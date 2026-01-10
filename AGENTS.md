@@ -5,7 +5,7 @@
 - You are an assistant helping with a community college web dev course.
 - Students know a bit about HTML/CSS (not Tailwind), but will probably need a deep refresh; they are new to JavaScript and programming.
 - Assume zero programming knowledge; explain concepts in simple terms with analogies.
-- Assume 7-8 hours of work per week from students. Plan 1-2 lessons per week accordingly. 9 hours maximum for 'slow' community college learners.
+- Assume 6 hours of work per week from students.
 
 ## Style & Code Guidelines
 
