@@ -32,7 +32,7 @@ The following instructions are specifically for Windows users. Mac users should 
 
 ### Windows File System Structure
 
-Windows organizes files through a hierarchical structure starting with drive letters. Your main drive typically appears as `C:\`, with user files stored in `C:\Users\YourName\`. Most software installs to `C:\Program Files\` or `C:\Program Files (x86)\`. We will create a dedicated `Code` folder in your user directory for organizing all development projects.
+Windows organizes files through a hierarchical structure starting with drive letters. Your main drive typically appears as `C:\`, with user files stored in `C:\Users\YourName\`. Most software installs to `C:\Program Files\` or `C:\Program Files (x86)\`. We will create a dedicated `Dev` folder in your user directory for organizing all development projects.
 
 The PATH environment variable determines where Windows searches for executable programs. Many installation issues stem from incorrect PATH configuration, which installers typically handle automatically when you select the appropriate options.
 
@@ -110,7 +110,7 @@ Visit `https://cli.github.com/` and click "Download for Windows" to download a f
 
 Verify installation by opening Warp and typing `gh --version`. You should see output like `gh version 2.40.1`.
 
-### Step 7: Authenticate GitHub CLI
+### Step 6: Authenticate GitHub CLI
 
 Ensure you are logged into GitHub in your web browser before proceeding. In Warp, type `gh auth login` and press Enter. Follow the authentication prompts: Select "GitHub.com" for where you use GitHub. Choose "HTTPS" as your preferred protocol. Select "Yes" to authenticate Git with your GitHub credentials. Choose "Login with a web browser" for authentication method.
 
@@ -118,47 +118,11 @@ Copy the one-time code displayed (like "7516-60CE"), press Enter to open GitHub 
 
 ### Step 8: Create Your Development Folder
 
-Open File Explorer with Windows key + E. Navigate to your user folder by clicking "This PC", then your C: drive, then Users, then your username folder. Right-click in an empty area and select New → Folder. Name it exactly `Code` with a capital C.
+Open File Explorer with Windows key + E. Navigate to your user folder by clicking "This PC", then your C: drive, then Users, then your username folder. Right-click in an empty area and select New → Folder. Name it exactly `Dev` with a capital D.
 
-Test the setup by right-clicking your Code folder. You should see "Open with Code" in the context menu. Click it to open the folder in VS Code. If VS Code opens with your Code folder visible in the sidebar, your setup is complete.
+Test the setup by right-clicking your Dev folder. You should see "Open with Code" in the context menu. Click it to open the folder in VS Code. If VS Code opens with your Dev folder visible in the sidebar, your setup is complete.
 
-## Troubleshooting & Best Practices
-
-### Common Installation Problems
-
-When encountering "Windows protected your PC" messages, click "More info" then "Run anyway". This warning appears for downloaded installers as a security precaution but does not indicate actual danger for legitimate software.
-
-Permission errors require running installers as administrator. Right-click the installer file and select "Run as administrator", entering your admin password if prompted.
-
-If commands are not recognized after installation, restart your computer completely to refresh the PATH environment variable. The system needs this restart to recognize newly installed command-line tools.
-
-### Important Note About Terminal Usage
-
-It is required for the course to use Warp Terminal for all course commands. In the lesson, we use Windows CMD 🐚 to get things set up. Now, since we have Warp, never open that other CLI again. Stick with Warp and use the AI 🤖 to help you learn. While PowerShell will technically work, you will miss significant benefits by not using Warp. The integrated AI assistance in Warp helps you learn commands, debug errors, and understand what you are doing in real-time. PowerShell users will need to rely on external resources for the same support. Additionally, some course instructions may reference Warp-specific features that PowerShell lacks. Using Warp ensures the best learning experience and keeps you aligned with course materials.
-
-**Avoid using the basic Windows CMD 🐚.**
-
-### What About GitBash?
-
-When we installed Git, we also installed yet another terminal program called GitBash. This is a fantastic backup terminal.
-
-#### Wait...Why Do We Need a Backup?
-
-It turns out that Warp for Windows sometimes has permissions issues. Certain commands will not work as they should. This can occur with seemingly innocuous commands like `touch`, to create a new file!
-
-Sometimes, conversing with Warp can be effective at resolving these issues. However, in the event that there are persistent problems, you can always fall back to GitBash.
-
-Just hit the Windows key and search for "Git Bash" to open it.
-
-You can complete whatever tasks you need in GitBash as a backup, and the switch back to Warp for all the rest!
-
-### Essential Windows Keyboard Shortcuts
-
-Master these keyboard shortcuts for efficient Windows development: Windows + E opens File Explorer for quick navigation. Windows + R opens the Run dialog for launching programs. Within VS Code, Ctrl + Shift + P opens the command palette for accessing all features, while Ctrl + backtick opens the integrated terminal.
-
-## Wrap-Up & Assessment
-
-### HW: Installation Verification
+## Tool Verification and Maintenance
 
 Open Warp Terminal and run these verification commands to confirm successful installation:
 
@@ -174,11 +138,24 @@ gh auth status
 
 Each command should return a version number or status confirmation. The spacing between commands and flags (like `git --version`) is critical. These delimiter spaces allow the terminal to distinguish between the command and its options.
 
-Submit screenshots or a video (no narration needed) to show the output of each command. Ensure the terminal window is large enough to read the text clearly. If any command fails, troubleshoot the installation steps or refer to the troubleshooting section below.
+## Navigating in Warp Terminal
+
+Use these basic commands to navigate your file system in Warp Terminal:
+
+- `cd Dev` → Change directory to your Dev folder
+- `ls` → List files and folders in the current directory
+- `pwd` → Print the current working directory path
 
 ### Troubleshooting Quick Reference
 
 If VS Code will not open, check your Start menu for "Visual Studio Code" or try running the installer again as administrator. For Node commands not found, restart your computer to refresh PATH, then reinstall Node.js if necessary, ensuring "Add to PATH" is selected. Git recognition issues may require checking for Git Bash in your Start menu or restarting your computer. If you cannot create the Code folder, verify you are in your user folder with appropriate permissions.
+
+### Keep Your Tools Updated
+
+Windows tools don’t auto‑upgrade as nicely as on Mac, so plan to refresh them **every 1–2 months**:
+
+- **VS Code, Node.js, Git, Warp, GitHub CLI**: Revisit their official download pages, grab the latest installers, and run them—this will update in place.
+- Put a simple recurring reminder on your phone (for example, first weekend of every other month) to do this quick maintenance pass.
 
 ### What You've Accomplished
 
@@ -187,5 +164,3 @@ You have successfully established a professional Windows development environment
 ### Next Steps
 
 With your development environment ready, you will proceed to configure VS Code with essential extensions, learn Git fundamentals for version control, and write your first JavaScript programs. This foundation enables you to begin serious programming work immediately.
-
-_Ready to configure VS Code with essential extensions? Let's move on to the VS Code Configuration lesson._

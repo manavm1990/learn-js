@@ -15,9 +15,11 @@ Setting up your development environment on Mac is streamlined thanks to Homebrew
 ### What You'll Install Today
 
 - **Homebrew**: Package manager for Mac (like an app store for developer tools)
+- **Warp Terminal**: Your primary terminal for this course
 - **Visual Studio Code**: Your code editor
 - **Node.js LTS**: JavaScript runtime for running code outside browsers
 - **Git**: Version control system (may already be installed)
+- **GitHub CLI (`gh`)**: Command-line helper for working with GitHub and authentication
 
 ## Core Concept Overview
 
@@ -174,7 +176,7 @@ Homebrew will make installing everything else much easier.
    - Click it - you should see "Shell command 'code' successfully installed"
 
 4. **Test the installation**:
-   - In Terminal, navigate to your home directory: `cd ~`
+   - In Warp Terminal, navigate to your home directory: `cd ~`
    - Type: `code .` (the dot means "current folder")
    - VS Code should open and show your home folder in the sidebar
 
@@ -199,7 +201,7 @@ Git might already be installed on your Mac, but let's make sure you have the lat
 
 1. **Check current Git version**:
    - In Warp Terminal, type: `git --version`
-   - If you see a version number, skip to Step 7 ⏩👇🏾
+   - If you see a version number, you can move on to the next step
    - If "command not found", Git isn't installed yet 😞
 
 2. **Install Git via Homebrew**:
@@ -213,86 +215,49 @@ Git might already be installed on your Mac, but let's make sure you have the lat
 
 We'll configure Git and set up your name and email in the Git Fundamentals lesson.
 
-### Step 7: Set Up Your Development directory
+### Step 7: Install GitHub CLI (`gh`)
+
+GitHub CLI makes it much easier to authenticate with GitHub and create/push repositories from the command line.
+
+1. **Install GitHub CLI with Homebrew**:
+   - In Warp Terminal, type: `brew install gh`
+   - Wait for the installation to finish
+
+2. **Verify installation**:
+   - Type: `gh --version`
+   - You should see something like `gh version 2.x.x`
+
+3. **Log in to GitHub** (you can do this now or later in the Git lessons):
+   - Make sure you have a GitHub account and are logged into github.com in your browser
+   - In Warp Terminal, run:
+
+   ```bash
+   gh auth login
+   ```
+
+   - Choose **GitHub.com** → **HTTPS** → **Login with a web browser**
+   - Copy/paste the one-time code and authorize in your browser
+   - Back in Warp, run `gh auth status` to confirm you're logged in
+
+You only need to do this once per machine. Later lessons will reuse this setup when pushing code to GitHub.
+
+### Step 8: Set Up Your Development directory
 
 **Note:** A directory is nothing but a folder on your computer. We will be using the terms interchangeably.
 
 1. **Create a Code directory**:
    - In Warp Terminal, make sure you're in your home directory: `cd ~`
-   - Create the folder: `mkdir Code`
-   - Navigate into it: `cd Code`
+   - Create the folder: `mkdir Dev`
+   - Navigate into it: `cd Dev`
 
 2. **Test your setup**:
-   - From inside the Code folder, type: `code .`
-   - VS Code should open with the Code folder in the sidebar
-   - You should see "CODE" in the sidebar with an empty folder
+   - From inside the Dev folder, type: `code .`
+   - VS Code should open with the Dev folder in the sidebar
+   - You should see "DEV" in the sidebar with an empty folder
 
 As we work on stuff, we'll be adding directories for each assignment/project.
 
-**\*️⃣ ordinarily, you should only type `code .` to open up a specific directory. We would not normally open up the entire `Code` directory in VS Code! 👎🏾**
-
-## Advanced Concepts & Comparisons
-
-### Understanding Homebrew Better
-
-**What Homebrew does**:
-
-- Downloads software from trusted sources. No more clicking 'Agree' in pop-ups!
-- Keeps everything updated with `brew upgrade`
-
-**Cask vs. Formula**:
-
-- **Formula**: Command-line tools (like `git`, `node`)
-- **Cask**: GUI applications (like `visual-studio-code`)
-- Use `brew install` for formulas, `brew install --cask` for casks
-
-**Useful Homebrew commands**:
-
-```bash
-brew list              # Show installed packages
-brew outdated          # Show packages that can be updated
-brew upgrade           # Update all packages
-brew uninstall package # Remove a package
-```
-
-### File System Navigation
-
-Essential Terminal commands for Mac:
-
-```bash
-pwd                    # Print current directory
-ls                     # List files and folders
-ls -la                 # List with details and hidden files
-cd folder-name         # Change to folder
-cd ..                  # Go up one level
-cd ~                   # Go to home directory
-mkdir folder-name      # Create new folder
-```
-
-### Understanding Warp Better
-
-Warp is a modern terminal built for speed and efficiency. Here are some key features:
-
-- **Command Palette**: Access commands quickly with `Cmd + P`.
-- **Split Panes**: Work with multiple terminal sessions side by side.
-- **Persistent Sessions**: Keep your terminal sessions alive even after closing the window.
-- **Built-in Git Integration**: View and manage Git repositories easily.
-
-Even better than reading this, Warp now has a Warp University and YouTube channel with tutorials and resources to help you master the terminal.
-
-<VideoYT
-  url="https://youtu.be/O5E6ze3vqeo?si=TDD7f0t0XO1eNgDa"
-  title="Introduction to Warp"
-  caption="Learn the basics of Warp Terminal in this introductory video."
-/>
-
----
-
-<VideoYT
-  url="https://youtu.be/fzb1JcZ0fFA?si=UM73XDb6_Eju6feJ"
-  title="Customize Warp"
-  caption="Customize whatever makes sense. You might skip over 2:25-4:05. "
-/>
+**\*️⃣ ordinarily, you should only type `code .` to open up a specific directory. We would not normally open up the entire `Dev` directory in VS Code! 👎🏾**
 
 ## Troubleshooting & Best Practices
 
@@ -325,32 +290,22 @@ Even better than reading this, Warp now has a Warp University and YouTube channe
 
 #### Keep your system updated:
 
-- **macOS**: Regularly update through System Preferences
-- **Homebrew**: Run `brew update && brew upgrade` monthly
-- **VS Code**: Updates automatically, but check Help → Check for Updates
-
-#### Organize your development environment:
-
-```
-/Users/YourName/
-├── Code/
-│   ├── SWIC-Course/     (this course)
-│   ├── Practice/        (experiments)
-│   └── Projects/        (real projects)
-├── Desktop/
-└── Documents/
-```
+- **macOS**: Regularly install system updates through System Settings.
+- **Homebrew tools (Node, Git, Warp, etc.)**: At least every 1–2 months, open Warp and run:
+  ```bash
+  brew update && brew upgrade
+  ```
+  Set a recurring reminder on your phone or calendar so this actually happens.
+- **VS Code**: Updates automatically, but occasionally check **Help → Check for Updates**.
 
 #### Essential Mac keyboard shortcuts:
 
 - **`Cmd + Space`** → Spotlight search _(Find apps quickly)_
-- **`Cmd + Tab`** → Switch apps _(Navigate between VS Code and Terminal)_
-- **`Cmd + C/V`** → Copy/Paste _(Works in Terminal too)_
+- **`Cmd + Tab`** → Switch apps _(Navigate between VS Code and Warp Terminal)_
+- **`Cmd + C/V`** → Copy/Paste _(Works in Warp Terminal too)_
 - **`Cmd + T`** → New tab _(Multiple Terminal tabs)_
 
 ### Security Considerations
-
-When you encounter Gatekeeper warnings or password prompts during installation, it's important to understand the implications. Always ensure that you are downloading software from trusted sources. If you receive a warning, double-check the URL and verify the software's authenticity before proceeding. Keeping your system secure is crucial for a smooth development experience.
 
 **Gatekeeper warnings\*\***:\*\*
 
@@ -365,8 +320,6 @@ When you encounter Gatekeeper warnings or password prompts during installation, 
 - VS Code and Node.js shouldn't need your password
 - Whenever entering your password, remember that no characters will appear as you type - this is a security feature
 
-## Wrap-Up & Assessment
-
 ### Installation Checklist
 
 Check each item as you complete it:
@@ -378,17 +331,16 @@ Check each item as you complete it:
 - [ ] `node --version` shows Node.js version
 - [ ] `npm --version` shows npm version
 - [ ] `git --version` shows Git version
-- [ ] Created `~/Code` folder with subfolders
-- [ ] Can navigate using basic Terminal commands
+- [ ] Created `~/Dev` folder
+- [ ] Can navigate using basic Warp Terminal commands
 
 ### Quick Test
 
-Run these commands in Terminal to verify everything works:
+Run these commands in Warp Terminal to verify everything works:
 
 ```bash
-# Navigate to your Code folder
-cd ~/Code
-
+# Navigate to your Dev folder
+cd ~/Dev
 # Check all tools are installed
 brew --version
 node --version
@@ -398,24 +350,6 @@ git --version
 # Open VS Code from command line
 code .
 ```
-
-### HW: Installation Verification
-
-Open Warp Terminal and run these verification commands to confirm successful installation:
-
-```bash
-# Check each tool's version
-git --version
-code --version
-node --version
-npm --version
-gh --version
-gh auth status
-```
-
-Each command should return a version number or status confirmation. The spacing between commands and flags (like `git --version`) is critical. These delimiter spaces allow the terminal to distinguish between the command and its options.
-
-Submit screenshots or a video (no narration needed) to show the output of each command. Ensure the terminal window is large enough to read the text clearly. If any command fails, troubleshoot the installation steps or refer to the troubleshooting section below.
 
 ### Understanding What You've Built
 
@@ -430,27 +364,3 @@ Submit screenshots or a video (no narration needed) to show the output of each c
 - **Organized workspace** (Code folder) for all your projects
 
 This is the same or similar setup used by professional developers at companies like Apple, Google, and thousands of startups.
-
-### Next Steps
-
-With your Mac development environment ready, you'll move on to:
-
-1. **Configure VS Code** with essential extensions
-2. **Learn Git fundamentals** for version control
-3. **Write your first JavaScript** programs
-
-**Congratulations!** You now have a professional development environment on Mac. This setup will serve you well throughout your programming journey.
-
-### Additional Resources
-
-- **Homebrew Documentation**: https://docs.brew.sh/
-- **VS Code on Mac**: https://code.visualstudio.com/docs/setup/mac
-- **Git Documentation**: https://git-scm.com/book
-
-### Troubleshooting Resources
-
-- **Homebrew Issues**: https://docs.brew.sh/Troubleshooting
-- **VS Code Issues**: https://code.visualstudio.com/docs/supporting/troubleshoot
-- **Stack Overflow**: Search for "mac development setup" questions
-
-_Ready to configure VS Code with essential extensions? Let's move on to the VS Code Configuration lesson._
