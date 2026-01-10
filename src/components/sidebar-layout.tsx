@@ -73,27 +73,56 @@ function CourseNavigation({
             {module.title}
           </h2>
           <ul className="mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400">
-            {module.lessons.map((lesson) => (
-              <li
-                key={lesson.id}
-                className={clsx(
-                  "-ml-px flex border-l border-transparent pl-4",
-                  "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
-                  "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
-                )}
-              >
-                <Link
-                  href={`/${lesson.id}`}
-                  aria-current={
-                    `/${lesson.id}` === pathname ? "page" : undefined
-                  }
-                  {...(onNavigate && { onClick: onNavigate })}
-                  className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+            {module.lessons.map((lesson) => {
+              const items: React.ReactNode[] = [];
+
+              // Insert a subtle week divider before the first Week 2 lesson
+              // in the Development Environment & Setup module.
+              if (
+                module.id === "environment-setup" &&
+                lesson.id === "terminal-fundamentals"
+              ) {
+                items.push(
+                  <li
+                    key="environment-setup-week-2-divider"
+                    aria-hidden="true"
+                    className="-ml-px flex border-l border-transparent pl-4"
+                  >
+                    <div className="my-2 flex w-full items-center gap-3">
+                      <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+                      <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+                        Week 2
+                      </span>
+                      <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+                    </div>
+                  </li>,
+                );
+              }
+
+              items.push(
+                <li
+                  key={lesson.id}
+                  className={clsx(
+                    "-ml-px flex border-l border-transparent pl-4",
+                    "hover:text-gray-950 hover:not-has-aria-[current=page]:border-gray-400 dark:hover:text-white",
+                    "has-aria-[current=page]:border-gray-950 dark:has-aria-[current=page]:border-white",
+                  )}
                 >
-                  {lesson.title}
-                </Link>
-              </li>
-            ))}
+                  <Link
+                    href={`/${lesson.id}`}
+                    aria-current={
+                      `/${lesson.id}` === pathname ? "page" : undefined
+                    }
+                    {...(onNavigate && { onClick: onNavigate })}
+                    className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
+                  >
+                    {lesson.title}
+                  </Link>
+                </li>,
+              );
+
+              return items;
+            })}
           </ul>
         </div>
       ))}
