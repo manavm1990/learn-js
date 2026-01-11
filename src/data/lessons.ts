@@ -61,21 +61,33 @@ const lessons = [
         title: "Welcome to SWIC Web Development",
         description:
           "Course introduction, learning mindset, and how to effectively use AI tools for web development.",
-        video: null,
+        video: {
+          duration: 696,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/student.jpg",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/sp2026-how-to-learn.mp4",
+        },
       },
       {
         id: "developer-tools-overview",
         title: "Modern Developer Tools",
         description:
           "Overview of professional development tools: Git, GitHub, VS Code, Node.js, and the modern web development workflow.",
-        video: null,
+        video: {
+          duration: 798,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/tools.jpg",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/sp2026-how-to-learn.mp4",
+        },
       },
       {
         id: "mac-setup-guide",
         title: "Mac Setup Guide",
         description:
           "Complete setup instructions for Mac users: Homebrew, VS Code, Node.js, and Git.",
-        video: null,
+        video: {
+          duration: 714,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/mac.jpg",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/sp26-mac.mp4",
+        },
       },
       {
         id: "windows-setup-guide",
@@ -83,6 +95,17 @@ const lessons = [
         description:
           "Step-by-step setup instructions for Windows users with direct downloads and installations.",
         video: null,
+      },
+      {
+        id: "ai-reality-check",
+        title: "AI Reality Check: Beyond the Hype",
+        description:
+          "A balanced look at AI's role in development: separating hype from reality, addressing concerns, and using AI as a learning tool.",
+        video: {
+          duration: 465,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/ai.jpg",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/sp2026-ai.mp4",
+        },
       },
       {
         id: "terminal-and-txt-files",
