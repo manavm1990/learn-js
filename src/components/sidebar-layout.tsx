@@ -1,7 +1,7 @@
 "use client";
 
-import { IconButton } from "@/components/icon-button";
 import { useCommandPalette } from "@/components/command-palette-provider";
+import { IconButton } from "@/components/icon-button";
 import { SidebarIcon } from "@/icons/sidebar-icon";
 import type { Video } from "@/types/video.types";
 import {
@@ -75,29 +75,6 @@ function CourseNavigation({
           <ul className="mt-4 flex flex-col gap-4 border-l border-gray-950/10 text-base/7 text-gray-700 sm:mt-3 sm:gap-3 sm:text-sm/6 dark:border-white/10 dark:text-gray-400">
             {module.lessons.map((lesson) => {
               const items: React.ReactNode[] = [];
-
-              // Insert a subtle week divider before the first Week 2 lesson
-              // in the Development Environment & Setup module.
-              if (
-                module.id === "environment-setup" &&
-                lesson.id === "terminal-fundamentals"
-              ) {
-                items.push(
-                  <li
-                    key="environment-setup-week-2-divider"
-                    aria-hidden="true"
-                    className="-ml-px flex border-l border-transparent pl-4"
-                  >
-                    <div className="my-2 flex w-full items-center gap-3">
-                      <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
-                      <span className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
-                        Week 2
-                      </span>
-                      <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
-                    </div>
-                  </li>,
-                );
-              }
 
               items.push(
                 <li
@@ -252,7 +229,7 @@ export function SidebarLayoutContent({
         <button
           type="button"
           onClick={openPalette}
-          className="hidden items-center gap-2 rounded-full border border-gray-300 bg-white px-3 py-1 text-xs text-gray-600 shadow-sm transition hover:border-gray-400 hover:text-gray-800 dark:border-white/20 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-white/40 sm:inline-flex"
+          className="hidden items-center gap-2 rounded-full border border-gray-300 bg-white px-3 py-1 text-xs text-gray-600 shadow-sm transition hover:border-gray-400 hover:text-gray-800 sm:inline-flex dark:border-white/20 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-white/40"
         >
           <span>Search lessons…</span>
           <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-300">
