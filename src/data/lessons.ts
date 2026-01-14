@@ -108,6 +108,13 @@ const lessons = [
         },
       },
       {
+        id: "how-computers-and-web-work",
+        title: "How Computers and the Web Work",
+        description:
+          "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
+        video: null,
+      },
+      {
         id: "terminal-and-txt-files",
         title: "Terminal and TXT Files: Your First Steps in Coding",
         description:
@@ -156,13 +163,6 @@ const lessons = [
     description:
       "Understanding how the web works and introduction to programming concepts that will guide your development journey.",
     lessons: [
-      {
-        id: "how-computers-and-web-work",
-        title: "How Computers and the Web Work",
-        description:
-          "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
-        video: null,
-      },
       {
         id: "js-introduction",
         title: "What is JavaScript?",
