@@ -217,6 +217,27 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         </code>
       );
     },
+    // Table components for proper MDX table rendering
+    table: ({ children }) => (
+      <div className="my-4 overflow-x-auto">
+        <table className="min-w-full border-collapse text-sm">
+          {children}
+        </table>
+      </div>
+    ),
+    thead: ({ children }) => (
+      <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>
+    ),
+    tbody: ({ children }) => <tbody>{children}</tbody>,
+    tr: ({ children }) => (
+      <tr className="border-b border-gray-200 dark:border-gray-700">
+        {children}
+      </tr>
+    ),
+    th: ({ children }) => (
+      <th className="px-4 py-2 text-left font-semibold">{children}</th>
+    ),
+    td: ({ children }) => <td className="px-4 py-2">{children}</td>,
     VideoYT: VideoYT,
     Figure: Figure,
     CopyableCode: CopyableCode,
