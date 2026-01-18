@@ -75,7 +75,7 @@ const lessons = [
         video: {
           duration: 798,
           thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/tools.jpg",
-          url: "https://videos.learnjs.tech/swic/videos/sp26/sp2026-how-to-learn.mp4",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/sp26-modern.mp4",
         },
       },
       {
