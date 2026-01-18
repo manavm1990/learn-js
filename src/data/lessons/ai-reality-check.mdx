@@ -2,48 +2,42 @@
 
 A balanced look at AI's role in development: separating hype from reality, addressing concerns, and using AI as a learning tool.
 
-> **Instructor's Note:** This lesson reflects my personal professional perspective as a developer who uses AI tools. While I'm not an AI researcher with a PhD or years in machine learning, these observations come from practical experience in the field. The truth about AI's future likely lies somewhere between the extreme hype and extreme doom scenarios. I might be wrong about some specifics - but I doubt it. 😉
+> **Instructor's Note:** This lesson reflects my personal professional perspective as a developer who uses AI tools. While I'm not an AI researcher with a PhD or years in machine learning, these observations come from practical experience in the field. The truth about AI's future likely lies somewhere between the extreme hype and extreme doom scenarios. I might be wrong, but I doubt it. 😉
 
 ## Introduction
 
-### The Elephant in the Room 🐘
-
-**Real-world scenario**: You've probably seen the headlines. "AI will replace all programmers!" "ChatGPT can write entire applications!" "Developers are obsolete!" At the same time, you might have concerns about AI's environmental impact, its effect on creative professionals, and whether it's just another tech bubble waiting to burst.
+**Real-world scenario**: You've probably seen the headlines. "AI will replace all programmers!" "Developers are obsolete!" At the same time, you might have concerns about AI's environmental impact, its effect on creative professionals, and whether it's just another tech bubble waiting to burst.
 
 You're right to be skeptical. You're also right to be curious.
 
-As future developers, you need to understand AI for what it actually is: a powerful tool with real limitations, legitimate concerns, and practical applications. Not a magic wand, not a world-ending threat, but a tool that can 10x your learning when used thoughtfully.
+As future developers, you need to understand AI for what it actually is: a powerful tool with real limitations, legitimate concerns, and practical applications. Not a magic wand, not a world-ending threat, but a tool that can accelerate your learning when used thoughtfully.
+
+**What AI Actually Is (The Simple Version)**
+
+Summarily, AI 🤖 as it stands today is nothing but a non-deterministic intelligent guesser. Non-deterministic means that we can pose the same query multiple times and get different outcomes. 2 + 2 doesn't always equal 4!
+
+Think of it like calling customer service. You could call the same support number and get different answers from different reps. Sometimes they're knowledgeable, sometimes not. Sometimes they try to help, sometimes they just want you off the phone. Non-deterministic intelligent guessers work similarly: they try to give you the best answer based on their training data, but they don't always get it right. And the training data itself may be flawed or biased.
 
 ![Terminator GIF|484x484](https://d8n3.c1.e2-8.dev/swic/terminator.gif)
 
-### What You'll Learn Today
+## The Reality Gap: What AI Actually Does vs. What People Claim
 
-- The reality behind AI hype and why most claims are overblown
-- Legitimate concerns about AI's environmental and social impact
-- Why the current AI bubble resembles the dot-com boom of the early 2000s
-- How to use AI as a learning accelerator (not a replacement for thinking)
-- Practical guidelines for ethical AI use in development
-
-## Core Concept Overview
-
-### The Hype Machine vs. Reality
-
-**The Claims:**
+**The Hype:**
 
 - "AI will replace all programmers by 2025!"
-- "GPT-5 is smarter than any human in every field!"
 - "AI can solve any problem you throw at it!"
 
 **The Reality:**
+
 AI is a sophisticated pattern-matching system that excels at certain tasks and fails spectacularly at others. It's like having a brilliant intern who:
 
 - Can write decent code when given clear instructions
 - Makes confident-sounding mistakes
 - Has no real understanding of what they're doing
 - Can't learn from their mistakes in real-time
-- Occasionally produces work that's genuinely helpful
+- Occasionally (or even frequently on a good day) produces work that's genuinely helpful
 
-### The Bubble Economics 💰
+## The Bubble Economics: Following the Dot-Com Playbook
 
 **Sound familiar?**
 
@@ -54,58 +48,48 @@ AI is a sophisticated pattern-matching system that excels at certain tasks and f
 
 This mirrors the dot-com boom of 1999-2001, when companies with ".com" in their name could raise millions regardless of their business model. Many AI companies today are following the same playbook: raise money, promise the moon, figure out the details later.
 
-**The current reality:**
+**The Dot-Com Parallel 📈**
 
-- OpenAI burns through billions while struggling to turn a consistent profit
-- "Revolutionary" GPT-5 struggles with basic tasks like spelling and spatial reasoning
+**1999-2001 Dot-Com Boom:**
+
+- Companies with ".com" in their name saw massive valuations
+- Investors threw money at any internet-related business
+- "This time is different" - traditional business models don't apply
+- **Result:** 78% crash when reality hit
+
+**2023-Present AI Boom:**
+
+- Companies adding "AI" to their name see stock price jumps
+- Billions invested in AI startups with unclear revenue models
+- "This time is different" - traditional profitability metrics don't apply
 - Major tech companies are quietly scaling back AI investment after initial euphoria
 - The infrastructure costs are enormous and unsustainable at current scales
+- **Prediction:** Significant correction coming, but useful technology will remain
 
-### Legitimate Concerns You Should Know About
+**What Survives the Bubble:**
 
-#### Environmental Impact 🌍
+- After the dot-com crash: Amazon, Google, eBay (solved real problems)
+- What will likely survive AI: Practical tools solving specific problems, companies enhancing human capabilities
+
+## Real-World Impact: The Stakes
+
+### Environmental Impact 🌍
 
 **The numbers are staggering:**
 
-- Training GPT-3 consumed as much electricity as 120 U.S. homes use in a year
-- A single ChatGPT query uses roughly 10x more energy than a Google search
 - Data centers powering AI are projected to consume 8% of global electricity by 2030
 - Water usage for cooling is creating shortages in some regions
+- There are significant carbon emissions associated with training large AI models
+- Communities are at odds during debates about whether to build new data centers
 
-**Your responsibility:** Use AI tools mindfully. Don't generate code just because you can - generate it because it genuinely helps you learn or solve a problem.
-
-#### AI's Potential for Good 🌱
-
-**The other side of the coin**: While AI has significant environmental costs today, it theoretically could help solve major environmental and scientific challenges:
-
-**Promising applications:**
-
-- **Materials science**: AI helping design more efficient solar panels and batteries
-- **Climate modeling**: Processing vast datasets to understand and predict climate change
-- **Drug discovery**: Accelerating research for diseases and medical treatments
-- **Resource optimization**: Making supply chains and energy grids more efficient
-- **Scientific research**: Analyzing patterns in data humans couldn't process manually
-
-**The "theoretically" caveat**:
-
-![Terminator saying theoretically GIF|640x272](https://d8n3.c1.e2-8.dev/swic/theoretically.gif)
-
-As the non-canonical Terminator would say - this is all theoretical. Many of these benefits remain promises rather than proven results. The environmental costs are real and happening now, while the benefits are mostly hypothetical and may take decades to materialize.
-
-**Critical thinking**: Short-term environmental cost for long-term gain sounds reasonable, but we've heard similar promises from other industries. The question is: will the benefits actually materialize, and are we making decisions based on hope or evidence?
-
-#### Putting Energy Use in Context ⚡
-
-**A balanced perspective**: While AI's energy consumption is worth discussing, it's helpful to consider it alongside other technology choices we make daily:
-
-**For comparison:**
+**Putting energy use in context**: While AI's energy consumption is worth discussing, it's helpful to consider it alongside other technology choices we make daily:
 
 - Gaming PCs can consume 1000+ watts during extended sessions
 - Streaming 4K video for several hours uses significant bandwidth and server energy
 - Cryptocurrency mining consumes more electricity than many entire countries
 - Even our smartphones require energy-intensive data centers for cloud services
 
-**The point isn't to dismiss environmental concerns** - they're valid and important. Rather, it's to think critically about energy use across all our technology choices. Every digital convenience has an environmental cost.
+**The point isn't to dismiss environmental concerns** - they're valid and important. Rather, it's to think critically about energy use across all our technology choices. Every digital convenience has an environmental cost. The key is being intentional: turn that light switch off when you leave the room, but also be mindful about your AI usage.
 
 **Thoughtful questions to ask yourself:**
 
@@ -113,9 +97,7 @@ As the non-canonical Terminator would say - this is all theoretical. Many of the
 - Are there more efficient ways to accomplish the same goals?
 - How can I be more mindful about all my technology consumption?
 
-**The takeaway**: Make informed choices about AI use, just as you would with any other technology that impacts the environment.
-
-#### Impact on Creative Professionals 🎨
+### Impact on Creative Professionals 🎨
 
 **The reality for designers and artists:**
 
@@ -126,22 +108,12 @@ As the non-canonical Terminator would say - this is all theoretical. Many of the
 
 **The nuance:** While AI threatens certain types of creative work, it also opens new possibilities. Many designers are finding ways to integrate AI into their workflow rather than being replaced by it.
 
-#### The Sam Altman Phenomenon 🎭
-
-OpenAI's CEO has become the face of AI hype, making grand promises while:
-
-- Constantly moving goalposts when predictions don't pan out
-- Requesting trillions in investment for questionable returns
-- Promoting AI safety concerns while rushing products to market
-- Creating a cult of personality around technology that's still fundamentally limited
-
-**Critical thinking:** When tech CEOs make extraordinary claims, ask: "What are they selling, and what would they gain by convincing me this is true?"
-
-#### Real Harms: When AI Goes Wrong 💔
+## When AI Goes Wrong: Real Harms 💔
 
 This isn't theoretical. People have died because AI systems were designed or operated irresponsibly.
 
 **The Serafini Case (2023):**
+
 A teenage boy in Italy used Character.AI - a chatbot designed to simulate fictional personalities - for emotional support. The conversations became increasingly dark, with the AI eventually adopting the persona of a character encouraging self-harm. The teenager died by suicide. His parents found a transcript of conversations where an AI system, trained to be engaging and responsive, had reinforced increasingly dangerous thoughts.
 
 **What happened:** The AI wasn't "trying to harm" anyone - it was doing exactly what it was trained to do: engage the user, match their emotional tone, and continue the conversation. It had no safety guardrails because the company prioritized "naturalness" over responsibility.
@@ -151,14 +123,48 @@ Multiple AI-powered apps marketed to children have included features teaching da
 
 **What went wrong:** When you optimize an AI system purely for engagement and user retention, it will find patterns in data that maximize those metrics - even if those patterns lead to harmful behavior.
 
-**The Pattern:**
-These aren't isolated incidents. They represent a systemic problem:
+**The ICE Recruitment Disaster (January 2026):**
+When Immigration and Customs Enforcement (ICE) rushed to hire 10,000 new officers, they used an AI tool to screen applicants and determine who qualified for accelerated training. Officers with prior law enforcement experience were supposed to get a shorter 4-week online course, while others received full academy training.
+
+**What went wrong:** The AI was designed to identify candidates with law enforcement experience by scanning résumés for the word "officer." Sounds reasonable, right? Except the AI took this literally - anyone with "officer" anywhere on their résumé got fast-tracked. This included:
+
+- Mall security officers
+- Compliance officers
+- People who wrote they _wanted_ to become ICE officers
+- Anyone who happened to use the word in any context
+
+The result? The _majority of new applicants_ were incorrectly placed in the accelerated program, sending people into the field with minimal training. According to a December investigation, some recruits "can barely read, let alone understand complex immigration law."
+
+**Why this happened:** The AI did exactly what it was programmed to do - find the pattern "officer" in text. It had no understanding of _context_, _intent_, or _meaning_. No human carefully reviewed the AI's decisions because everyone assumed the AI "knew what it was doing." The pressure to hire quickly meant cutting corners on safety and oversight.
+
+**Real consequences:** Untrained officers enforcing complex immigration law can destroy lives - making wrong calls about deportations, mishandling cases, violating rights. This isn't a hypothetical problem; it's happening right now because someone trusted an AI system to make critical decisions without proper validation.
+
+### The Bias Problem 🎯
+
+AI systems can exhibit concerning patterns of bias that undermine their reliability. The ICE case above is one example, but there are others that reveal systemic issues.
+
+**Case Study: The "MechaHitler" Incident**
+In 2024, Grok (X's AI system) generated content that appeared to adopt Nazi personas and rhetoric when prompted. This wasn't a political statement - it was a technical failure demonstrating how AI systems can amplify dangerous content when not properly safeguarded. It's a clear example of why AI bias isn't just an abstract concern - it can produce genuinely harmful outputs.
+
+**Technical red flags in AI systems:**
+
+- Training data that heavily skews toward particular perspectives
+- Responses that consistently favor certain viewpoints over others
+- Rejection of well-established scientific consensus without evidence
+- Outputs designed to confirm existing beliefs rather than encourage critical thinking
+- Claims of being "unbiased" while demonstrating clear patterns of bias
+- Systems that can be easily manipulated to produce extremist content
+- Use of AI to amplify division rather than understanding
+
+### The Pattern: Why These Failures Keep Happening
 
 1. Companies rush AI products to market without adequate safety testing
 2. Safety features are treated as obstacles to "user experience," not requirements
 3. Financial incentives favor deployment speed over responsible design
 4. Liability is unclear when AI systems cause harm
 5. Vulnerable populations (teenagers, children) are often the primary targets for engagement
+
+**Critical thinking:** When tech CEOs make extraordinary claims, ask: "What are they selling, and what would they gain by convincing me this is true?"
 
 **Why this matters for you as future developers:**
 
@@ -182,13 +188,31 @@ When you do, you'll face pressure to "move fast" and "prioritize user engagement
 - What safety features are we skipping for speed?
 - Who's responsible if someone is hurt by this system?
 
-## Hands-On Application
+## AI's Potential for Good 🌱
 
-### AI as a Learning Tool (Not a Crutch)
+**The other side of the coin**: While AI has significant environmental costs today, it theoretically could help solve major environmental and scientific challenges:
+
+**Promising applications:**
+
+- **Materials science**: AI helping design more efficient solar panels and batteries
+- **Climate modeling**: Processing vast datasets to understand and predict climate change
+- **Drug discovery**: Accelerating research for diseases and medical treatments
+- **Resource optimization**: Making supply chains and energy grids more efficient
+- **Scientific research**: Analyzing patterns in data humans couldn't process manually
+
+![Terminator saying theoretically GIF|640x272](https://d8n3.c1.e2-8.dev/swic/theoretically.gif)
+
+**The "theoretically" caveat**:
+
+Many of these benefits remain promises rather than proven results. The environmental costs are real and happening now, while the benefits are mostly hypothetical and may take decades to materialize.
+
+**Critical thinking**: Short-term environmental cost for long-term gain sounds reasonable, but we've heard similar promises from other industries. The question is: will the benefits actually materialize, and are we making decisions based on hope 🤞🏾 or evidence?
+
+## AI as a Learning Tool (Not a Crutch)
 
 Here's how to use AI effectively as a developer without becoming dependent on it:
 
-#### ✅ **Good Uses of AI for Learning:**
+### ✅ **Good Uses of AI for Learning:**
 
 **Code Explanation:**
 
@@ -211,30 +235,31 @@ Here's how to use AI effectively as a developer without becoming dependent on it
 ✅ "I understand variables, but I'm confused about the difference between 'let' and 'const'. Can you give me examples?"
 ```
 
-#### ❌ **Problematic Uses:**
+### ❌ **Problematic Uses:**
 
 - **Generating entire assignments** without understanding the code
 - **Copy-pasting AI solutions** without modification or comprehension
-- **Using AI as a substitute** for reading documentation or tutorials
 - **Asking AI to solve problems** you haven't attempted yourself
 
 ### The 10x Learning Accelerator Method
 
+No, this is not really "10x." It's more like 2x or 3x if you're lucky, but for some reason every "hot topic" on the web is a "10x" something these days. So there you go.
+
 **1. Attempt First** (15-30 minutes)
-Try to solve the problem yourself. Get stuck. Struggle. This creates the mental framework for learning.
+Try to solve the problem yourself. Get stuck. Struggle. This creates the mental framework for learning. Copilot in VS Code has a feature in the bottom right that allows you to disable code completions for 5 minutes at a time. Use it.
 
 **2. Strategic AI Use** (5-10 minutes)
-Ask specific questions about the part you're stuck on, not the entire problem.
+Ask specific questions about the part you're stuck on, not the entire problem. If using Warp, provide context by using "@" to cite specific files. When using Copilot, use "#" to do the same.
 
 **3. Understand and Modify** (10-15 minutes)
-Don't just copy AI suggestions. Understand why they work, then modify them to fit your specific needs.
+Don't just copy AI suggestions. Understand why they work, then modify them to fit your specific needs. Without advanced configuration 🔧, most AI cites and presents outdated information ℹ️. For simple tasks such as what we do in this course, it's probably not a big deal, but do your best to cross-reference with official documentation such as [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript).
 
 **4. Teach Back** (5 minutes)
-Explain the solution to yourself or others. If you can't explain it, you don't understand it. This is why videos are required to accompany most of your code submissions; and they better not just sound like you are reading a script like a hostage.
+Explain the solution to yourself or others (e.g., make a screencast video). If you can't explain it, you don't understand it.
 
 ### The Uncomfortable Truth About This Class 💯
 
-**Let me be brutally honest with you**: You can probably use AI for everything in this class and pass, maybe even with a C or possibly a B. You can have ChatGPT write your code, GitHub Copilot complete your functions, and AI generate scripts for your video explanations.
+**Let me be brutally honest with you**: You can probably use AI for everything in this class and pass, maybe even with a C or possibly a B. You can have GitHub Copilot and Warp (and other AI 🤖) complete your functions, and generate scripts for your video explanations.
 
 You can lead a learner to learning, but you can't make them think.
 
@@ -247,7 +272,7 @@ You can lead a learner to learning, but you can't make them think.
 - ❌ You'll struggle in advanced courses that build on these concepts
 - ❌ You'll be unprepared for technical interviews
 - ❌ You'll lack the problem-solving skills employers actually want
-- ❌ You'll have wasted your time and money on education that didn't stick
+- ❌ You'll have wasted your time and money on education that didn't stick (unless you are one of those just collecting financial aid 💸—in which case, carry on)
 
 **If you use AI as a learning tool:**
 
@@ -257,69 +282,11 @@ You can lead a learner to learning, but you can't make them think.
 - ✅ You'll build confidence in your abilities
 - ✅ You'll develop skills that make you valuable to employers
 
-**The choice is yours.** I can't force you to learn - I can only create assignments that make learning the path of least resistance. The screencast requirements, the "explain your process" components, the debugging exercises - these are designed to make it harder to fake understanding than to actually develop it.
+**The choice is yours.** You can't be forced to learn or to take pride in your work. But I strongly encourage you to use AI as a tool to enhance your learning, not as a crutch to avoid it.
 
-**Remember**: Employers can tell the difference between someone who learned programming and someone who learned to prompt AI. The job market will be the ultimate test of which approach you chose.
+**Remember**: Employers can tell the difference between someone who learned programming and someone who learned to prompt AI. The job market will be the ultimate test of which approach you chose. If the work you produce is virtually the same as what AI can generate, employers will realize that it's almost always cheaper to just use AI directly.
 
-## Advanced Concepts & Comparisons
-
-### The Dot-Com Parallel 📈
-
-**1999-2001 Dot-Com Boom:**
-
-- Companies with ".com" in their name saw massive valuations
-- Investors threw money at any internet-related business
-- "This time is different" - traditional business models don't apply
-- **Result:** 78% crash when reality hit
-
-**2023-2024 AI Boom:**
-
-- Companies adding "AI" to their name see stock price jumps
-- Billions invested in AI startups with unclear revenue models
-- "This time is different" - traditional profitability metrics don't apply
-- **Prediction:** Significant correction coming, but useful technology will remain
-
-### What Survives the Bubble
-
-**After the dot-com crash, what remained:**
-
-- Amazon (focused on actual customer value)
-- Google (solved real search problems)
-- eBay (facilitated genuine commerce)
-
-**What will likely survive the AI bubble:**
-
-- Practical AI tools that solve specific problems
-- Companies using AI to enhance human capabilities, not replace them
-- AI applications with clear ROI and sustainable business models
-
-### The Bias Problem 🎯
-
-Some AI systems exhibit concerning patterns of bias that can undermine their usefulness as learning tools. When AI systems are designed to promote specific viewpoints rather than provide balanced assistance, they become less reliable for educational purposes.
-
-**Case Study: The "MechaHitler" Incident**
-In 2024, Grok (X's AI system) generated content that appeared to adopt Nazi personas and rhetoric when prompted. This wasn't a political statement - it was a technical failure demonstrating how AI systems can amplify dangerous content when not properly safeguarded. It's a clear example of why AI bias isn't just an abstract concern - it can produce genuinely harmful outputs.
-
-**Technical red flags in AI systems:**
-
-- Training data that heavily skews toward particular perspectives
-- Responses that consistently favor certain viewpoints over others
-- Rejection of well-established scientific consensus without evidence
-- Outputs designed to confirm existing beliefs rather than encourage critical thinking
-- Claims of being "unbiased" while demonstrating clear patterns of bias
-- Systems that can be easily manipulated to produce extremist content
-- Use of AI to amplify division rather than understanding
-
-## Troubleshooting & Best Practices
-
-### Developing AI Literacy
-
-**Critical Questions to Ask:**
-
-1. **Who trained this AI and on what data?**
-2. **What are the financial incentives of the company behind it?**
-3. **What are the known limitations of this technology?**
-4. **Am I using this to learn or to avoid learning?**
+## Your Role as a Future Developer
 
 ### Ethical AI Use Guidelines
 
@@ -331,14 +298,6 @@ In 2024, Grok (X's AI system) generated content that appeared to adopt Nazi pers
 - ❌ Use AI to complete assignments without understanding
 - ❌ Submit AI-generated work as your own
 - ❌ Rely on AI instead of developing problem-solving skills
-
-**For Environmental Responsibility:**
-
-- ✅ Use AI tools purposefully, not casually
-- ✅ Prefer local tools when possible
-- ✅ Be aware of the computational cost of your queries
-- ❌ Generate endless variations "just to see what happens"
-- ❌ Use AI for tasks that simple tools could handle
 
 ### The New Learning Dynamic: AI + Human Instruction
 
@@ -355,7 +314,7 @@ This means:
 **Red Flags You Can Spot as a Beginner:**
 
 - AI gives you code but can't explain what each line does when you ask
-- The solution looks way more complicated than the examples in your textbook
+- The solution looks way more complicated than other course examples
 - AI suggests something that contradicts what your instructor just taught
 - AI tells you to "just copy this" without helping you understand it
 - The AI's explanation doesn't make sense or seems to contradict itself
@@ -363,16 +322,7 @@ This means:
 
 **When in doubt, ask your instructor!** Part of my job now is helping you develop the judgment to know when AI is helpful vs. when it's misleading you.
 
-**General Red Flags:**
-
-- Confident answers about rapidly changing topics
-- Claims that contradict established scientific consensus
-- Responses that seem designed to confirm your existing beliefs
-- Information without cited sources for verifiable claims
-
-## Wrap-Up & Assessment
-
-### The Bottom Line
+## The Bottom Line
 
 AI is neither the savior nor the destroyer of programming. It's a tool - like calculators, IDEs, or Stack Overflow - that can accelerate learning when used thoughtfully and hinder it when used as a crutch.
 
@@ -385,8 +335,6 @@ Your job as future developers is to:
 3. **Think critically** about AI claims and promises
 4. **Develop strong fundamentals** that don't depend on AI assistance
 
-![And that's the bottom line because I said so GIF|498x278](https://d8n3.c1.e2-8.dev/swic/bottom-line.gif)
-
 ### What's Next?
 
 Now that you have a realistic understanding of AI's place in the development world, you're ready to use it as one tool among many in your learning toolkit. In our upcoming JavaScript lessons, you'll see examples of when AI can be genuinely helpful for learning - and when traditional methods work better.
@@ -395,4 +343,4 @@ Remember: The goal isn't to avoid AI entirely or to use it for everything. The g
 
 ---
 
-_The future belongs to developers who can think critically, solve problems creatively, and use technology - including AI - as a means to an end, not an end in itself._
+_The future belongs to developers who can think critically, solve problems creatively, and use technology—including AI—as a means to an end, not an end in itself._

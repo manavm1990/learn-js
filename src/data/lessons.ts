@@ -101,11 +101,7 @@ const lessons = [
         title: "AI Reality Check: Beyond the Hype",
         description:
           "A balanced look at AI's role in development: separating hype from reality, addressing concerns, and using AI as a learning tool.",
-        video: {
-          duration: 465,
-          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/ai.jpg",
-          url: "https://videos.learnjs.tech/swic/videos/sp26/sp2026-ai.mp4",
-        },
+        video: null,
       },
       {
         id: "how-computers-and-web-work",
