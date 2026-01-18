@@ -104,17 +104,17 @@ const lessons = [
         video: null,
       },
       {
+        id: "terminal-files",
+        title: "Terminal and TXT Files: Your First Steps in Coding",
+        description:
+          "Get comfortable using the terminal and working with plain-text files. Learn essential commands for navigating and managing files in a coding environment.",
+        video: null,
+      },
+      {
         id: "how-computers-and-web-work",
         title: "How Computers and the Web Work",
         description:
           "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
-        video: null,
-      },
-      {
-        id: "terminal-and-txt-files",
-        title: "Terminal and TXT Files: Your First Steps in Coding",
-        description:
-          "Get comfortable using the terminal and working with plain-text files. Learn essential commands for navigating and managing files in a coding environment.",
         video: null,
       },
       {

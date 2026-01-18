@@ -1,0 +1,219 @@
+# Terminal and TXT Files: Your First Steps in Coding
+
+**Time estimate:** 1–1.5 hours
+
+## Introduction
+
+You're about to write your first code—not JavaScript, not HTML—but something far more practical: **terminal commands** and **plain-text files**.
+
+Right now, you just need to know 4 things:
+
+1. **`pwd`** — "Where am I?"
+2. **`cd`** — "Move to a folder"
+3. **`ls`** — "What's in here?"
+4. **`code .`** — "Open this folder in VS Code"
+
+That's it. You'll spend some time practicing these four things until they feel like muscle memory. Once they do, every lesson after this one becomes easier because you'll navigate projects like a real developer.
+
+## Core Concept: The Terminal is Just Another Way to Navigate
+
+You already know how to navigate your computer using the **GUI** (the Graphical User Interface—folders, double-clicks, dragging files). The terminal is just a **text-based way** to do the exact same things.
+
+Compare:
+
+| Action                   | GUI                       | Terminal        |
+| ------------------------ | ------------------------- | --------------- |
+| "Where am I?"            | Look at the folder window | `pwd`           |
+| "What's in this folder?" | See the folder contents   | `ls`            |
+| "Go into that folder"    | Double-click it           | `cd foldername` |
+| "Go back one level"      | Click the back arrow      | `cd ..`         |
+| "Go home"                | Click Home in the sidebar | `cd ~`          |
+
+One is visual. One is text-based. Both do the same job.
+
+## The 4 Commands You Need Right Now
+
+Don't use these just yet. First, read through what each does and why it's useful.
+
+### 1. `pwd` — Print Working Directory
+
+**What it does:** Shows you exactly where you are in your computer's folder structure.
+
+```bash
+pwd
+```
+
+You might see output like:  
+`/Users/yourname/Dev/projects`
+
+This means: "I'm in the `projects` folder, which is inside `Dev`, which is inside `yourname`, which is inside `Users`." It's a **path**—a map to your current location.
+
+**Use case:** Anytime you're unsure where you are, type `pwd`. It's like looking up at a street sign.
+
+### 2. `ls` — List
+
+**What it does:** Shows all the files and folders in your current location.
+
+```bash
+ls
+```
+
+You might see something like:
+
+```
+Desktop
+Documents
+Downloads
+bio.txt
+styles.css
+```
+
+**With flags (the 🏴 way):**
+
+Flags are little options you add to commands. The most useful flag for `ls` is `-l` (lowercase L):
+
+```bash
+ls -l
+```
+
+This shows more detail about each file (size, date modified, permissions). Try it—you'll see the difference immediately.
+
+Another useful flag: `-a` shows **all** files, including hidden ones (files starting with a dot, like `.gitignore`):
+
+```bash
+ls -a
+```
+
+You can combine flags:
+
+```bash
+ls -la
+```
+
+This shows all files with details. Most developers use this a lot.
+
+### 3. `cd` — Change Directory
+
+**What it does:** Moves you into a different folder.
+
+```bash
+cd Dev
+```
+
+Now you're **inside** the `Dev` folder. If you type `pwd`, you'll see your path has changed.
+
+**Special `cd` tricks:**
+
+- `cd ~` — Go to your home folder (where Documents, Downloads, etc. live)
+- `cd ..` — Go **up one level** (to the parent folder)
+- `cd` (just `cd` alone) — Go to home folder (same as `cd ~`)
+- `cd /` — Go to the very root of your computer (rarely needed)
+
+**Pro tip:** Type `cd Dev` then press **Tab**. The terminal will auto-complete. This saves typing and prevents mistakes.
+
+### 4. `code .` — Open in VS Code
+
+**What it does:** Opens the current folder in Visual Studio Code.
+
+```bash
+code .
+```
+
+The dot (`.`) means "the current folder I'm standing in." VS Code will launch and show all the files in that folder.
+
+**This is huge because:**
+
+- You navigate to your project folder using the terminal
+- You open it in VS Code with one command
+- This is how developers work every single day
+
+## Hands-On: Create Your First Project
+
+Open up Warp Terminal.
+
+**Note for Windows Users:** If you hit permission issues in Warp Terminal, switch to GitBash and re-run the command. Warp is great for AI assistance, but GitBash is our backup.
+
+### Step 1: Navigate Home
+
+```bash
+pwd
+```
+
+See where you are. Now go home:
+
+```bash
+cd ~
+```
+
+Verify:
+
+```bash
+pwd
+```
+
+### Step 2: Create a Dev Folder
+
+```bash
+mkdir Dev
+cd Dev
+```
+
+Verify you're in the right place:
+
+```bash
+pwd
+ls
+```
+
+### Step 3: Create a Practice Folder
+
+```bash
+mkdir TXTPractice
+cd TXTPractice
+```
+
+Verify:
+
+```bash
+pwd
+```
+
+### Step 4: Create a Text File
+
+```bash
+touch bio.txt
+```
+
+Check it was created:
+
+```bash
+ls
+```
+
+### Step 5: Open in VS Code
+
+```bash
+code .
+```
+
+VS Code will open showing your folder. You should see `bio.txt` in the file explorer.
+
+### Step 6: Write in Your File
+
+Click `bio.txt` in VS Code and type a few sentences about yourself. Save it with `Cmd + S` (Mac) or `Ctrl + S` (Windows).
+
+### Step 7: Verify from Terminal
+
+Go back to your terminal. You're still in the `TXTPractice` folder. List the files:
+
+```bash
+ls
+```
+
+You should see `bio.txt`. You just created a file, opened it in an editor, wrote to it, and verified it from the terminal. **This is how developers work.**
+
+---
+
+## Key Takeaway
+
+The terminal is just another way to navigate your computer. You've learned the four commands you **need** right now. Everything else builds on top of these four. Keep practicing until they feel natural. By next week, using `pwd`, `cd`, `ls`, and `code .` should feel as automatic as using your mouse.
