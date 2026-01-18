@@ -212,6 +212,94 @@ ls
 
 You should see `bio.txt`. You just created a file, opened it in an editor, wrote to it, and verified it from the terminal. **This is how developers work.**
 
+### Step 8: Create a JavaScript File
+
+Now let's try something new: **JavaScript**. You don't need to understand everything yet—just follow along and run the code. Confusion 😕 is totally okay at this point. 🆗
+
+While you're still in the `TXTPractice` folder in your terminal, create a new file:
+
+```bash
+touch hello.js
+```
+
+**⚠️ FILE EXTENSIONS MATTER!**
+
+Notice the `.js` at the end of the filename. This is a **file extension**—it tells your computer what type of file this is.
+
+- `.txt` = text file
+- `.js` = JavaScript file
+- `.html` = HTML file
+- `.css` = CSS file
+
+The computer and tools like `node` look at the extension to know how to handle the file. If you named it `hello` (no extension), or `hello.txt`, or `hello.jsx`, the `node` command wouldn't recognize it as JavaScript and wouldn't run it the same way.
+
+**Think of it like this:** If you mail a letter in an envelope labeled "FRAGILE," the postal worker handles it carefully. If you don't label it, they treat it like any other package. Extensions are labels.
+
+Check it was created:
+
+```bash
+ls
+```
+
+### Step 9: Write Some JavaScript
+
+Click on `hello.js` in VS Code and write:
+
+```javascript
+// This prints text to the console
+console.log("Hello JS");
+```
+
+Save the file (`Cmd + S` or `Ctrl + S`).
+
+**What's happening here?**
+
+- `console.log()` is a command that prints things
+- Anything inside the parentheses and quotes gets printed
+- We used single quotes (`'`), but double quotes (`"`) work too
+
+### Step 10: Run JavaScript from the Terminal
+
+Go back to your terminal. Make sure you're still in the `TXTPractice` folder (type `pwd` to check). Then run:
+
+```bash
+node hello.js
+```
+
+You should see `Hello JS` printed in your terminal.
+
+**Congratulations!** You just ran real code. This is huge. 🎉
+
+### Step 11: Use a Variable and Template Literal
+
+Now let's level up a tiny bit. Update `hello.js` to:
+
+```javascript
+// Store a name in a variable
+const name = "Alex";
+
+// Use a template literal to build a message
+const message = `Hello, ${name}! Welcome to JavaScript.`;
+
+console.log(message);
+```
+
+Save the file and run it again:
+
+```bash
+node hello.js
+```
+
+You should see `Hello, Alex! Welcome to JavaScript.`
+
+**What just happened?**
+
+- We created a **variable** called `name` and stored a value in it. This uses the computer's memory and lets us reuse that value by assigning it to a name.
+- We used a **template literal** (those backticks: `` ` ``) to combine text with the variable. It's a way to build strings that include variables. It's like 'fill in-the-blank' for text.
+- The `${name}` part says "put the value of name here," rather than the word "name." This will only work inside template literals (the backticks) and will only work if there is something in memory with that variable name.
+
+If this doesn't make 100% sense yet, **that's completely normal**. We'll cover variables and template literals in depth soon. For now, just know that you ran real JavaScript code from the terminal. That's the important part.
+
 ---
 
 ## Key Takeaway
