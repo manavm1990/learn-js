@@ -108,7 +108,12 @@ const lessons = [
         title: "Terminal and TXT Files: Your First Steps in Coding",
         description:
           "Get comfortable using the terminal and working with plain-text files. Learn essential commands for navigating and managing files in a coding environment.",
-        video: null,
+        video: {
+          duration: 171,
+          url: "https://videos.learnjs.tech/swic/videos/sp26/terminal-files.mp4",
+          thumbnail:
+            "https://videos.learnjs.tech/swic/videos/sp26/terminal.jpg",
+        },
       },
       {
         id: "how-computers-and-web-work",
