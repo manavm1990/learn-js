@@ -109,6 +109,25 @@ Now you're **inside** the `Dev` folder. If you type `pwd`, you'll see your path 
 
 **Pro tip:** Type `cd Dev` then press **Tab**. The terminal will auto-complete. This saves typing and prevents mistakes.
 
+#### Understanding `.` and `..`
+
+These two tiny symbols show up everywhere and unlock a lot of power:
+
+- `.` (dot) means “the current folder I’m standing in.”
+	- Examples: `code .` opens your current folder in VS Code; `ls .` lists the current folder (same as `ls`).
+- `..` (dot‑dot) means “the parent folder one level up.”
+	- Examples: `cd ..` moves up one folder; `ls ..` lists the parent folder.
+
+Think of folders like addresses on a street:
+
+- `.` is the house you’re in right now
+- `..` is the house next door behind you (one step back)
+
+You’ll also see these in path references later (HTML/CSS and imports):
+
+- `./hello.js` — a file inside the current folder
+- `../images/logo.png` — a file inside the parent folder’s `images` subfolder
+
 ### 4. `code .` — Open in VS Code
 
 **What it does:** Opens the current folder in Visual Studio Code.
@@ -129,7 +148,7 @@ The dot (`.`) means "the current folder I'm standing in." VS Code will launch an
 
 In this course, we’ll use **Warp** as our main terminal. Warp gives you a modern experience plus built‑in AI help 🤖, and it uses the same Unix‑style commands that professional developers use every day.
 
-If you're on **Windows**, you might be used to **PowerShell** or `cmd.exe`. You _can_ use PowerShell if you really want to—most of the commands we teach (`pwd`, `ls`, `cd`) will still work because PowerShell provides them as aliases. Just know that dome details and options may look a little different than what you see in the lesson.
+If you're on **Windows**, you might be used to **PowerShell** or `cmd.exe`. You _can_ use PowerShell if you really want to—most of the commands we teach (`pwd`, `ls`, `cd`) will still work because PowerShell provides them as aliases. Just know that some details and options may look a little different than what you see in the lesson.
 
 So: **Warp is the recommended default** (best match to the lessons + AI superpowers). PowerShell is there if you insist—but that’s at your own small risk. 🙂
 
@@ -183,6 +202,44 @@ Verify:
 ```bash
 pwd
 ```
+
+### Step 3.5: Walk back home manually (practice `..`)
+
+Now that you’re inside `TXTPractice`, practice moving “up” without shortcuts:
+
+1. Check where you are:
+
+	```bash
+	pwd
+	```
+
+	You should see something like `/Users/yourname/Dev/TXTPractice`.
+
+2. Move up one level into `Dev`:
+
+	```bash
+	cd ..
+	pwd
+	```
+
+	You should now be in `/Users/yourname/Dev`.
+
+3. Move up one more level into your home folder:
+
+	```bash
+	cd ..
+	pwd
+	```
+
+	Stop when you see `/Users/yourname` (your actual name will be there). That’s “home.”
+
+4. Optional: List what’s in your home folder to confirm:
+
+	```bash
+	ls
+	```
+
+The goal here is muscle memory: when you see `..`, think “go up one folder.” We’ll use this often for relative paths later.
 
 ### Step 4: Create a Text File
 
