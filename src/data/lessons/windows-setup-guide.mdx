@@ -28,7 +28,7 @@ The following instructions are specifically for Windows users. Mac users should 
 
 ### Understanding Windows Development Tools
 
-**Command Prompt and PowerShell** serve as Windows' built-in command-line interfaces. Command Prompt represents the legacy interface, while PowerShell offers more advanced capabilities. We will bootstrap with these tools initially, then transition to Warp Terminal for superior development experience.
+**Git Bash and Warp Terminal** will be your primary command-line tools in this course. Windows also includes Command Prompt and PowerShell, but we will not rely on them for day-to-day work. Git Bash (installed with Git for Windows) gives you a Unix-style terminal, and Warp adds a modern interface and integrated AI help.
 
 **Visual Studio Code** functions as a powerful code editor created by Microsoft. It provides syntax highlighting for code readability, integrated terminal access, comprehensive file management, and thousands of extensions for added functionality. The editor serves as your primary workspace for writing and editing code.
 
@@ -60,13 +60,13 @@ Visit the Node.js website at `https://nodejs.org/`. You will see two download op
 
 Run the Node.js installer from your Downloads folder, granting Windows permission when requested. Progress through the installation wizard, accepting the license agreement and keeping the default installation location. On the Custom Setup screen, verify that "Add to PATH" is selected before proceeding.
 
-After installation completes, verify Node.js works correctly. Press Windows key + R to open the Run dialog, type `cmd`, and press Enter. In the command prompt window, type `node --version` and press Enter. You should see a version number like `v20.11.0`. Similarly, verify npm by typing `npm --version`, which should display something like `10.2.4`.
+After installation completes, you'll verify Node.js works correctly from your terminal once Git Bash and/or Warp are set up in later steps. After installing Git in the next step, open **Git Bash** from the Start menu (or **Warp Terminal** if you've already installed it) and run `node --version` and `npm --version`; you should see version numbers such as `v20.11.0` and `10.2.4`.
 
 ### Step 3: Install Git
 
 Download Git from `https://git-scm.com/` by clicking "Download for Windows". This downloads a file like `Git-2.XX.X-64-bit.exe`. Run the installer from your Downloads folder with administrator permission.
 
-The Git installer presents numerous configuration screens. Maintain the default selections for all options except:
+The Git installer presents numerous configuration screens. Maintain the default selections for all options (including installation of **Git Bash**) except:
 
 <Figure
   src="https://d8n3.c1.e2-8.dev/swic/git-editor.png"
@@ -76,7 +76,7 @@ The Git installer presents numerous configuration screens. Maintain the default 
   height={401}
 />
 
-After installation, verify Git functionality by opening a new command prompt and typing `git --version`. You should see output like `git version 2.42.0.windows.1`.
+After installation, verify Git functionality by opening **Git Bash** or **Warp Terminal** and typing `git --version`. You should see output like `git version 2.42.0.windows.1`.
 
 ### Step 4: Install Warp Terminal
 
@@ -86,7 +86,7 @@ When you first open Warp, you'll be prompted to sign up for a Warp account. **Ch
 
 Warp improves upon Command Prompt and PowerShell through its modern interface with tabs, intelligent autocompletion, built-in AI help accessible with the `#` symbol, and superior text rendering. Use Warp as your primary terminal moving forward.
 
-**Note:** If you encounter permission issues when running commands in Warp, try running Warp as administrator by right-clicking its icon and selecting "Run as administrator". Alternatively, keep GitBash installed as a backup terminal (see the "What About GitBash?" section below).
+**Note:** If you encounter permission issues when running commands in Warp, try running Warp as administrator by right-clicking its icon and selecting "Run as administrator". Also keep **Git Bash** (installed with Git for Windows) as a backup terminal in case Warp is unavailable.
 
 **Important Note About PowerShell**: While PowerShell will technically work for most course commands, you will miss significant benefits by not using Warp Terminal. The integrated AI assistance in Warp helps you learn commands, debug errors, and understand what you are doing in real-time. PowerShell users will need to rely on external resources for the same support. Additionally, some course instructions may reference Warp-specific features that PowerShell lacks. We strongly recommend using Warp Terminal to ensure the best learning experience and to stay aligned with course materials.
 
