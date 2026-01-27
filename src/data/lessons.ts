@@ -116,13 +116,6 @@ const lessons = [
         },
       },
       {
-        id: "how-computers-and-web-work",
-        title: "How Computers and the Web Work",
-        description:
-          "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
-        video: null,
-      },
-      {
         id: "learn-md",
         title: "Learn Markdown",
         description:
@@ -132,6 +125,13 @@ const lessons = [
           thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/md.png",
           url: "https://videos.learnjs.tech/swic/videos/sp26/md.mp4",
         },
+      },
+      {
+        id: "how-computers-and-web-work",
+        title: "How Computers and the Web Work",
+        description:
+          "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
+        video: null,
       },
       {
         id: "git-fundamentals",
