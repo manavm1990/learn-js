@@ -127,7 +127,11 @@ const lessons = [
         title: "Learn Markdown",
         description:
           "Master the basics of Markdown syntax for formatting text documents.",
-        video: null,
+        video: {
+          duration: 188,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/md.png",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/md.mp4",
+        },
       },
       {
         id: "git-fundamentals",
