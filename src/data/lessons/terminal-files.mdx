@@ -4,14 +4,15 @@
 
 You're about to write your first code—not JavaScript, not HTML—but something far more practical: **terminal commands** and **plain-text files**.
 
-Right now, you just need to know 4 things:
+Right now, you just need to know 5 things:
 
 1. **`pwd`** — "Where am I?"
 2. **`cd`** — "Move to a folder"
 3. **`ls`** — "What's in here?"
 4. **`code .`** — "Open this folder in VS Code"
+5. **`history`** — "What did I just do?"
 
-That's it. You'll spend some time practicing these four things until they feel like muscle memory. Once they do, every lesson after this one becomes easier because you'll navigate projects like a real developer.
+That's it. You'll spend some time practicing these five things until they feel like muscle memory. Once they do, every lesson after this one becomes easier because you'll navigate projects like a real developer.
 
 ## Core Concept: The Terminal is Just Another Way to Navigate
 
@@ -19,13 +20,14 @@ You already know how to navigate your computer using the **GUI** (the Graphical 
 
 Compare:
 
-| Action                   | GUI                       | Terminal        |
-| ------------------------ | ------------------------- | --------------- |
-| "Where am I?"            | Look at the folder window | `pwd`           |
-| "What's in this folder?" | See the folder contents   | `ls`            |
-| "Go into that folder"    | Double-click it           | `cd foldername` |
-| "Go back one level"      | Click the back arrow      | `cd ..`         |
-| "Go home"                | Click Home in the sidebar | `cd ~`          |
+| Action                   | GUI                          | Terminal        |
+| ------------------------ | ---------------------------- | --------------- |
+| "Where am I?"            | Look at the folder window    | `pwd`           |
+| "What's in this folder?" | See the folder contents      | `ls`            |
+| "Go into that folder"    | Double-click it              | `cd foldername` |
+| "Go back one level"      | Click the back arrow         | `cd ..`         |
+| "Go home"                | Click Home in the sidebar    | `cd ~`          |
+| "What did I type?"       | Look at your browser history | `history`       |
 
 One is visual. One is text-based. Both do the same job.
 
@@ -114,9 +116,9 @@ Now you're **inside** the `Dev` folder. If you type `pwd`, you'll see your path 
 These two tiny symbols show up everywhere and unlock a lot of power:
 
 - `.` (dot) means “the current folder I’m standing in.”
-	- Examples: `code .` opens your current folder in VS Code; `ls .` lists the current folder (same as `ls`).
+  - Examples: `code .` opens your current folder in VS Code; `ls .` lists the current folder (same as `ls`).
 - `..` (dot‑dot) means “the parent folder one level up.”
-	- Examples: `cd ..` moves up one folder; `ls ..` lists the parent folder.
+  - Examples: `cd ..` moves up one folder; `ls ..` lists the parent folder.
 
 Think of folders like addresses on a street:
 
@@ -138,11 +140,27 @@ code .
 
 The dot (`.`) means "the current folder I'm standing in." VS Code will launch and show all the files in that folder.
 
-**This is huge because:**
+### 5. `history` — See What You've Typed
 
-- You navigate to your project folder using the terminal
-- You open it in VS Code with one command
-- This is how developers work every single day
+**What it does:** Shows a list of all the commands you've run in this terminal session.
+
+```bash
+history
+```
+
+You'll see a numbered list of every command you've typed. This is handy when you:
+
+- Want to re-run a command you used 10 steps ago
+- Forgot the exact syntax
+- Want to remember what you did earlier
+
+**Keyboard shortcuts (even faster):**
+
+- **Press the ↑ arrow key** to cycle backwards through recent commands
+- **Press the ↓ arrow key** to cycle forwards
+- **Ctrl + R** (Mac/Linux) or **Cmd + R** (some terminals): Search through history by typing part of a command
+
+**Why it matters**: The terminal never forgets. Every command you type is there if you need it. This takes the fear out of "what was that command I ran?"
 
 ### Quick note about PowerShell and other terminals
 
@@ -209,35 +227,35 @@ Now that you’re inside `TXTPractice`, practice moving “up” without shortcu
 
 1. Check where you are:
 
-	```bash
-	pwd
-	```
+   ```bash
+   pwd
+   ```
 
-	You should see something like `/Users/yourname/Dev/TXTPractice`.
+   You should see something like `/Users/yourname/Dev/TXTPractice`.
 
 2. Move up one level into `Dev`:
 
-	```bash
-	cd ..
-	pwd
-	```
+   ```bash
+   cd ..
+   pwd
+   ```
 
-	You should now be in `/Users/yourname/Dev`.
+   You should now be in `/Users/yourname/Dev`.
 
 3. Move up one more level into your home folder:
 
-	```bash
-	cd ..
-	pwd
-	```
+   ```bash
+   cd ..
+   pwd
+   ```
 
-	Stop when you see `/Users/yourname` (your actual name will be there). That’s “home.”
+   Stop when you see `/Users/yourname` (your actual name will be there). That’s “home.”
 
-4. Optional: List what’s in your home folder to confirm:
+4. List what’s in your home folder to confirm:
 
-	```bash
-	ls
-	```
+   ```bash
+   ls
+   ```
 
 The goal here is muscle memory: when you see `..`, think “go up one folder.” We’ll use this often for relative paths later.
 
