@@ -123,10 +123,10 @@ const lessons = [
         video: null,
       },
       {
-        id: "terminal-fundamentals",
-        title: "Terminal Fundamentals",
+        id: "learn-md",
+        title: "Learn Markdown",
         description:
-          "Learn the basics of using the terminal, including navigation, file manipulation, and command execution.",
+          "Master the basics of Markdown syntax for formatting text documents.",
         video: null,
       },
       {
@@ -134,13 +134,6 @@ const lessons = [
         title: "Git Fundamentals",
         description:
           "Learn Git workflow with text files and how to write meaningful commit messages from day one.",
-        video: null,
-      },
-      {
-        id: "learn-md",
-        title: "Learn Markdown",
-        description:
-          "Master the basics of Markdown syntax for formatting text documents.",
         video: null,
       },
       {

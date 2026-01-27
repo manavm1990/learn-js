@@ -10,6 +10,68 @@ Markdown is a lightweight markup language that you can use to add formatting ele
 
 You will quickly notice that this is like a light 🚨 version of HTML. The difference is that this cannot be rendered directly with a browser. Instead we need a markdown renderer. In addition, the styles 💄 are generally set by the aforementioned rendered. Summarily, this is a great tool for creating structured documents without the complexity of traditional word processors or HTML/CSS 💄.
 
+## What Markdown Isn't
+
+Before we go further, it helps to know what Markdown is NOT:
+
+- It is not HTML. Browsers do not understand `.md` files the way they understand `.html` files.
+- It is not a programming language. Markdown has no logic or variables—it's just text with simple formatting rules.
+- It is not a WYSIWYG (What You See Is What You Get) document like Google Docs. You write plain text and a renderer turns it into styled output.
+- It does not load in a browser by itself. If you open a `.md` file in a browser, you'll typically just see plain text unless a site has a Markdown renderer (for example, GitHub does).
+
+Think of Markdown as “nicely formatted notes” that become pretty only after a helper tool converts them.
+
+## File extensions: `.txt` vs `.md` vs `.html`
+
+File extensions tell computers and browsers how to treat a file:
+
+- `.txt` — Plain text. No formatting rules. A browser or text editor shows the text exactly as written.
+- `.md` — Markdown text. Still plain text, but with special symbols (like `#`, `*`, `[ ]`) that a Markdown renderer can turn into headings, lists, and links.
+- `.html` — HyperText Markup Language. Browsers natively understand and render HTML, applying structure and styles.
+
+Practical differences:
+
+- Double-clicking `notes.txt` opens a text viewer. No styling.
+- Double-clicking `readme.md` opens a text viewer (or a specialized app). In a browser without a renderer, it looks like plain text. On GitHub, it looks styled because GitHub renders it for you.
+- Double-clicking `index.html` opens in your browser and renders with headings, paragraphs, images, etc., because browsers speak HTML.
+
+### Quick experiment
+
+Try this to make the differences crystal clear:
+
+1. Create three files on your desktop or wherever you like. You can just use the GUI (right-click → New File) or a text editor. Name them:
+
+- `sample.txt` with the text: `# Hello`
+- `sample.md` with the text: `# Hello`
+- `sample.html` with the text:
+  ```html
+  <h1>Hello</h1>
+  ```
+
+2. Open each file:
+
+- `sample.txt` and `sample.md` will look almost the same in a plain text viewer.
+- `sample.html` will show a big “Hello” heading when opened in a browser.
+
+3. Create a Markdown Gist:
+   - Go to https://gist.github.com/.
+   - Paste `# Hello` as the content.
+   - In “Filename including extension,” name it `sample.md` — the `.md` extension tells GitHub to render Markdown.
+   - As soon as you add the `.md` extension, you’ll see a tab that offers a preview of the rendered Markdown.
+   - Click “Create secret gist” or “Create public gist.”
+   - You’ll see a styled heading because GitHub renders Markdown for `.md` files in Gists.
+   - Reference: Creating a gist [GitHub Docs](https://docs.github.com/en/get-started/writing-on-github/editing-and-sharing-content-with-gists/creating-gists#creating-a-gist)
+
+<Figure
+  src="https://d8n3.c1.e2-8.dev/swic/gist-md.png"
+  alt="GitHub Gist of a Markdown file"
+  width={292}
+  height={150}
+  caption="MUST use .md extension to get rendered Markdown in GitHub Gist"
+/>
+
+As you can see, the file extension plays a crucial role in how content is interpreted and displayed. In the MD file, the `#` symbol is recognized as a header indicator, while in the TXT file, it is treated as plain text. With that, since you now understand the importance of file extensions, let's move on to some basic Markdown syntax!
+
 ## Basic Syntax
 
 Here are some common Markdown syntax elements:
@@ -38,8 +100,8 @@ _Italic_ or _Italic_
 
 ### Lists
 
-- **Unordered lists**: Use asterisks, plus signs, or hyphens.
-- **Ordered lists**: Use numbers followed by periods.
+- **Unordered lists**: Use asterisks, plus signs, or hyphens. **Hot ♨️ tip:** You can indent subitems with two spaces or a tab!
+- **Ordered lists**: Use numbers followed by periods. **Hot ♨️ tip:** You can number everything with `1.` and Markdown will auto-number it for you!
 
 ```markdown
 - Item 1
@@ -59,6 +121,8 @@ Create links using the following syntax:
 [Link text](URL)
 ```
 
+Example: `[Google](https://google.com)` becomes [Google](https://google.com)
+
 ### Images
 
 Images are similar to links but with an exclamation mark in front:
@@ -67,6 +131,41 @@ Images are similar to links but with an exclamation mark in front:
 ![Alt text](Image URL)
 ```
 
+Example: `![Cat photo](https://example.com/cat.jpg)`
+
+### Code
+
+You can show code inline or in blocks:
+
+- **Inline code**: Wrap text in single backticks: `` `code here` ``
+- **Code blocks**: Use three backticks before and after:
+
+````markdown
+```
+const greeting = "Hello, world!";
+```
+````
+
+**Pro tip**: Add a language name after the opening backticks for syntax highlighting:
+
+````markdown
+```javascript
+const greeting = "Hello, world!";
+```
+````
+
+### Blockquotes
+
+Use `>` to create a blockquote:
+
+```markdown
+> This is a quote.
+```
+
+Renders as:
+
+> This is a quote.
+
 ## Common Mistakes
 
 Here are some common mistakes to avoid when using Markdown:
@@ -74,51 +173,24 @@ Here are some common mistakes to avoid when using Markdown:
 1. **Forgetting to close emphasis tags**: Ensure you close your italic or bold tags correctly. For example, use `_italic_` instead of `_italic`.
 2. **Incorrectly formatting lists**: Be consistent with your list formatting. Mixing ordered and unordered lists can lead to confusion.
 3. **Not using the correct file extension**: Always save your Markdown files with the `.md` extension to ensure proper rendering.
-4. **Using unsupported syntax**: Some platforms may not support all Markdown features. Always check the platform's documentation for supported syntax.
+4. **Missing blank lines**: Many Markdown renderers need blank lines before and after headings, lists, and code blocks. When in doubt, add a blank line!
 
-## Conclusion
+## Preview Your Markdown
 
-Markdown is a powerful tool for creating formatted text using a plain-text editor. By mastering its syntax, you can create well-structured documents quickly and easily.
+Since browsers don't render `.md` files directly, you need a tool to preview your work:
 
-## HW: Learn Markdown
+- **GitHub Gist**: Automatically previews `.md` files (as you saw in the experiment above)
+- **VS Code**: Built-in Markdown preview (right-click a `.md` file → "Open Preview")
+- **Dillinger**: Online editor with live preview at [dillinger.io](https://dillinger.io/)
+- **Notion**: Supports Markdown shortcuts
+- **Google Docs**: [Can enable Markdown](https://support.google.com/docs/answer/12014036?hl=en)
 
-Complete [Markdown Tutorial.](https://www.markdowntutorial.com/) Note that this actually goes a bit more in depth than we do here, but it is a good resource to learn the basics.
+**Why so many tools?** Different developers prefer different workflows. Some like online tools (Gist, Dillinger), while others prefer working locally (VS Code). Try a few and see what fits your style!
 
-Take a screenshot of your completion screen.
-
-## HW: Markdown Reflection
-
-You will now demonstrate what you have learned by creating a GitHub Markdown Gist. It's easy to do. Start by heading over to [GitHub Gist](https://gist.github.com/) and creating a new Gist.
-
-<Figure
-  src="https://d8n3.c1.e2-8.dev/swic/gist-md.png"
-  alt="Gist MD file"
-  width={966}
-  height={496}
-  caption="Let Gist know that is a MD file by adding a filename with a '.md' extension"
-/>
-
-**Note:** If you didn't before, you now start to realize how important file extensions are. In the case of Markdown files, using the `.md` extension is crucial for proper rendering and recognition by various tools and platforms.
-
-From here, go back to the TXT HW reflections that you wrote previously. Rewrite them as well-formatted markdown documents, using as many of the features you learned about as possible. You can also add images if you like.
-
-When you are done, save the Gist as shown below:
-
-![Create Secret Gist|606x262](https://d8n3.c1.e2-8.dev/swic/save-gist.png)
-
-Then, share the gist 🔗:
-
-<Figure
-  src="https://d8n3.c1.e2-8.dev/swic/share-gist.png"
-  alt="Gist MD file"
-  width={614}
-  height={338}
-  caption="Be sure to set this to use a 'Share' link - not 'Embed!'"
-/>
-
-That 🔗 will be your HW submission.
+---
 
 ### Additional Resources
 
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 - [Dillinger](https://dillinger.io/) - Feel free to use this in addition to or as a replacement for GitHub Gist for creating and previewing your Markdown files
+- [VS Code Markdown Preview](https://code.visualstudio.com/docs/languages/markdown#_markdown-preview)
