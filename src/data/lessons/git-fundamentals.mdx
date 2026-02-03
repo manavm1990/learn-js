@@ -1,78 +1,69 @@
 # Git Fundamentals
 
-Learn Git workflow with text files and how to write meaningful commit messages from day one.
+Master local Git workflow with text files: track changes, write clear commit messages, and never lose work again.
 
 ## Introduction
 
 ### Why Git Changes Everything
 
-**Real-world scenario**: After finishing my studies at SWIC, I embarked on an internship project for the City of Columbia. At that time, I had no idea what I was doing, and there was little technical support available. I often found myself creating a new folder for each small feature I developed, leading to 40-50 different copies of the same project. When a feature broke, I had to manually compare files to identify what had changed.
+**Real-world scenario**: After finishing my studies at SWIC, I started an internship with the City of Columbia. I had no idea what I was doing. For every new feature, I created a new folder: `project-v1`, `project-v2`, `project-final`, `project-ACTUALLY-final`. I ended up with 40-50 copies of the same project. When something broke, I had to manually compare files to figure out what changed.
 
-It was only after this experience that I learned about Git. Unfortunately, it was never taught in my courses at SWIC, and I want to ensure that future students do not miss out on this essential tool. The positive feedback I receive from learners who find jobs due to their understanding of Git reinforces its importance, especially since many entry-level positions require this knowledge.
+Then I learned about Git. It solved everything. One folder. Complete history. No more chaos.
 
-Learning Git not only helps prevent the chaos I experienced but also equips students with a vital skill that is highly valued in the job market.
+This is why I teach Git from day one. Entry-level jobs require it, and it saves you from the nightmare I experienced.
 
 ### The Cost of Not Using Git
 
-Without Git, developers face:
+Without Git:
 
-- **Lost work**: One wrong save can destroy hours of effort
-- **Collaboration chaos**: "final_v2_REALLY_FINAL_fixed.html"
-- **No accountability**: Who changed what? When? Why?
-- **Fear of experimentation**: Scared to try new things because you might break working code, or you have to make 50 copies of your project and then try to backtrack manually 😓
+- **Lost work**: One wrong save destroys hours of effort
+- **File chaos**: `final_v2_REALLY_FINAL_fixed.html`
+- **No history**: Who changed what? When? Why?
+- **Fear of trying new things**: Scared to experiment because you might break working code
 
-With Git, you gain:
+With Git:
 
 - **Confidence**: Every change is tracked and reversible
-- **Professional credibility**: Required skill for any programming job
+- **Professional credibility**: Required for any programming job
 - **Clear history**: See exactly what changed and why
-- **Safe experimentation**: Try new features without breaking what works
+- **Safe experimentation**: Try new ideas without breaking what works
 
 ### What You'll Learn Today
 
-- What Git is and why developers can't live without it
-- How to set up Git with your identity
-- Basic Git workflow: add, commit, status, log
-- How to write commit messages that don't make your future self angry
-- Practicing with text files before moving to code
+- Configure Git with your identity (do this once, done). **Note:** You probably already did this.
+- Create a Git repository and track changes
+- Essential Git commands: `status`, `add`, `commit`, `log`
+- Write commit messages that make sense
+- Use `diff` to see changes and `restore` to undo mistakes
 
 ### What Success Looks Like
 
-By the end of this lesson, you'll have a Git repository with at least 5 commits, each with a clear message describing what changed. Your `git log --oneline` will tell a story of your learning progress, and you'll be able to navigate your project's history with confidence.
+By the end of this lesson, you'll have a Git repository tracking a text file with clear commit messages. Your `git log` will tell the story of your work. You'll understand how to save progress and undo mistakes.
 
 ## Core Concept Overview
 
 ### What is Git?
 
-Git is a Version Control System (VCS) - think of it like "Track Changes" in Microsoft Word or Google Docs version history, but with much more control and designed for any type of file.
+Git is version control for any file. Think of it like Track Changes in Word, but designed for developers.
 
 **Think of Git like**:
 
-- **Photo album**: Each commit is a snapshot of your project at a point in time
-- **Save game**: You can always go back to any previous "save point"
-- **Time machine**: See what your project looked like days, weeks, or months ago
+- **Photo album**: Each commit is a snapshot of your project
+- **Save game**: Go back to any previous save point
+- **Time machine**: See your project from days or weeks ago
 
 ### Key Git Concepts
 
 **Repository (Repo)**:
-
-- A folder that Git is tracking
-- Contains your files plus Git's tracking information
-- Can be local (on your computer) or remote (on GitHub)
+A folder that Git is tracking. Contains your files plus Git's history.
 
 **Staging Area**:
-
-- A "waiting room" for changes before they become commits
-- You choose which changes to include in each commit
-- Gives you control over what gets saved together
+A "waiting room" for changes before they become commits. You choose what to save together.
 
 **Commit**:
+A snapshot of your project at a specific moment with a message describing what changed.
 
-- A snapshot of your project at a specific moment
-- Like taking a photo of all your files at once
-- Includes a message describing what changed
-
-Think of the staging area like packing a moving box. You don't throw everything into the box at once - you carefully select which items belong together. Maybe all kitchen items go in one box (one commit), while bedroom items go in another (separate commit). The staging area lets you organize related changes before permanently saving them.
+Think of the staging area like packing a moving box. You don't throw everything in at once—you carefully select what belongs together. All kitchen items in one box (one commit), bedroom items in another (separate commit). The staging area lets you organize related changes before saving them permanently.
 
 ### The Basic Git Workflow
 
@@ -81,520 +72,419 @@ Working Directory → Staging Area → Repository
      (edit)          (git add)     (git commit)
 ```
 
-This is what happens:
+1. Edit files in your **working directory**
+2. Select changes with **git add** → moves to staging
+3. Save permanently with **git commit** → stored in repository
 
-1. You edit files in your **working directory**
-2. You select changes with **git add** → moves to staging
-3. You save permanently with **git commit** → stored in repository
-
-Here's a concrete example with a todo.txt file:
+Example with a text file:
 
 ```
-Working Directory: todo.txt has "- [ ] Learn Git" → "- [x] Learn Git"
-                   (file is modified but Git hasn't been told)
+Working Directory: notes.txt has new text added
+                   (modified but Git doesn't know yet)
 
-Staging Area:      git add todo.txt
-                   (change is staged, ready to commit)
+Staging Area:      git add notes.txt
+                   (change is ready to commit)
 
-Repository:        git commit -m "Check off Git learning goal"
-                   (change is permanently saved in history)
+Repository:        git commit -m "Add notes about Git workflow"
+                   (change is saved in history forever)
 ```
-
-This workflow becomes second nature after practice.
-
-### Important Understanding: Git is Local
-
-Everything we're doing with Git right now is completely local to your computer. These commits exist only on your machine. GitHub (which we'll learn later) is where you'll share these commits with the world. Think of it like writing in a private journal (local Git) versus publishing a blog post (pushing to GitHub).
 
 ## Hands-On Application
 
-### Step 1: Configure Git Identity
+### Step 1: Configure Git (Do This Once)
 
-Before using Git, you need to tell it who you are. This information appears in every commit you make.
+Run `git config --global --list` to see if you've already set your name and email. If you see them listed, skip to Step 2.
 
-1. **Open Warp Terminal**:
-   - Press `Cmd + Space` (Mac) or Windows key, type "Warp", press Enter
+Before using Git, tell it who you are. This information appears in every commit.
 
-2. **Set your name**:
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+```
 
-   ```bash
-   git config --global user.name "Your Full Name"
-   ```
+**Why?** Every commit records who made it. This is essential for team projects and your own history.
 
-   Replace "Your Full Name" with your actual name in quotes.
+**Use your school email** to get the [GitHub Student Developer Pack](https://education.github.com/pack) with free tools worth hundreds of dollars, including GitHub Copilot. You can always add personal emails later or update your config after graduation.
 
-3. **Set your email**:
+Verify your settings:
 
-   ```bash
-   git config --global user.email "your.school@email.edu"
-   ```
+```bash
+git config --global --list
+```
 
-   Use your school email address - this unlocks GitHub education benefits.
+You should see your name and email. **Done.** You never have to do this again on this computer.
 
-   Note: You can add multiple emails to your GitHub account later, or change this with the same command using a different email.
+### Step 2: Terminal Review (Quick Refresher)
 
-4. **Important: Set VS Code as your default editor** (this prevents VIM from opening):
+Before we start Git, let's review the commands you learned in [Terminal and TXT Files](/terminal-files):
 
-   ```bash
-   git config --global core.editor "code --wait"
-   ```
+```bash
+pwd                 # Where am I?
+ls                  # What's in here?
+cd foldername       # Go into that folder
+mkdir foldername    # Create a folder
+touch filename.txt  # Create a file
+code .              # Open current folder in VS Code
+```
 
-   This ensures Git uses VS Code instead of VIM for any text editing needs.
+Remember: `.` means "current folder" and `..` means "parent folder one level up."
 
-5. **Verify your settings**:
+### Step 3: Create Your Git Project
 
-   ```bash
-   git config --global --list
-   ```
+Navigate to your `Dev` folder:
 
-   You should see your name, email, and editor settings in the output.
+```bash
+cd ~/Dev
+```
 
-**Note about VIM**: If you ever accidentally end up in VIM (you'll see a scary text editor with `~` symbols), don't panic (OK, maybe just a little)! Press `Esc` then type `:q!` and press Enter to exit without saving. But with the VS Code setting above, this shouldn't happen.
+Create a new project folder:
 
-**💡 Pro Tip**: Using your school email gives you access to the GitHub Student Developer Pack with free tools worth hundreds of dollars, including GitHub Copilot. You can always add personal emails to your GitHub account or update your Git config later when you graduate.
+```bash
+mkdir git-practice
+cd git-practice
+```
 
-### Step 2: Create Your First Git Repository
+Verify you're in the right place:
 
-We'll start with text files to learn Git concepts before moving to code.
+```bash
+pwd
+```
 
-1. **Navigate to your Code folder**:
+Should show something like `/Users/yourname/Dev/git-practice`.
 
-   ```bash
-   cd ~/Code        # Mac
-   ```
+### Step 4: Initialize Git Repository
 
-2. **Create a new folder for Git practice**:
+Turn this folder into a Git repository:
 
-   ```bash
-   mkdir git-practice
-   cd git-practice
-   ```
+```bash
+git init
+```
 
-3. **Initialize Git repository**:
+You should see: `Initialized empty Git repository in /Users/yourname/Code/git-practice/.git/`
 
-   ```bash
-   git init
-   ```
+**What just happened?** Git created a hidden `.git` folder that stores all your history.
 
-   You should see: "Initialized empty Git repository"
+Check with `ls`:
 
-   **Note:** Ordinarily, we will not be starting with a Git repository from scratch. You would normally clone an existing repository, but that comes later.
+```bash
+ls
+```
 
-4. **Check the status** (you'll use this command constantly):
+You won't see anything because the folder is empty. But try this:
 
-   ```bash
-   git status
-   ```
+```bash
+ls -a
+```
 
-   This shows what Git sees in your folder.
+**Remember flags 🏴 from the terminal lesson?** The `-a` flag means "all"—it shows hidden files (files starting with a dot). You should see `.git` in the list.
 
-   **Why git status matters**: Running `git status` is like checking your GPS while driving - it tells you exactly where you are and what your next move should be. Professional developers run this command obsessively because it prevents mistakes before they happen.
+**Your terminal prompt changed too!** It now shows your branch name (usually `main` or `master`). This tells you you're inside a Git repository.
 
-### Step 3: Practice with Text Files
+### Step 5: Check Git Status
 
-Let's learn Git with simple text files first.
-
-1. **Create a README MarkDown file**:
-
-   You can do this with the `touch` command: `touch README.md`. Alternatively, you can open up VS Code with `code .` and create the file there.
-
-   Create the file in VS Code with this content:
-
-   ```
-   My First Git Repository
-
-   This is where I'm learning Git fundamentals.
-   ```
-
-   Remember to open VS Code with `code .` from your 'git-practice' folder.
-
-2. **Check Git status**:
-
-   ```bash
-   git status
-   ```
-
-   You'll see README.txt listed as "untracked file"
-
-3. **Add the file to staging area**:
-
-   ```bash
-   git add README.md
-   ```
-
-4. **Check status again**:
-
-   ```bash
-   git status
-   ```
-
-   Now README.txt shows as "Changes to be committed"
-
-5. **Make your first commit**:
-
-   ```bash
-   git commit -m "Add README file with project description"
-   ```
-
-Congratulations! You've made your first Git commit.
-
-### Step 4: Practice the Git Workflow
-
-Let's practice the add-commit cycle with more changes.
-
-1. **Create a to-do list file** (`todo.txt`):
-
-   ```
-   My Learning Goals:
-   - [ ] Learn Git basics
-   - [ ] Practice meaningful commit messages
-   - [ ] Set up first repository
-   - [ ] Understand staging area
-   ```
-
-2. **Add and commit the new file**:
-
-   ```bash
-   git add todo.txt
-   git commit -m "Add learning goals todo list"
-   ```
-
-3. **Update your todo list** - check off completed items:
-
-   ```
-   My Learning Goals:
-   - [x] Learn Git basics
-   - [x] Practice meaningful commit messages
-   - [x] Set up first repository
-   - [x] Understand staging area
-   ```
-
-4. **Stage and commit the changes**:
-
-   ```bash
-   git add todo.txt
-   git commit -m "Mark completed learning goals as done"
-   ```
-
-5. **View your commit history**:
-
-   ```bash
-   git log --oneline
-   ```
-
-   You'll see all your commits with their messages. Fun fact: I just learned about `--oneline`!
-
-### Step 5: Writing Good Commit Messages
-
-In professional settings, your Git history becomes your development diary. Colleagues read your commit messages to understand what changed and why. Good Git habits now mean smoother code reviews and faster onboarding at your first job.
-
-**Bad commit messages**:
-
-- "fix"
-- "update"
-- "changes"
-- "asdfgh"
-
-**Good commit messages**:
-
-- "Add user authentication to login form"
-- "Fix navigation menu not closing on mobile"
-- "Update README with installation instructions"
-- "Remove unused CSS styles from homepage"
-
-#### Commit Message Formula
-
-**Format**: `[Action] [what you did]`
-
-Use present tense imperative mood (like giving a command):
-
-- ✅ "Add contact form"
-- ❌ "Added contact form"
-- ❌ "Adding contact form"
-
-**Examples**:
-
-- `Add contact form to homepage`
-- `Fix broken link in navigation menu`
-- `Update Node.js version requirements`
-- `Remove deprecated API calls`
-
-### Practice Scenario: The Breaking Change
-
-Let's see how Git saves you from disaster:
-
-1. **Create a file** called `important.txt`:
-
-   ```
-   This is very important information.
-   Do not lose this data!
-   It took hours to write.
-   ```
-
-2. **Commit it**:
-
-   ```bash
-   git add important.txt
-   git commit -m "Add important documentation"
-   ```
-
-   If you see "nothing to commit," make sure you saved the file first!
-
-3. **"Accidentally" mess up the file** - edit `important.txt` to just say:
-
-   ```
-   oops
-   ```
-
-   **⚠️ IMPORTANT: Save the file!**
-   - In VS Code: Press `Cmd+S` (Mac) or `Ctrl+S` (Windows)
-   - Or use File → Save from the menu
-   - You'll know it's saved when the white dot next to the filename disappears
-
-4. **See what you broke**:
-
-   ```bash
-   git diff
-   ```
-
-   You should see red lines (deleted text) and green lines (added text) showing your changes.
-
-   **Not seeing anything?** Make sure you:
-   - Saved the file after changing it
-   - Are in the right directory (`pwd` to check)
-   - Actually changed the content (not just opened and closed the file)
-
-5. **Restore the file** (this is the magic!):
-
-   ```bash
-   git restore important.txt
-   ```
-
-   This command restores the file to its last committed state.
-
-   **Note:** You might see older tutorials use git checkout -- important.txt - this does the same thing, but git restore is the modern, clearer command designed specifically for restoring files.
-
-6. **Verify it's restored**:
-
-   ```bash
-   cat important.txt
-   ```
-
-   You should see your original three lines of text back!
-
-You just saved yourself from a fake disaster! Now imagine this was 100 lines of carefully crafted code that took you three hours to write. Without Git, you'd be frantically trying to remember what you typed. With Git, recovery takes seconds. This scenario happens more often than you'd think - maybe you delete the wrong section, your cat walks across your keyboard, or you accidentally paste something over your work.
-
-### Troubleshooting This Exercise
-
-- **`git diff` shows nothing**: You need to save the file after editing! The file must be saved for Git to see changes.
-- **`git restore` didn't work**: Make sure the file was committed first (step 2) and that you saved your "oops" change.
-- **Can't see file contents**: Use `cat important.txt` in Warp Terminal to display the file contents. If it says "No such file or directory," double-check your spelling and current directory.
-
-### Terminal Tips for Git with Warp
-
-- **Use Warp AI**: Type `#` followed by what you want to do
-  - Example: `#how do I see what files changed`
-- **Don't memorize**: Use `git status` constantly to see what's happening
-- **Tab completion**: Type first few letters, press Tab
-- **Arrow keys**: Press ↑ to repeat previous commands
-- **Clear screen**: Type `clear` when terminal gets cluttered
-
-### Common Beginner Issues
-
-#### "Nothing to commit" message
+This is the command you'll use constantly:
 
 ```bash
 git status
-# Shows if you have changes to commit
-# If clean, make some changes first!
 ```
 
-#### Forgot to add files before committing
+You should see:
 
-If you forgot to include a file in your last commit, don't worry - just add it to your next commit. Each commit tells part of the story, and it's perfectly fine to have multiple small commits.
+```
+On branch main
+No commits yet
+nothing to commit (create/copy files and use "git add" to track)
+```
 
-#### Want to see what changed
+This is Git saying: "I'm ready, but you haven't given me anything to track yet."
+
+### Step 6: Create and Track a Text File
+
+Create a file:
 
 ```bash
-git diff              # See unstaged changes
-git diff --staged     # See staged changes
-git show              # See last commit changes
+touch learning.txt
 ```
 
-#### Accidentally in VIM editor
-
-If you ever see a screen full of `~` symbols:
-
-1. Press `Esc`
-2. Type `:q!`
-3. Press `Enter`
-4. Run `git config --global core.editor "code --wait"` to prevent this
-
-#### Windows Git Issues
-
-If Windows says Git isn't recognized as a command, refer back to the [Windows Setup Guide](/windows-setup-guide) for troubleshooting steps.
-
-### Git Myths - Don't Believe These!
-
-- **Myth**: "Git will delete my files" - Git never deletes files unless you explicitly tell it to
-- **Myth**: "You can break Git by committing too much" - More commits are better than fewer
-- **Myth**: "Professional developers memorize all Git commands" - Everyone googles Git commands, even senior developers
-- **Myth**: "Git is only for team projects" - Solo developers benefit just as much from version control
-
-### Best Practices for Git
-
-#### Commit frequency:
-
-- **Commit often**: Multiple times per coding session
-- **Logical chunks**: Group related changes
-- **Working state**: Don't commit broken code
-- **Before breaks**: Always commit before stopping work
-
-Fun Fact: I learned Git from Dave McFarland. He said to, "Commit early! Commit often!"
-
-#### Essential commands to master:
+Open VS Code:
 
 ```bash
-git status          # Check current state (use constantly!)
-git add [file]      # Stage specific file
-git add .           # Stage all changes (use carefully)
-git commit -m "msg" # Commit with message
-git log --oneline   # View commit history
-git diff            # See what changed
+code .
 ```
 
-## Understanding Git vs. GitHub
+Click `learning.txt` and write a few sentences about what you're learning. Save it (`Cmd + S` or `Ctrl + S`).
 
-### What is Git?
-
-Git is a distributed version control system that allows developers to track changes in their code, collaborate with others, and manage project history. It operates locally on your machine, enabling you to work offline and commit changes without needing an internet connection.
-
-### What is GitHub?
-
-GitHub is a cloud-based platform that hosts Git repositories. It provides a web interface for managing Git repositories, facilitating collaboration among developers, and offering features like issue tracking, pull requests, and project management tools. GitHub allows you to share your Git repositories with others and collaborate on projects.
-
-In practice, GitHub also feels like a "social layer" for code: developers have profiles, can follow each other, star repositories, and discover projects. This is why you'll sometimes hear it described informally as "social media for programmers," even though its core purpose is hosting Git repositories and enabling collaboration.
-
-### Relationship Between Git and GitHub
-
-- **Git** is the tool that manages version control.
-- **GitHub** is a service that hosts Git repositories and provides additional collaboration features.
-- You can use Git without GitHub, but GitHub enhances the collaborative experience by allowing multiple developers to work together seamlessly.
-
-## Git Integration into VS Code
-
-Visual Studio Code (VS Code) has built-in support for Git, making it easy to manage your repositories directly from the editor. Here’s how Git integrates into VS Code:
-
-1. **Source Control View**: Access the Source Control view by clicking on the Source Control icon in the Activity Bar. This view shows your changes, staged files, and commit history.
-
-2. **Staging Changes**: You can stage changes by clicking the "+" icon next to modified files or using the context menu.
-
-3. **Committing Changes**: Enter a commit message in the input box at the top of the Source Control view and click the checkmark icon to commit your changes.
-
-4. **Viewing History**: Use the built-in Git history feature to view your commit history and see changes over time.
-
-5. **Branch Management**: Create, switch, and manage branches directly from VS Code, allowing you to work on features or fixes in isolation.
-
-6. **Extensions**: Enhance your Git experience with extensions like GitLens, which provides additional insights into your repository's history and contributions.
-
-By integrating Git into VS Code, you can streamline your development workflow and manage version control without leaving your coding environment.
-
-## Wrap-Up & Assessment
-
-### Key Takeaways
-
-1. **Git tracks every change** you make to your files
-2. **Staging area gives control** over what goes in each commit
-3. **Good commit messages** help your future self and teammates
-4. **Commit frequently** with logical, working chunks
-5. **Git is essential** for any programming career
-
-### HW: Three-Stage Git Practice
-
-**Stage 1: Interactive Learning**
-
-- Complete Level 1-1 at [Learn Git Branching](https://learngitbranching.js.org/)
-- Take a screenshot showing your completion
-
-<Figure
-  src="https://d8n3.c1.e2-8.dev/swic/learn-git-1-1.png"
-  alt="A visual overview of Git"
-  width={842}
-  height={256}
-  caption="You only need to do number 1️⃣ here."
-/>
-
-**Stage 2: Local Practice**
-
-- Create a new folder called `git-journal`
-- Initialize it as a Git repository
-- Create at least 5 commits with different types of changes:
-  - Add a new file
-  - Modify an existing file
-  - Add multiple files in one commit
-  - Make multiple changes to the same file across different commits
-- Each commit message must follow the imperative format
-- Submit screenshot of `git log --oneline` showing your commit history
-
-**Stage 3: Reflection**
-
-- Write a paragraph about what clicked for you with Git
-- Identify one thing that's still confusing
-- Describe how you might use Git for a personal project
-
-**Success Criteria**:
-
-- [ ] All commands execute without errors
-- [ ] Commit messages follow the imperative format
-- [ ] Screenshots clearly show terminal output
-- [ ] Demonstrate understanding of staging vs committing
-- [ ] Show progression through multiple commits
-
-### HW: Quick Assessment Reflection 🪞
-
-Review this quiz. Then, open up any text editor and write down your thoughts on each question. Expand on the correct answers and reflect on your own learning process. Explain why the other answers are wrong. Add in any personal analogies or insights from your own learning journey.
-
-**Test your understanding**:
-
-1. **What's the difference between staging and committing?**
-   - Answer: Staging selects changes for the next commit; committing saves those changes permanently
-
-2. **Which is a better commit message?**
-   - a) "Fixed stuff"
-   - b) "Fix login button not responding on mobile"
-   - Answer: b) - it's specific and uses imperative mood
-
-3. **When should you run `git status`?**
-   - Answer: Constantly! Before and after every Git operation to understand what's happening
-
-### Command Quick Reference
+Go back to your terminal and check status:
 
 ```bash
-# Setup (one time)
-git config --global user.name "Your Name"
-git config --global user.email "your.school@email.edu"
-git config --global core.editor "code --wait"
-
-# Daily workflow
-git status                  # Check current state
-git add [file]              # Stage specific file
-git add .                   # Stage all changes
-git commit -m "message"     # Commit staged changes
-git log --oneline           # View commit history
-
-# Seeing changes
-git diff                    # Unstaged changes
-git diff --staged           # Staged changes
-git show                    # Last commit details
-
-# Restoring files (modern commands)
-git restore [file]          # Restore file to last committed state
-git restore --staged [file] # Unstage file (move from staging back to working)
-
-# Legacy commands (you might see in older tutorials)
-git checkout -- [file]     # Old way to restore (use git restore instead)
-git reset HEAD [file]      # Old way to unstage (use git restore --staged instead)
-
-# Emergency exit from VIM
-# Press Esc, then type :q! and press Enter
+git status
 ```
+
+You should see:
+
+```
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        learning.txt
+```
+
+Git sees the file but isn't tracking it yet.
+
+### Step 7: Stage the File
+
+Add the file to the staging area:
+
+```bash
+git add learning.txt
+```
+
+**Important**: We're adding the file by name. No shortcuts. You need to understand what you're adding.
+
+Check status again:
+
+```bash
+git status
+```
+
+Now you should see:
+
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   learning.txt
+```
+
+The file is in the staging area, ready to commit.
+
+### Step 8: Make Your First Commit
+
+Save the file permanently to Git's history:
+
+```bash
+git commit -m "Add initial learning notes"
+```
+
+**Commit message rules**:
+
+- Use **imperative tense** (like giving a command). Some teams do use present tense, but at least be consistent!
+- Start with a verb: Add, Update
+- Be specific but concise
+
+✅ **Good examples**:
+
+- `"Add initial learning notes"`
+- `"Update progress on Git commands"`
+- `"Add summary of key concepts"`
+
+❌ **Bad examples**:
+
+- `"changes"` (what changes?)
+- `"update"` (update what?)
+- `"asdfgh"` (come on...)
+
+You should see output like:
+
+```
+[main (root-commit) a1b2c3d] Add initial learning notes
+ 1 file changed, 3 insertions(+)
+ create mode 100644 learning.txt
+```
+
+**Congratulations!** You made your first commit.
+
+### Step 9: View Your Commit History
+
+See your commit:
+
+```bash
+git log
+```
+
+You'll see detailed output with:
+
+- Commit hash (long string of letters/numbers)
+- Author (you!)
+- Date
+- Commit message
+
+The commit hash is like a unique ID for this snapshot. Git uses it to track every change.
+
+**Want a cleaner view?** Try this:
+
+```bash
+git log --oneline
+```
+
+**Remember flags 🏴?** `--oneline` is a flag that tells `log` to show compact output. One commit per line with just the short hash and message.
+
+Much easier to read when you have many commits!
+
+### Step 10: Make a Change and See the Difference
+
+Open `learning.txt` in VS Code and add more text:
+
+```
+I am learning Git fundamentals.
+Git tracks every change I make.
+I can commit my work to save progress.
+```
+
+Save the file. Now check what changed:
+
+```bash
+git diff
+```
+
+You'll see output showing what you added (lines starting with `+` in green) and what you removed (lines starting with `-` in red).
+
+This is powerful—you can see exactly what changed before committing.
+
+### Step 11: Stage and Commit the Change
+
+Add the change:
+
+```bash
+git add learning.txt
+```
+
+Check what's staged:
+
+```bash
+git status
+```
+
+Commit it:
+
+```bash
+git commit -m "Add more details about Git workflow"
+```
+
+View your history:
+
+```bash
+git log --oneline
+```
+
+You should see 2 commits now!
+
+### Step 12: The Safety Net (Undo Mistakes)
+
+Make a deliberate mistake. Open `learning.txt` and delete everything except one word:
+
+```
+oops
+```
+
+Save the file. **Don't commit it.**
+
+Check what you broke:
+
+```bash
+git diff
+```
+
+You'll see all the red lines showing what you deleted. Panic? No need. Git has your back.
+
+Restore the file to the last committed version:
+
+```bash
+git restore learning.txt
+```
+
+Open `learning.txt` in VS Code. **Everything is back!**
+
+This is the magic of Git. As long as you committed something, you can always get it back.
+
+### Step 13: Exploring Your History
+
+Want to see an old version of your project? Git has a command for that: `git checkout <commit-hash>`.
+
+Get your commit hash from the log:
+
+```bash
+git log --oneline
+```
+
+You'll see something like:
+
+```
+b2c3d4e Add more details about Git workflow
+a1b2c3d Add initial learning notes
+```
+
+To explore the first commit:
+
+```bash
+git checkout a1b2c3d
+```
+
+Git will show you a message about "detached HEAD state"—don't worry about this for now. Just know that your files are now showing the first version.
+
+Open `learning.txt` in VS Code. It shows the original content!
+
+To get back to the latest version:
+
+```bash
+git checkout main
+```
+
+Everything is back to the current state.
+
+**For now, just know this exists.** We won't be doing much of this 'fancy time traveling' in this course, unless it becomes necessary.
+
+## Key Takeaways
+
+### Essential Git Commands
+
+```bash
+git config --global user.name "Name"    # Set your name (once)
+git config --global user.email "email"  # Set your email (once)
+git init                                 # Turn folder into Git repo
+git status                               # Check current state (use constantly!)
+git add filename                         # Stage specific file
+git commit -m "message"                  # Save staged changes
+git log                                  # View full commit history
+git log --oneline                        # View compact history
+git diff                                 # See unstaged changes
+git restore filename                     # Undo uncommitted changes
+git checkout <hash>                      # Explore old commit
+git checkout main                        # Return to latest version
+```
+
+### Commit Message Formula
+
+**Format**: `[Verb] [what you did]`
+
+Use imperative tense:
+
+- ✅ `"Add contact form"`
+- ✅ `"Update README with setup instructions"`
+- ❌ `"added contact form"` (past tense)
+- ❌ `"changes"` (meaningless)
+
+### The Git Workflow Loop
+
+1. Make changes to files
+2. `git status` to see what changed
+3. `git diff` to review changes
+4. `git add filename` to stage
+5. `git commit -m "message"` to save
+6. Repeat
+
+Use `git restore filename` anytime you want to undo uncommitted changes.
+
+## What's Next
+
+You've mastered **local Git**—tracking changes on your computer. Next up: **GitHub**—sharing your work with the world.
+
+In the GitHub lesson, you'll learn:
+
+- Creating repositories on GitHub
+- Connecting local repos to GitHub
+- Pushing your commits to the cloud
+- Cloning existing projects
+- Collaborating with others
+
+For now, keep practicing the local workflow. The better you understand `add`, `commit`, `status`, and `log`, the easier GitHub will be.
+
+Git is not optional in professional development. You've just learned the foundation of how every developer works. Keep practicing, and this will become second nature.

@@ -141,16 +141,10 @@ const lessons = [
         video: null,
       },
       {
-        id: "terminal-x-git",
-        title: "Terminal + Git",
-        description: "Reinforce using Git and Terminal commands.",
-        video: null,
-      },
-      {
-        id: "node-template-repo",
-        title: "Node.js Template Repository",
+        id: "git-github-workflow",
+        title: "Git & GitHub Workflow",
         description:
-          "Learn how to set up a Node.js template repository for your projects.",
+          "Learn how to collaborate using Git and GitHub, including branching, pull requests, and merging.",
         video: null,
       },
     ],

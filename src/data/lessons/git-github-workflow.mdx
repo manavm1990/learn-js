@@ -1,0 +1,383 @@
+# Git + GitHub Workflow
+
+Connect your local Git repository to GitHub and share your work with the world.
+
+## Introduction
+
+### What is GitHub?
+
+You've been tracking changes locally with Git. Your commits exist only on your computer. That's powerful, but limited.
+
+**Technically**, you could share your project by:
+
+1. Zipping up your entire folder (including the `.git` directory)
+2. Emailing it to someone
+3. They unzip it and have your complete history
+
+This works. People did this. It's terrible.
+
+**In real life**, we use **GitHub**.
+
+### Git vs GitHub: What's the Difference?
+
+**Git** = Version control tool on your computer
+
+- Tracks changes locally
+- Creates commits
+- Manages history
+- Works offline
+
+**GitHub** = Cloud platform for Git repositories
+
+- Stores your repos online
+- Lets others see your code
+- Enables collaboration
+- Backs up your work
+
+Think of it like:
+
+- **Git** = Your journal where you write entries
+- **GitHub** = Publishing your journal so others can read it. Or, you can keep it private on GitHub if you want.
+
+### Why GitHub Matters
+
+**Professional reality**:
+
+- Every programming job expects you to use GitHub
+- Portfolios live on GitHub
+- Open source projects live on GitHub
+- Homework submissions in this course will happen through GitHub
+- Job applications typically ask for your GitHub profile
+
+**What GitHub gives you**:
+
+- **Backup**: Your code is safe even if your laptop dies
+- **Sharing**: Send a link instead of a zip file
+- **Collaboration**: Work on the same project with classmates
+- **Portfolio**: Employers look at your GitHub profile
+
+### What You'll Learn Today
+
+- Create a GitHub account (if you don't have one)
+- Connect your local Git repo to GitHub
+- Push your commits to the cloud
+- View your project on GitHub
+- Understand the workflow for future projects
+
+### What Success Looks Like
+
+By the end of this lesson, your `git-practice` repository will be on GitHub. You'll be able to send someone a link to your project, and they'll see your commits, your code, and your complete Git history.
+
+## Core Concept Overview
+
+### The Local → Remote Workflow
+
+```
+Your Computer (Local)          GitHub (Remote)
+─────────────────────          ───────────────
+git init
+git add
+git commit
+                    ─────────→ gh repo create
+                    git push   (uploads commits)
+```
+
+**Local** = Your computer (what you've been doing)
+**Remote** = GitHub servers (what we're adding today)
+
+### Key Concepts
+
+**Repository (on GitHub)**:
+Your project lives in the cloud. Anyone with the link can see it (if public).
+
+**Push**:
+Uploading your local commits to GitHub. Like backing up your journal to the cloud.
+
+**Pull**:
+Downloading commits from GitHub to your computer. (We'll use this later when collaborating.)
+
+**Remote**:
+The connection between your local repo and GitHub. Git calls it `origin` by default.
+
+### What Happens When You Push
+
+```
+Local:                Remote (GitHub):
+─────                 ─────────────────
+Commit 1 ────────────→ Commit 1
+Commit 2 ────────────→ Commit 2
+Commit 3 ────────────→ Commit 3
+(new commits)         (synced!)
+```
+
+Push sends all commits GitHub doesn't have yet. Your local and remote stay in sync.
+
+## Hands-On Application
+
+### Step 1: Install GitHub CLI
+
+We'll use GitHub's command-line tool to make this easy.
+
+**Check if you have it**:
+
+```bash
+gh --version
+```
+
+If you see a version number, skip to Step 2.
+
+**If you need to install it**:
+
+**Mac**:
+
+```bash
+brew install gh
+```
+
+**Windows**:
+Download from [cli.github.com](https://cli.github.com/) and run the installer.
+
+### Step 2: Authenticate with GitHub
+
+Connect the GitHub CLI to your account. You probably already did this part too. You can verify by running: `gh auth status`. If the output includes: `✓ Logged in to github.com account: yourusername`, you're good to go. Skip ahead to Step 3.
+
+```bash
+gh auth login
+```
+
+You'll see prompts. Choose these answers:
+
+1. **What account do you want to log into?** → `GitHub.com`
+2. **What is your preferred protocol for Git operations?** → `HTTPS`
+3. **Authenticate Git with your GitHub credentials?** → `Yes`
+4. **How would you like to authenticate GitHub CLI?** → `Login with a web browser`
+
+Follow the instructions. A browser will open. Log in to GitHub and authorize the CLI.
+
+When you see "Congratulations, you're all set!" in your terminal, you're ready.
+
+### Step 3: Navigate to Your Existing Project
+
+Go to the `git-practice` folder you created in the Git Fundamentals lesson:
+
+```bash
+cd ~/Dev/git-practice
+```
+
+Verify you're in a Git repository:
+
+```bash
+git status
+```
+
+You should see your branch name and commit status. If you see "not a git repository," you're in the wrong folder.
+
+Check your commits:
+
+```bash
+git log --oneline
+```
+
+You should see the commits you made earlier.
+
+### Step 4: Create a GitHub Repository
+
+Now we'll create the remote repository on GitHub and connect it to your local repo.
+
+Run this command:
+
+```bash
+gh repo create
+```
+
+**Interactive prompts** will appear. Here's what to choose:
+
+**1. What would you like to do?**
+→ Choose: `Push an existing local repository to GitHub`
+
+**2. Path to local repository**
+→ Press Enter (uses current directory)
+
+**3. Repository name**
+→ Type: `git-practice` (or whatever you want to call it)
+
+**4. Repository description**
+→ Type: `My first Git project` (or leave blank and press Enter)
+
+**5. Visibility**
+→ Choose: `Public` (so you can share the link)
+
+**6. Add a remote?**
+→ Choose: `Yes`
+
+**7. What should the new remote be called?**
+→ Press Enter (uses `origin` by default)
+
+**8. Would you like to push commits from the current branch to "origin"?**
+→ Choose: `Yes`
+
+**What just happened?**
+
+1. Created a repo on GitHub
+2. Connected your local repo to it (`origin` remote)
+3. Pushed all your commits to GitHub
+
+### Step 5: View Your Repository on GitHub
+
+The CLI will show you a link to your repo. It looks like:
+
+```
+https://github.com/yourusername/git-practice
+```
+
+**Open that link in your browser.**
+
+You should see:
+
+- Your project files
+- Your commit history (click "X commits" near the top)
+- Your README or learning.txt file contents
+- The branch name (`main`)
+
+**Congratulations!** Your project is now on GitHub.
+
+### Step 6: Make a Change and Push Again
+
+Let's practice the push workflow.
+
+**1. Make a change locally**:
+
+Open `learning.txt` in VS Code and add a line:
+
+```
+I just pushed my first repo to GitHub!
+```
+
+Save the file.
+
+**2. Check what changed**:
+
+```bash
+git status
+git diff
+```
+
+**3. Commit the change**:
+
+```bash
+git add learning.txt
+git commit -m "Add note about pushing to GitHub"
+```
+
+**4. Push to GitHub**:
+
+```bash
+git push
+```
+
+You should see output like:
+
+```
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+...
+To https://github.com/yourusername/git-practice.git
+   a1b2c3d..e4f5g6h  main -> main
+```
+
+**5. Refresh your GitHub page**:
+
+Go back to your browser and refresh. You'll see:
+
+- The commit count increased
+- Your new commit message appears
+- The file shows your latest changes
+
+**This is the workflow**:
+
+1. Make changes locally
+2. `git add` and `git commit`
+3. `git push`
+4. Changes appear on GitHub
+
+## Key Takeaways
+
+### Essential Commands
+
+```bash
+gh auth login            # Connect GitHub CLI to your account (once)
+gh repo create           # Create a new repo on GitHub
+git push                 # Upload commits to GitHub
+git remote -v            # See your GitHub connection
+```
+
+### The Daily Workflow
+
+**On your computer**:
+
+1. Make changes
+2. `git add filename`
+3. `git commit -m "message"`
+4. `git push`
+
+**On GitHub**:
+
+- Your commits appear automatically
+- Others can see your code
+- You have a backup
+
+### What You've Learned
+
+- **Git** tracks changes locally
+- **GitHub** stores your repos in the cloud
+- **Push** uploads your commits
+- **gh repo create** connects local to remote
+- **Public repos** can be shared with anyone
+
+## What's Next
+
+### For the Rest of This Course
+
+Starting with the next project, you'll work differently:
+
+**Instead of**:
+
+```bash
+mkdir project
+cd project
+git init
+```
+
+**You'll do**:
+
+```bash
+gh repo clone some-repo-url
+cd some-repo
+```
+
+**What's `git clone`?**
+It's like downloading a project that's already on GitHub. You get:
+
+- All the files
+- Complete Git history
+- Automatic connection to GitHub
+
+Think of it like downloading, but better—you get the entire project history and can push changes back.
+
+**Why clone instead of creating from scratch?**
+
+- Starter code is already set up
+- Dependencies are configured
+- You can start coding immediately
+- Team projects start this way
+
+### The Full Circle
+
+**What you've learned**:
+
+1. **Git Fundamentals**: Track changes locally
+2. **GitHub Workflow**: Share your work online
+
+**What's coming**: 3. **Clone → Code → Push**: The professional workflow 4. **Collaboration**: Working with others 5. **Pull requests**: Contributing to projects
+
+You now have the foundation every developer needs. Git + GitHub is how software gets built. Keep practicing this workflow—it becomes second nature quickly.
