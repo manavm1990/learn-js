@@ -1,208 +1,88 @@
 # What is JavaScript?
 
-Introduction to JavaScript: what it is, what it can do, and how it fits into modern web development.
+JavaScript is the programming language that powers interactive web experiences. From form validation to real-time updates to complex applications, JavaScript is the bridge between static HTML/CSS and dynamic user interaction.
 
 ## Introduction
 
-### From Static to Dynamic
+### What Actually Happened
 
-**Real-world scenario**: You've built some great-looking websites with HTML and CSS, but they're essentially digital brochures - they just sit there looking pretty. What if you want a button that actually does something? What if you want to create a shopping cart, validate a form, or build an interactive game? That's where JavaScript comes in.
+You've now learned how computers process information (binary, transistors) and how the web works (URLs, HTTP, servers). You might be wondering: where does JavaScript fit into all this?
 
-JavaScript is what transforms your static web pages into interactive, dynamic experiences. It's the difference between a beautiful poster and a responsive, engaging application.
+JavaScript was created in 1995 by [Brendan Eich](https://en.wikipedia.org/wiki/Brendan_Eich) while working at Netscape Communications Corporation. The original name was _LiveScript_. However, due to a marketing decision—an attempt to capitalize on the popularity of the Java programming language at the time—it was renamed to JavaScript.
+
+This caused decades of confusion, but here's the bottom line: **JavaScript and Java are completely separate languages.** As one common analogy goes: _Java is to JavaScript as ham is to a hammock._ They share a name, but not much else.
+
+**Quick note:** Technically, JavaScript is trademarked by Oracle, so the official standard is called ECMAScript. For practical purposes, we use these terms interchangeably.
 
 ### What You'll Learn Today
 
-- What JavaScript is and how it fits into web development
-- What kinds of things JavaScript can do (it's more than you might think!)
-- How JavaScript works with HTML and CSS
-- How to add JavaScript to a web page
-- Basic JavaScript syntax and comments
+- What JavaScript actually is
+- How it fits into the web development picture
+- Why it's so widely used
+- The ES2015+ standard we'll be using
 
 ## Core Concept Overview
 
-### JavaScript: The Third Layer of the Web
+### JavaScript: The Third Layer
 
-Instead of reinventing the wheel, let's learn from two excellent JavaScript resources. Work through both of these complementary guides:
+When you've built websites with HTML and CSS, you created the _structure_ and _styling_. JavaScript is the third layer: it makes things _interactive_.
 
-#### 📚 **Resource 1: MDN - What is JavaScript?**
+Think of it this way:
 
-[**What is JavaScript? - MDN**](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/What_is_JavaScript)
+- **HTML** = The skeleton (structure)
+- **CSS** = The skin and clothes (presentation)
+- **JavaScript** = The muscles and nerves (behavior and interactivity)
 
-Read these **first three sections**:
+### Higher-Order vs. Lower-Order Languages
 
-1. **A high-level definition**
-2. **So what can it really do?**
-3. **What is JavaScript doing on your page?**
+JavaScript is a _higher-order language_. This means you write code using words and syntax that humans can relatively understand:
 
-**⚠️ Stop after section 3** - we'll cover the remaining sections in future lessons.
+```javascript
+// This reads almost like English
+const message = "Hello, World!";
+console.log(message);
+```
 
-#### 📚 **Resource 2: JavaScript.info - Introduction**
+But here's what happens under the hood: When JavaScript runs, an _interpreter_ (a program written in C++) translates your human-readable code into lower-order languages—C, Assembly—until finally it becomes the 1s and 0s that computers actually understand. All of this happens instantly.
 
-[**An Introduction to JavaScript**](https://javascript.info/intro)
+This is why JavaScript is so accessible to beginners: you don't need to understand machine code or assembly language to get started. The language handles the translation for you.
 
-Read these **first three sections**:
+### What JavaScript Can Do
 
-1. **What is JavaScript?**
-2. **What can in-browser JavaScript do?**
-3. **What CAN'T in-browser JavaScript do?**
+JavaScript runs in the browser on the _client side_ (the user's computer), which makes it unique. Here's what that means:
 
-**⚠️ Skip the "Languages 'over' JavaScript" section** (contains outdated info about CoffeeScript, etc.)
-**⚠️ Stop after section 3** - we'll cover the remaining sections in future lessons when we're ready to write actual JavaScript code.
+- **Interactive forms**: Validate user input in real-time, respond to clicks
+- **Dynamic content**: Update the page without refreshing
+- **Animations and effects**: Create smooth transitions and animations
+- **Storage**: Save data locally on the user's device
+- **Real-time features**: Chat, notifications, live updates
 
-### Key Takeaways to Focus On
+JavaScript can also run on _servers_ (Node.js), in _desktop applications_ (Electron), and on _mobile devices_ (React Native). But the core strength of JavaScript is that it's the only language built directly into every web browser by default.
 
-As you read through both articles, pay special attention to:
+### ECMAScript and Modern JavaScript
 
-**From MDN:**
+JavaScript as a language got a **major update in June 2015** called ES2015 (also known as ES6). This update brought significant improvements in readability, features, and how developers can organize code.
 
-- **The layer cake 🍰 analogy**: How HTML, CSS, and JavaScript work together
-- **What makes JavaScript different**: It's a programming language, not just markup or styling
-- **Real-world capabilities**: The examples of what JavaScript can do today
+Since then, the JavaScript standards committee (TC39—a group of about 50-100 developers) releases updates to the language annually. These updates include new features and refinements.
 
-**From JavaScript.info:**
+**For this course**: We'll focus on **ES2015+ syntax**—the modern way of writing JavaScript. This means you're learning the current, industry-standard version of the language, not outdated syntax from the 1990s.
 
-- **JavaScript's origin story**: Why it's called "JavaScript" and its evolution
-- **JavaScript engines**: V8, SpiderMonkey, and how code gets executed
-- **Security limitations**: What JavaScript CAN'T do and why that's important
-- **Browser safety**: How JavaScript protects users from malicious websites
+## Self-Check: Test Your Understanding
 
-**Common themes:**
+1. **Origin story**: In your own words, explain why JavaScript is called "JavaScript" even though it's unrelated to Java.
 
-- **Client-side vs server-side**: JavaScript runs in the browser (for now, in our course)
-- **Versatility**: JavaScript has grown far beyond simple web interactions
+2. **Three layers**: Describe how HTML, CSS, and JavaScript work together. What would a website look like if it only had HTML and CSS, but no JavaScript?
 
-## Hands-On Application
+3. **Higher-order language**: What does it mean that JavaScript is a "higher-order language"? Who or what does the translation into machine code?
 
-### Exploration Exercise
+4. **Built-in power**: Why is it significant that JavaScript is built directly into every web browser by default?
 
-Since this is your first exposure to JavaScript concepts, let's focus on understanding rather than coding:
+5. **ES2015**: What does ES2015 represent, and why does it matter that we're learning modern JavaScript syntax?
 
-**Part 1: Layer Cake Analysis**
-Visit 3 different websites (suggestions: your favorite news site, an e-commerce site like Amazon, and a social media platform). For each site:
+## Why This Matters
 
-1. **Identify HTML elements**: What content structure do you see? (headings, paragraphs, images, buttons)
-2. **Spot CSS styling**: What visual design choices are evident? (colors, layouts, fonts, animations)
-3. **Find JavaScript behavior**: What happens when you interact with the page? (click buttons, hover over elements, scroll, type in forms)
-
-Document your findings for each site.
-
-**Part 2: JavaScript Capability Deep-Dive**
-After reading the MDN article, choose **three** JavaScript capabilities that surprised or excited you most. For each:
-
-1. **Describe the capability** in your own words
-2. **Find a real-world example** (screenshot or describe a website that uses this)
-3. **Brainstorm a use case** for a website you might want to build
-
-**Part 3: The Developer Mindset**
-Now that you understand JavaScript's role, reflect on:
-
-1. **Before vs After**: How has your understanding of websites changed after learning about JavaScript?
-2. **Problem-solving perspective**: Think of a problem or frustration you've had with a website. How might JavaScript solve it?
-3. **Learning roadmap**: Based on what you've learned, what JavaScript skills are you most excited to develop?
-
-## Advanced Concepts & Comparisons
-
-### JavaScript in the Modern Web
-
-JavaScript has evolved far beyond simple web page interactions:
-
-**Today's JavaScript can:**
-
-- Build entire mobile apps (React Native, Ionic)
-- Create desktop applications (Electron - think VS Code, Discord)
-- Power server-side applications (Node.js)
-- Control hardware devices (IoT, robotics)
-- Process machine learning models
-- Create virtual and augmented reality experiences
-
-**Why this matters for you**: The JavaScript you'll learn for web development opens doors to many other platforms and career paths.
-
-### JavaScript vs Other Languages
-
-**How JavaScript compares:**
-
-- **Easier entry point**: No compilation step, runs directly in browsers
-- **Immediate feedback**: See results instantly in the browser
-- **Huge ecosystem**: Millions of libraries and frameworks available
-- **High demand**: One of the most in-demand programming languages for jobs
-
-### Industry Context
-
-**JavaScript's role in modern development:**
-
-- **Frontend frameworks**: React, Vue, Angular power most modern web apps
-- **Full-stack development**: Use JavaScript for both frontend and backend
-- **Career implications**: JavaScript developers are among the highest paid and most in-demand
-
-## Troubleshooting & Best Practices
-
-### Common Misconceptions
-
-**"JavaScript is just for simple animations"**
-
-- Reality: JavaScript powers complex applications like Google Docs, Netflix, and WhatsApp Web
-
-**"You need to learn HTML and CSS perfectly before JavaScript"**
-
-- Reality: Basic HTML/CSS knowledge is enough to start JavaScript - you'll strengthen all three together
-
-**"JavaScript is hard"**
-
-- Reality: JavaScript has challenges, but it's designed to be beginner-friendly with immediate visual feedback
-
-### Mindset for Success
-
-- **Embrace experimentation**: JavaScript is forgiving - broken code won't crash your computer
-- **Focus on problem-solving**: Every JavaScript feature exists to solve a real problem
-- **Build momentum**: Start with simple interactions and gradually increase complexity
-
-## Wrap-Up & Assessment
-
-### HW: Reflection and Research 🪞
-
-**Submission Format**: Create a Markdown document and share via GitHub Gist link (as established in previous lessons).
-
-**Assignment Parts:**
-
-**1. MDN Article Synthesis** (Write 2-3 paragraphs)
-
-- Summarize the three sections you read in your own words
-- Explain the "layer cake" concept using an analogy from your own life
-- Describe what surprised you most about JavaScript's capabilities
-
-**2. Website Analysis Report**
-
-- Document your findings from the 3-website exploration exercise
-- Include screenshots or detailed descriptions of JavaScript interactions you identified
-- Reflect on how understanding JavaScript changes how you view these sites
-
-**3. Personal Connection & Goals**
-
-- Which JavaScript capabilities from the MDN and JavaScript.info articles excite you most and why?
-- Describe a website or web application idea you'd like to build someday
-- What specific JavaScript skills do you want to prioritize learning first?
-
-**4. Comparative Analysis**
-After reading both resources:
-
-- Compare how MDN and JavaScript.info explain what JavaScript is - which explanation resonated more with you and why?
-- Which resource provided more useful information about JavaScript's limitations and security features?
-- Based on both articles, write your own one-paragraph definition of JavaScript
-
-### Success Criteria
-
-- [ ] Demonstrates understanding of JavaScript's role in web development
-- [ ] Can identify JavaScript behavior on real websites
-- [ ] Shows curiosity about JavaScript's broader capabilities
-- [ ] Articulates personal learning goals for JavaScript
-- [ ] Uses correct terminology from the MDN article
-
-### What's Next?
-
-In our next lesson, we'll start writing actual JavaScript code! We'll begin with variables - how to store and work with data in JavaScript. You'll see how the concepts you learned today translate into code you can write and run.
-
-**Pro tip**: Bookmark the MDN JavaScript documentation - it'll become your best friend as we start coding!
+Understanding _what_ JavaScript is—not just how to write it—helps you make better decisions as you learn. You'll understand why certain things are possible in the browser and others aren't. You'll understand why JavaScript is so widely used (despite its quirks). And you'll be equipped to learn other languages more easily later, because you'll understand the underlying concepts.
 
 ---
 
-_Remember: Every professional JavaScript developer started exactly where you are now. The key is consistent practice and maintaining curiosity about how things work under the hood._
+_Next up: We'll look at the reality of development with AI and other tools, then move into JavaScript Basics where you'll start writing actual code._
