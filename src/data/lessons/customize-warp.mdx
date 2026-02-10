@@ -1,0 +1,212 @@
+# Customize Warp
+
+Configure Warp Terminal for comfortable command-line work: appearance, AI settings, and essential features.
+
+## Introduction
+
+### When to do this
+
+Complete this after [Mac Setup Guide](/mac-setup-guide) or [Windows Setup Guide](/windows-setup-guide) and after working through [Terminal and TXT Files](/terminal-files). You should already know basic commands like `pwd`, `ls`, and `cd`.
+
+**Windows users:** If you encounter permission issues with Warp, use Git Bash instead. Git Bash works perfectly for this course—Warp's AI features are helpful but not required.
+
+### What you'll configure
+
+- **Theme and font size**: Make the terminal easy to read
+- **Input position**: Choose where you type commands (top or bottom)
+- **AI model**: Set up Warp's built-in AI assistant
+- **AI features**: Enable web search and natural language detection
+
+### The goal
+
+Make Warp readable and set up AI assistance for learning terminal commands. You should be able to type commands comfortably and ask Warp's AI for help when stuck.
+
+## Core Concept Overview
+
+### Settings strategy: search, change one thing, test
+
+Warp has many settings. Don't browse through menus trying to understand everything.
+
+**Efficient approach:**
+
+1. Open Settings
+2. Use the search bar to find what you want
+3. Change one setting
+4. Test if it feels better
+5. Undo if it feels worse
+
+### Input position: top vs bottom
+
+Warp lets you type commands at the top or bottom of the window.
+
+**Bottom (traditional):**
+
+- Output scrolls upward
+- Matches most traditional terminals
+- Command prompt stays at bottom
+
+**Top (modern):**
+
+- Output appears below your command
+- Easier to see what you just typed
+- Command prompt stays visible
+
+Neither is "better." Pick based on what feels natural. You can change it later.
+
+### AI base model: cost vs capability
+
+Warp offers different AI models. For this course:
+
+- **Cost Efficient**: Faster, handles basic questions, free tier lasts longer
+- **Advanced models**: Slower, more detailed, uses free tier faster
+
+Use **Cost Efficient** unless you need complex explanations. Save the advanced models for when you're truly stuck.
+
+### Features to ignore (for now)
+
+Warp has many advanced features you don't need yet:
+
+- Custom YAML themes
+- Vim keybindings
+- Voice input
+- Custom keyboard shortcuts
+- MCP servers (not used in this course)
+
+If you don't know what a setting does, leave it alone.
+
+## Hands-On Application
+
+### 60-second setup checklist
+
+Open Warp → Settings → use the search bar.
+
+**Do these in order:**
+
+1. **Update Warp**
+   - If you see an "Update Warp" notification, do it first
+   - Restart Warp after updating
+
+2. **Choose a theme**
+   - Search "theme" in Settings
+   - Pick a theme with strong contrast
+   - Test: If you squint to read text, pick a different theme
+
+3. **Adjust font size**
+   - Search "font size" in Settings
+   - Increase until text is comfortable to read
+   - Err on the side of slightly too large
+
+4. **Set input position**
+   - Search "input position" in Settings
+   - Try both top and bottom
+   - Pick whichever makes it easier to see what you're typing
+   - There's no wrong choice
+
+5. **Set AI base model**
+   - Search "base model" in Settings
+   - Set to **Cost Efficient**
+   - This is sufficient for learning terminal commands
+
+6. **Enable AI helpers** (if available)
+   - Search "call web tools" → turn on (lets AI look up current info)
+   - Search "natural language detection" → turn on (Warp detects questions)
+
+Stop here. Don't tweak other settings.
+
+### Test your setup (2 minutes)
+
+Open a new terminal session in Warp and run:
+
+```bash
+pwd
+ls
+cd ~
+ls
+```
+
+**What to check:**
+
+- Can you read the output easily?
+- Is the command prompt obvious?
+- Can you see where to type your next command?
+
+If any answer is "no," adjust the relevant setting (theme, font size, or input position).
+
+### Using Warp's AI (quick reference)
+
+You already learned terminal commands in [Terminal and TXT Files](/terminal-files). Warp's AI helps when you forget or get stuck.
+
+**Ask for help:**
+
+Type `#` followed by your question:
+
+```
+# how do I list hidden files?
+```
+
+Warp suggests: `ls -a`
+
+**Explain a command:**
+
+If you see a command you don't understand:
+
+```
+# explain: git log --oneline
+```
+
+Warp explains what each part does.
+
+**Get suggestions:**
+
+Start typing what you want to do. Warp will suggest commands based on context.
+
+**Important:** Read AI suggestions before running them. Don't blindly execute commands you don't understand. AI is your tutor, not your autopilot.
+
+## Common mistakes
+
+### Theme rabbit hole
+
+Don't spend 30 minutes comparing themes. Pick one with good contrast in 60 seconds.
+
+### Changing too many settings at once
+
+If something feels wrong after multiple changes, you won't know which setting caused it. Change one thing at a time.
+
+### Blindly running AI commands
+
+Always read what the AI suggests. If you don't understand a command, ask Warp to explain it before running it.
+
+### Using advanced AI models too early
+
+The Cost Efficient model handles 95% of questions you'll have in this course. Don't waste your free tier on questions like "how do I list files."
+
+## Wrap-Up
+
+### What you should have now
+
+- [ ] Theme with strong contrast
+- [ ] Font size large enough to read comfortably
+- [ ] Input position set (top or bottom)
+- [ ] AI base model set to Cost Efficient
+- [ ] AI web tools and natural language detection enabled
+
+### Key takeaways
+
+- **Readability first**: Theme and font size matter more than aesthetics
+- **Input position is personal**: Pick what makes the prompt obvious to you
+- **Cost Efficient AI is enough**: Save advanced models for complex problems
+- **AI is a learning tool**: Use it to understand commands, not avoid learning them
+
+### Self-check
+
+Answer these in your course notebook:
+
+1. What theme did you choose and why?
+2. What input position did you pick (top or bottom) and why?
+3. Give an example of when you would use Warp's AI to help you learn vs when you would just run a command you already know.
+
+### What's next
+
+Warp is configured. You already know basic terminal commands from [Terminal and TXT Files](/terminal-files). The upcoming lessons will teach you Git, which relies heavily on terminal work.
+
+Your terminal is ready. Now you'll use it.

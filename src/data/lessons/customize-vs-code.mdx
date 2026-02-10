@@ -1,0 +1,227 @@
+# Customize VS Code
+
+Configure VS Code for comfortable coding: fonts, themes, and essential extensions.
+
+## Introduction
+
+You should have VS Code installed and working. You should have already gotten Copilot setup as part of the [Student Developer Pack.](https://docs.github.com/en/education/about-github-education/github-education-for-students/apply-to-github-education-as-a-student) At the least, if that's taking a while, you can get a free trial of Copilot for now and switch to the student pack later.
+
+If you haven't set up Copilot yet, you can still follow along with the font and theme configuration steps. Just skip the Copilot installation for now and come back to it once you have access.
+
+### What you'll configure
+
+- **Coding font**: Makes similar characters (like `0` and `O`) easier to distinguish
+- **Color theme**: Reduces eye strain during long coding sessions
+- **GitHub Copilot**: AI assistance for code completion and explanations
+- **Essential settings**: Font size and basic editor behavior
+
+### The goal
+
+Make VS Code comfortable enough that you can code for hours without fighting your tools. Don't overthink this—you can change any of these settings later.
+
+## Core Concept Overview
+
+### Coding fonts vs regular fonts
+
+Coding fonts use **monospacing** (every character takes the same width) and distinguish similar characters clearly. This makes code easier to scan and reduces mistakes.
+
+**Free coding fonts worth trying:**
+
+- **Fira Code**: Popular, includes ligatures (combines symbols like `=>` into one character)
+- **JetBrains Mono**: Clean, excellent readability
+- **Cascadia Code**: Microsoft's coding font, works well on Windows
+- **Monaspace Neon**: Modern, slightly wider spacing
+
+Browse and compare fonts at [programmingfonts.org](https://programmingfonts.org). Pick one in 2 minutes and move on.
+
+### Themes: dark vs light
+
+Themes control all colors in VS Code: background, text, syntax highlighting, and icons.
+
+**Dark themes** reduce eye strain in dim lighting. **Light themes** work better in bright rooms. Pick based on your workspace lighting.
+
+**Verified theme recommendations:**
+
+- GitHub Theme (official)
+- Dracula Official
+- Night Owl
+- One Dark Pro
+- Monokai Pro
+
+You need one theme. Don't install ten.
+
+### Extensions: only what you need
+
+Extensions add features but can slow VS Code or cause conflicts. For this course, you need exactly **two extensions**:
+
+1. **GitHub Copilot** + **GitHub Copilot Chat**: AI code suggestions and explanations
+2. **Web Search for Copilot**: Lets Copilot search for current information
+
+We'll add more extensions as needed later in the course. Resist installing random extensions now.
+
+### Common mistakes
+
+- **Font rabbit hole**: Spending 30 minutes comparing fonts instead of coding
+- **Theme hoarding**: Installing 10 themes when you'll use one
+- **Extension overload**: Installing every recommended extension
+- **Skipping GitHub Education**: Missing free GitHub Copilot access
+
+## Hands-On Application
+
+### Step 1: Install a coding font (5 minutes)
+
+**Choose a font:**
+
+1. Go to [programmingfonts.org](https://programmingfonts.org)
+2. Click through 3-4 fonts using the buttons at the top
+3. Pick one that looks readable to you
+
+**Download and install:**
+
+1. Click "Website" to visit the font's download page
+2. Look for "Releases" or "Download"
+3. Download the TrueType/TTF file
+4. Install:
+   - **Mac**: Double-click `.ttf` file → "Install Font"
+   - **Windows**: Right-click `.ttf` file → "Install"
+
+**Set the font in VS Code:**
+
+1. Open VS Code
+2. Press `Cmd + ,` (Mac) or `Ctrl + ,` (Windows) to open Settings
+3. Search "font family"
+4. Add your font name at the beginning of the list:
+   ```
+   'Monaspace Neon', monospace
+   ```
+   or
+   ```
+   'Fira Code', monospace
+   ```
+
+The comma-separated list means VS Code will try your chosen font first, then fall back to the next if unavailable.
+
+**Optional - Enable ligatures** (for Fira Code or similar fonts):
+
+1. In Settings, search "font ligatures"
+2. Check the box to enable
+
+### Step 2: Choose a theme (2 minutes)
+
+**Open extensions:**
+
+- Press `Cmd + Shift + X` (Mac) or `Ctrl + Shift + X` (Windows)
+
+**Filter for themes only:**
+
+1. Click the filter icon (three horizontal lines) at the top
+2. Select "Category" → "Themes"
+
+**Install one theme:**
+
+1. Pick a verified theme from the list above
+2. Click "Install"
+3. Click "Set Color Theme" or press `Cmd + K, Cmd + T` (Mac) or `Ctrl + K, Ctrl + T` (Windows)
+4. Select your theme from the dropdown
+
+Try maximum 2-3 themes. Pick one and continue.
+
+[Vira Theme](https://vira.build/) is a premium paid theme that many students love. If you want to try it, you can get a free trial for 7 days and decide if it's worth it for you.
+
+### Step 3: Set up GitHub Copilot (5 minutes)
+
+**Prerequisites:**
+
+- GitHub account signed in at github.com
+- GitHub Student Developer Pack activated at [education.github.com/pack](https://education.github.com/pack)
+
+**Sign in to GitHub:**
+
+1. Click the **Accounts** icon (person silhouette) in the bottom-left corner
+2. Click "Sign in to use GitHub Copilot"
+3. Follow the browser prompts to authorize VS Code
+
+**Install Copilot extensions:**
+
+1. Press `Cmd + Shift + X` (Mac) or `Ctrl + Shift + X` (Windows)
+2. Search "GitHub Copilot"
+3. Install both:
+   - **GitHub Copilot** (main extension)
+   - **GitHub Copilot Chat** (conversational AI)
+
+**Install web search:**
+
+1. In extensions, search "Web Search for Copilot"
+2. Install the extension
+
+**Verify setup:**
+
+- Look for the Copilot icon in the bottom-right status bar
+- It should show a checkmark or "ready" status
+- If you see an error, click it and follow the instructions (usually needs GitHub sign-in)
+
+### Step 4: Adjust font size (optional, 30 seconds)
+
+If text is too small or large:
+
+1. Press `Cmd + ,` (Mac) or `Ctrl + ,` (Windows)
+2. Search "font size"
+3. Change "Editor: Font Size" to 14-16 (typical range)
+
+## Troubleshooting
+
+### Copilot shows "not authorized"
+
+1. Confirm you're signed up for [GitHub Education](https://education.github.com/pack)
+2. Check your GitHub account is connected in VS Code (Accounts icon, bottom-left)
+3. Sign out and sign back in
+4. Restart VS Code
+
+### Font doesn't appear in VS Code
+
+1. Verify the font is installed on your system (check Font Book on Mac, Settings on Windows)
+2. Make sure you typed the font name exactly right in VS Code settings (capitalization matters)
+3. Restart VS Code after installing the font
+
+### Theme looks broken or hard to read
+
+1. Try a different theme—some are poorly maintained
+2. Stick with verified publishers (GitHub, Dracula Official, etc.)
+3. Increase font size if text is too small
+
+## Wrap-Up
+
+### What you should have now
+
+- [ ] A coding font installed and set in VS Code
+- [ ] A theme you can read comfortably for long periods
+- [ ] GitHub Copilot installed and signed in
+- [ ] Web Search for Copilot installed
+- [ ] Font size adjusted if needed
+
+### Key takeaways
+
+- **Coding fonts** make code easier to read by clearly distinguishing similar characters
+- **Themes** are personal preference based on your lighting—pick one quickly
+- **GitHub Copilot** provides AI assistance while you code—essential for modern development
+- **Minimal extensions** prevent slowdowns and conflicts
+
+### Common questions
+
+**Can I change my font or theme later?**
+
+Yes. These aren't permanent decisions. Change them anytime in Settings.
+
+**What if my friend uses a different extension?**
+
+Stick with the two Copilot extensions for now. We'll add more as the course progresses and you understand what you actually need.
+
+**Do I need ligatures?**
+
+No. They make some symbol combinations look nicer (like `=>` becoming a single arrow) but aren't required. If you don't know what they are, ignore them.
+
+### What's next
+
+VS Code is now configured for coding. The upcoming JavaScript lessons will teach you how to use Copilot effectively as a learning tool, not a shortcut to avoid thinking.
+
+Your editor is ready. Now you'll learn to code.

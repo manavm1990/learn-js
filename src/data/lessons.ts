@@ -97,6 +97,30 @@ const lessons = [
         video: null,
       },
       {
+        id: "customize-warp",
+        title: "Customize Warp",
+        description:
+          "Make Warp easier to read and use: themes, font size, cursor/input settings, and beginner-friendly AI tips.",
+        video: {
+          duration: 338,
+          url: "https://videos.learnjs.tech/swic/videos/sp26/customize-warp.mp4",
+          thumbnail:
+            "https://videos.learnjs.tech/swic/videos/sp26/customize-warp.png",
+        },
+      },
+      {
+        id: "customize-vs-code",
+        title: "Customize VS Code",
+        description:
+          "Install coding fonts, choose themes, and set up GitHub Copilot for AI-assisted development.",
+        video: {
+          duration: 511,
+          url: "https://videos.learnjs.tech/swic/videos/sp26/customize-vsc.mp4",
+          thumbnail:
+            "https://videos.learnjs.tech/swic/videos/sp26/customize-vsc.webp",
+        },
+      },
+      {
         id: "ai-reality-check",
         title: "AI Reality Check: Beyond the Hype",
         description:
