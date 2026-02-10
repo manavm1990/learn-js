@@ -191,7 +191,12 @@ const lessons = [
         title: "Program Structure & Variables",
         description:
           "Learn about variables, program structure, and hands-on JavaScript coding using the browser console.",
-        video: null,
+        video: {
+          duration: 306,
+          url: "https://videos.learnjs.tech/swic/videos/sp26/program-structure.mp4",
+          thumbnail:
+            "https://videos.learnjs.tech/swic/videos/sp26/program-structure.jpg",
+        },
       },
       {
         id: "js-values-types-ops",
