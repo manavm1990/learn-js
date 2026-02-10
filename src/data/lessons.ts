@@ -164,44 +164,11 @@ const lessons = [
           "Learn how to collaborate using Git and GitHub, including branching, pull requests, and merging.",
         video: null,
       },
-    ],
-  },
-  {
-    id: "web-fundamentals",
-    title: "Web Development Fundamentals",
-    description:
-      "Understanding how the web works and introduction to programming concepts that will guide your development journey.",
-    lessons: [
       {
         id: "how-computers-and-web-work",
         title: "How Computers and the Web Work",
         description:
           "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
-        video: null,
-      },
-      {
-        id: "js-introduction",
-        title: "What is JavaScript?",
-        description:
-          "Introduction to JavaScript: what it is, what it can do, and how it fits into modern web development.",
-        video: null,
-      },
-      {
-        id: "semantic-html",
-        title: "Semantic HTML: Why It Matters",
-        description:
-          "Learn the importance of semantic HTML for accessibility, SEO, and maintainable code. Avoid common mistakes and write clean, meaningful markup.",
-        video: {
-          duration: 1222,
-          thumbnail: "https://videos.learnjs.tech/swic/videos/html.png",
-          url: "https://videos.learnjs.tech/swic/videos/html.mp4",
-        },
-      },
-      {
-        id: "css-fundamentals-review",
-        title: "CSS Fundamentals Review",
-        description:
-          "Review essential CSS concepts: selectors, properties, box model, and layout basics. Build the foundation needed for Tailwind and browser-based styling.",
         video: null,
       },
     ],
@@ -213,10 +180,10 @@ const lessons = [
       "Learn the fundamentals of JavaScript, including variables, data types, operators, and basic syntax.",
     lessons: [
       {
-        id: "js-values-types-ops",
-        title: "Values, Types, and Operators",
+        id: "js-introduction",
+        title: "What is JavaScript?",
         description:
-          "Explore JavaScript's core data types, operators, and how to work with them effectively.",
+          "Introduction to JavaScript: what it is, what it can do, and how it fits into modern web development.",
         video: null,
       },
       {
@@ -224,6 +191,13 @@ const lessons = [
         title: "Program Structure & Variables",
         description:
           "Learn about variables, program structure, and hands-on JavaScript coding using the browser console.",
+        video: null,
+      },
+      {
+        id: "js-values-types-ops",
+        title: "Values, Types, and Operators",
+        description:
+          "Explore JavaScript's core data types, operators, and how to work with them effectively.",
         video: null,
       },
       {

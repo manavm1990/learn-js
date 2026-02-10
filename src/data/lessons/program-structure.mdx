@@ -1,569 +1,479 @@
-# Program Structure & Variables in JavaScript
+# Program Structure: Variables, Types, and Operators
 
-## Pre-Work
-
-1. Read [Program Structure](https://eloquentjavascript.net/02_program_structure.html) until you get to _Conditional execution._
-1. Read [Variables](https://javascript.info/variables). Be sure to work through and understand the _Tasks._ You can use your Developer Console.
-1. Read [Data Types](https://javascript.info/types). This should be mostly a review.
+Learn the fundamental building blocks of JavaScript: data types, variables, and how to work with them.
 
 ## Introduction
 
-- Icebreaker: What do you think a variable is in programming?
-- Real-world scenario: Think of a variable as an 🐙 using its arms to bind itself to values.
-- Lesson objectives: Learn about variables, their types, and how to use them in JavaScript.
-- Introduction to the concept: Variables are fundamental in programming, allowing us to store and manipulate data.
+Before you write a program, you need to understand what data is, how to store it, and how to use it. This lesson builds that foundation.
 
-## Expressions and Statements
+### What You'll Learn Today
 
-In JavaScript, a **statement** is a complete instruction that performs an action. For example, declaring a variable or calling a function are statements. Statements can be simple or complex, and they often end with a semicolon (`;`), although JavaScript can usually infer the end of a statement without it.
+- JavaScript's primitive data types: strings, numbers, booleans
+- What variables are and how to create them
+- The assignment operator (`=`)
+- Semantic naming: making your code readable
+- Template literals: combining variables and strings
+- Basic operators: arithmetic, comparison, logical
 
-An expression is a sentence fragment while a statement is a complete sentence. An expression produces a value, while a statement performs an action. A statement usually does something more meaningful, like creating a variable, calling a function, or controlling the flow of the program.
+### Pre-Work: Reading
 
-`5 + 3;` is an expression that evaluates to `8`, but `const sum = 5 + 3;` is a statement that declares a variable `sum` and assigns it the value of the expression `5 + 3`. In the former, nothing is done with the value `8`, it's created and then discarded or garbage collected. In the latter, the value `8` is stored in the variable `sum` for later use. A statement typically has consequences and repercussions in the program, while an expression simply produces a value.
+Before diving into this lesson, read these specific sections from [Eloquent JavaScript Chapter 2](https://eloquentjavascript.net/02_program_structure.html):
 
-![Consequences and repercussions Gif|400x217](https://y.yarn.co/0aa56390-affe-4739-af3d-efe172775ec5_text.gif)
+- **"Bindings"** — Introduction to variables and how they store values
+- **"Binding Names"** — How to name variables meaningfully
 
-## Variable Bindings
+These sections reinforce what you'll learn here. It should take 10-15 minutes. Stop there—don't read beyond "Binding Names" yet.
 
-A **variable** is a reference to a value stored in the computer's memory.
+### Pre-Work: Quick Reflection
 
-From _Eloquent JavaScript's_ apt analogy, values float around in a sea of data, and variables are an 🐙 octopus' tentacles grasping at these values, creating variable bindings.
+After reading, write down your answers to these questions:
 
-The analogy takes it a step further by mentioning variable names being tattooed onto these tentacles, representing variable names.
+1. What is a variable in JavaScript? How does it work?
+2. Why is it important to choose good variable names?
+3. Can you give an example of a variable declaration using `const`?
 
-Variables declared with the keyword `const` (which is what we should be doing 99% of the time) cannot be reassigned. In this case, the 🐙 tentacle will forever clutch this same value, never releasing it as long as it's alive.
+### As You Work Through This Lesson
 
-This 🐙 analogy is actually a much more accurate mental model than others where variables are described as boxes storing values, or similar 👎🏾.
+**Keep handwritten notes**: Write down definitions of strings, numbers, and booleans in your own words as you learn them. Include 2-3 examples of each. These notes matter for the assessment.
 
-## `console.log()`
+**Experiment actively**: When you try code in the browser console, write down what you tried and what happened. Note what surprised you or confused you.
 
-This may not have much meaning at the moment, but we will repeat this mantra throughout the course, "Everything in JavaScript is an object, except for primitives. And even those can be treated like objects sometimes."
+**Answer the self-check questions in writing**: Don't just think about answers—write them out with detailed explanations. One-word answers won't cut it.
 
-JavaScript has many built in objects, all of which extend from the base prototype `Object`. One of the most commonly used built-in objects is `console`, which provides access to the browser's debugging console (or the terminal console when using Node.js).
+### Why This Matters
 
-Both the browser dev console and Node.js provide this built in object called `console`. And, just like any other object, we use **dot notation** to access its properties and methods.
+Everything in a program is data. Understanding types helps you know what operations are valid, what mistakes look like, and how to think about problems systematically.
 
-Properties are just values associated with the object, while methods are functions that belong to the object. Properties describe an object while methods perform actions.
+---
 
-In the case of the `console` object, we don't much care about its properties, we just want to do things with it. The most commonly used method of the `console` object is `log()`, which outputs messages to the console by accepting one or more **arguments.**
+## Core Concept: Data Types
 
-An argument is just a value you pass into a function whenever you call it. Here, arguments are good things. They provide the information ℹ️ that a function/method needs to do its job. `console.log()` can take multiple arguments, separated by commas. Each argument can be a string, number, boolean, variable, or even an expression.
+JavaScript has several **primitive data types**—basic building blocks that represent single values.
+
+### Strings
+
+A **string** is text. Wrap it in quotes (single, double, or backticks):
 
 ```javascript
-console.log("Hello, World!"); // Logs a string
-console.log(42); // Logs a number
-console.log(true); // Logs a boolean
-const name = "Alice";
-console.log("User name is:", name); // Logs a string and a variable
-console.log("Sum of 5 + 3 is:", 5 + 3); // Logs a string and an expression
+"Hello, World!";
+"JavaScript"`This is also a string`;
 ```
 
-**Note for Java/C# learners** JS is an OOP language like those others, but it's more than that. It also supports functional and procedural programming styles. Those other languages have been adopting more functional features over time, but JS has always had them. Furthermore, JS uses prototypal inheritance rather than class-based inheritance, which is a key difference.
-
-## Browser Function/Methods
-
-The readings reference `alert()`, `prompt()`, and `confirm()` functions that are built into web browsers. These functions create pop-up dialog boxes that interact with the user. These would only work in the browser environment, not in Node.js.
-
-All of these functions are methods of the `window` object. Since JS is just a mere programming language, it doesn't know about the web browser, but it does understand objects very well. Therefore, the ever graceful web browser offers up to JS all of its functionality packaged into a single giant global object called `window`.
-
-True functions, as we will learn later, are not tied to any object. They stand alone. Methods, on the other hand, are functions that belong to an object and must be accessed via `.` notation, with the exception of global objects such as `window`.
-
-## Hands-On Application
-
-### Step 1: Open the Browser Console
-
-For these exercises, we'll use the browser's developer console - a built-in tool that lets you write and test JavaScript immediately without creating files.
-
-**"Wait, didn't we set up VS Code?"** Yes! We'll use VS Code extensively in upcoming lessons. For now, we're starting with the console because:
-
-- **Immediate feedback** - see results instantly without running files
-- **Focus on concepts** - no file management distractions
-- **Professional skill** - developers use console constantly for testing ideas
-- **Perfect for basics** - simple variables and operations don't need file complexity
-
-1. **Open your web browser** (Preferably Chrome or FF Developer Edition for best experience)
-2. **Open the developer console**:
-   - **Chrome**: Press `F12` or `Ctrl+Shift+I` (Windows) / `Cmd+Option+I` (Mac)
-   - **Firefox**: Press `F12` or `Ctrl+Shift+K` (Windows) / `Cmd+Option+K` (Mac)
-3. **Find the Console tab** - click on it if it's not already selected
-4. **You should see a prompt** (usually `>`) where you can type JavaScript code
-
-### Step 2: Your First JavaScript Code
-
-1. **Type this in the console** and press Enter:
-   ```javascript
-   console.log("Hello, World!");
-   ```
-2. **Try another line**:
-
-   ```javascript
-   console.log("I'm learning JavaScript!");
-   ```
-
-3. **You should see the output** appear immediately in the console!
-
-You will also see `undefined` after each `console.log()` call because the method itself does not return a value. The purpose of `console.log()` is to display information in the console, not to produce a value that can be used elsewhere.
-
-This console environment will always output the result of the last expression evaluated, which is `undefined` for `console.log()`. ;)
-
-**Pro tip**: You can press the ↑ (up arrow) key to repeat previous commands.
-
-### Console Workflow Tips
-
-**For longer code blocks**: Instead of typing line by line, you can:
-
-1. **Use Shift+Enter** to create multiple lines without executing
-2. **Copy and paste** entire code blocks at once
-3. **Type in any text editor first**, then copy to console if needed
-
-**Common console quirks**:
-
-- **Variables disappear**: If you refresh the page, all your variables are lost - this is normal!
-- **Autocomplete suggestions**: Console might suggest variables from the website - just ignore these
-- **Red error messages**: Totally normal when learning - read them for helpful clues
-- **Long outputs get cut off**: Click the expand arrows to see more
-
-**Remember**: Making mistakes is how we learn! Every programmer, including your instructor, makes typos and errors daily. The console is a safe space to experiment, break things, and try again. 🧪
-
-**Pro workflow**: Keep your console open in a **blank tab** (about:blank or new tab) to avoid interference from website code. If the console becomes cumbersome, that's normal - we'll introduce file-based coding in upcoming lessons when projects get more complex!
-
-### Step 3: Working with Variables
-
-Variables let you store and reuse information. Let's practice in the browser console!
-
-**First, let's learn about comments**: Comments are notes you can add to your code to explain what it does. They start with `//` and JavaScript completely ignores them. Comments help you (and others) understand your code later.
+Key point: **If it's in quotes, it's a string.** Even if it looks like a number:
 
 ```javascript
-// This is a comment - it explains what the code does
-const age = 25; // You can also put comments at the end of a line
+"25"; // String
+25; // Number
 ```
 
-Comments are like sticky notes for your code - use them to remind yourself what you were thinking!
+### Numbers
 
-1. **In the console, type each line and press Enter**:
-
-   ```javascript
-   // This is a comment - it explains what the code does
-   // Comments start with // and are ignored by JavaScript
-
-   // Creating variables with const (default choice)
-   const firstName = "Alex";
-   ```
-
-2. **Continue with more variables**:
-
-   ```javascript
-   const age = 25;
-   const isStudent = true;
-   ```
-
-3. **Display the variables**:
-
-   ```javascript
-   console.log("First Name:", firstName);
-   console.log("Age:", age);
-   console.log("Is Student:", isStudent);
-   ```
-
-4. **You should see the output** appear as you type each line!
-
-**Note**: You can type multiple lines at once by holding Shift and pressing Enter to go to a new line without executing.
-
-### Step 4: Variable Types Challenge
-
-**Quick Challenge: Your Personal Data**
-
-1. **Create 4 variables about yourself**:
-
-   ```javascript
-   const myName = "Your actual name";
-   const myAge = 20; // Your real age
-   const isStudent = true; // Are you a student?
-   const favoriteNumber = 7; // Pick any number
-   ```
-
-2. **Test the types**:
-
-   ```javascript
-   console.log("Name type:", typeof myName);
-   console.log("Age type:", typeof myAge);
-   console.log("Student type:", typeof isStudent);
-   console.log("Number type:", typeof favoriteNumber);
-   ```
-
-3. **Display your data**:
-   ```javascript
-   console.log("Hi, I'm", myName, "and I'm", myAge, "years old!");
-   ```
-
-**That's it!** You understand data types when you can predict what `typeof` will return.
-
-### Step 5: Basic Operations Practice
-
-**Practice with Your Numbers**
-
-1. **Math with your data**:
-
-   ```javascript
-   const num1 = 10; // Use your age or any meaningful number
-   const num2 = 5; // Use another number that matters to you
-
-   const sum = num1 + num2;
-   const product = num1 * num2;
-
-   console.log(num1, "+", num2, "=", sum);
-   console.log(num1, "*", num2, "=", product);
-   ```
-
-2. **Combine strings**:
-
-   ```javascript
-   const firstName = "Your name";
-   const lastName = "Your last name";
-   const fullName = firstName + " " + lastName;
-
-   console.log("Full name:", fullName);
-   ```
-
-3. **When values change** (this is when we use `let`):
-
-   ```javascript
-   let counter = 0;
-   console.log("Start:", counter);
-
-   counter = counter + 5;
-   console.log("After adding 5:", counter);
-   ```
-
-**Template Literal Challenge**: Try rewriting the string combination using backticks and `${}` instead of `+`!
-
-### Step 6: Put It All Together
-
-**Simple About Me Program**
-
-Combine what you've learned into one small program:
+A **number** is any numeric value without quotes:
 
 ```javascript
-// Your basic info
-const name = "Your name here";
-const age = 20; // Your actual age
-const city = "Your city";
-const isLearningJS = true;
-
-// Display your info
-console.log("=== About Me ===");
-console.log("Name:", name);
-console.log("Age:", age);
-console.log("City:", city);
-console.log("Learning JavaScript:", isLearningJS);
-
-// One calculation
-const yearsTo30 = 30 - age;
-console.log("Years until 30:", yearsTo30);
+42;
+3.14 - 7;
+0;
+2.998e8; // Scientific notation
 ```
 
-**Your turn**:
+JavaScript doesn't distinguish between integers and decimals. They're all just `number` type.
 
-1. Replace the placeholder values with your real information
-2. Try rewriting one of the console.log statements using template literals
-3. Add one more piece of information about yourself
-
-**That's it!** You've created a JavaScript program using variables, data types, and operations.
-
-## Advanced Concepts & Comparisons
-
-### let, const, and var: Variable Declaration Keywords
-
-**Important note about the pre-work readings**: You'll notice the JavaScript.info article starts examples with `let`. This was written when `const` wasn't as widely adopted. In 2025, modern development practices have evolved!
-
-**Modern best practice**: Use `const` by default, `let` only when you need to reassign the variable, never `var`.
-
-**Why `const` by default?**
-
-- **Prevents accidental changes** - catches bugs before they happen
-- **Communicates intent** - makes it clear the value shouldn't change
-- **Team standards** - most modern codebases and linters enforce this
-- **Functional programming influence** - immutability is preferred when possible
-
-**Note**: Different teams may have varying standards, but `const`-by-default is increasingly the norm at modern companies.
+**Edge cases:**
 
 ```javascript
-// Good examples
-const PI = 3.14159; // Never changes
-const userName = "alex2024"; // Won't change in this program
-const score = 0; // Will change as game progresses
-const currentLevel = 1; // Will increase over time
-
-// This would cause an error:
-// PI = 3.14;  // Can't change const variables!
+Infinity - // A valid number (result of 1/0)
+  Infinity; // Negative infinity
+NaN; // "Not a Number" (but it's actually type number—confusing!)
 ```
 
-### String Operations and Template Literals
+If you see `NaN`, something went wrong with a calculation.
 
-**Traditional string combination**:
+### Booleans
+
+A **boolean** is one of two values: `true` or `false`. No quotes.
 
 ```javascript
-const name = "Sarah";
-const age = 28;
-const message = "Hi, I'm " + name + " and I'm " + age + " years old.";
+true;
+false;
 ```
 
-**Modern template literals** (easier!):
+**Not a boolean:**
 
 ```javascript
-const name = "Sarah";
-const age = 28;
-const message = `Hi, I'm ${name} and I'm ${age} years old.`;
+"true"; // String
+"false"; // String
 ```
 
-### Numbers and Math Operations
+Booleans are used to make decisions: "Is this condition true? Then do this."
+
+### Empty Values
+
+JavaScript has two special values that mean "nothing":
+
+**`undefined`** — The variable exists but has no value assigned yet.
 
 ```javascript
-const a = 10;
-const b = 3;
-
-console.log("Addition:", a + b); // 13
-console.log("Subtraction:", a - b); // 7
-console.log("Multiplication:", a * b); // 30
-console.log("Division:", a / b); // 3.333...
-console.log("Remainder:", a % b); // 1
-
-// Built-in Math functions
-console.log("Square root of 16:", Math.sqrt(16)); // 4
-console.log("Random number:", Math.random()); // 0.something
-console.log("Round 3.7:", Math.round(3.7)); // 4
+let x;
+console.log(x); // undefined
 ```
 
-## Troubleshooting & Best Practices
-
-### Common Beginner Errors
-
-#### "SyntaxError: Unexpected token"
+**`null`** — Intentional assignment of "nothing."
 
 ```javascript
-// ❌ Wrong - missing quotes
-const name = Alex;
+let y = null; // Deliberately saying "this is nothing"
+```
 
-// ✅ Correct - strings need quotes
+**For now, just know they exist.** You'll rarely use them deliberately.
+
+---
+
+## Creating Variables: `const` and `let`
+
+A **variable** is a named storage location. You create one with `const` or `let`:
+
+```javascript
 const name = "Alex";
+const age = 25;
+const isStudent = true;
 ```
 
-#### "ReferenceError: variable is not defined"
+### `const` vs `let`
+
+**Use `const` by default.** It means "this variable won't be reassigned."
 
 ```javascript
-// ❌ Wrong - typo in variable name
-const firstName = "John";
-console.log(firstname); // lowercase 'f'
-
-// ✅ Correct - exact spelling matters
-const firstName = "John";
-console.log(firstName);
+const favoriteColor = "blue"; // ✅ Perfect
 ```
 
-#### "Uncaught SyntaxError" in browser console
-
-- **Solution**: Check your syntax - missing quotes, brackets, or semicolons
-- **Tip**: The browser will show you the line where the error occurred
-- **Common fix**: Make sure all strings are wrapped in quotes
-
-### JavaScript Best Practices
-
-#### Naming conventions:
+**Use `let` only if you'll change the value later.**
 
 ```javascript
-// ✅ Good variable names (camelCase)
-const firstName = "John";
+let counter = 0;
+counter = counter + 1; // ✅ Changed, so `let` is correct
+```
+
+**Don't use `var`.** It's old syntax. Forget it exists.
+
+---
+
+## The Assignment Operator: `=`
+
+**`=` does NOT mean "equals."** It means "store the value on the right into the variable on the left."
+
+```javascript
+const x = 5; // Store 5 in x
+const y = x; // Store the VALUE of x (which is 5) in y
+
+console.log(x); // 5
+console.log(y); // 5
+```
+
+Later, you'll see `===` (triple equals), which means "are these values equal?"
+
+```javascript
+console.log(5 === 5); // true
+console.log(5 === "5"); // false (different types)
+```
+
+---
+
+## Semantic Naming: Write Readable Code
+
+**Bad variable names:**
+
+```javascript
+const x = "Alex";
+const y = 25;
+const z = true;
+```
+
+You have no idea what these are.
+
+**Good variable names:**
+
+```javascript
+const userName = "Alex";
 const userAge = 25;
-const isLoggedIn = true;
-const bankAccountBalance = 1500.75;
-
-// ❌ Avoid these naming styles
-const first_name = "John"; // snake_case (Python style)
-const UserAge = 25; // PascalCase (for classes only)
-const x = true; // Not descriptive
-const a1b2c3 = 1500.75; // Meaningless
+const isStudent = true;
 ```
 
-#### Code organization:
+Now it's obvious. This is **semantic naming**—names describe what they contain.
+
+### Naming Conventions
+
+- Use `camelCase`: first word lowercase, next words capitalized
+  - `userName`, `isStudent`, `totalCost`, `hasPermission`
+- Be specific: `userName` is better than `user`
+- For booleans, start with `is` or `has`: `isActive`, `hasPermission`
+- Avoid single letters except in loops (later)
+
+---
+
+## Basic Operators
+
+### Arithmetic Operators
 
 ```javascript
-// Group related variables together
-const userName = "alex2024";
-const userEmail = "alex@email.com";
-const userAge = 22;
-
-// Add blank lines between different sections
-const gameScore = 0;
-const gameLevel = 1;
-const gameLives = 3;
-
-// Use comments to explain what sections do
-// === Player Statistics ===
-console.log("Player:", userName);
-console.log("Score:", gameScore);
+5 + 3; // 8 (addition)
+5 - 3; // 2 (subtraction)
+5 * 3; // 15 (multiplication)
+5 / 3; // 1.666... (division)
+5 % 3; // 2 (modulus—remainder)
 ```
 
-#### Console.log() tips:
+**Modulus (`%`)** is useful for checking if something is even or odd:
 
 ```javascript
-// ✅ Descriptive output
-console.log("User name:", userName);
-console.log("Current score:", gameScore);
-
-// ❌ Hard to understand output
-console.log(userName);
-console.log(gameScore);
-
-// ✅ Use multiple values in one log
-console.log("Game status:", gameLevel, gameScore, gameLives);
+5 % 2; // 1 (odd)
+4 % 2; // 0 (even)
 ```
 
-### Browser Console Tips
+### Comparison Operators
 
-**Useful console shortcuts**:
-
-- **↑/↓ arrow keys**: Navigate through command history
-- **Tab**: Auto-complete variable names and functions
-- **Ctrl/Cmd + L**: Clear the console screen
-- **Shift + Enter**: Create multi-line input without executing
-- **Ctrl/Cmd + Shift + J**: Open console directly (Chrome)
-
-**Console features**:
-
-- **Variable inspection**: Just type a variable name and press Enter to see its value
-- **Error highlighting**: Syntax errors are highlighted in red
-- **Auto-complete**: Console suggests completions as you type
-- **History**: Your commands are saved for the session
-
-## Wrap-Up & Assessment
-
-### Key Takeaways
-
-1. **JavaScript runs everywhere** - browsers, servers, mobile apps
-2. **Variables store information** using `const` by default, `let` when reassignment is needed
-3. **console.log() displays output** - your main debugging tool
-4. **Browser console** provides immediate JavaScript execution for learning
-5. **Strings, numbers, and booleans** are the basic data types
-6. **Good naming makes code readable** - use descriptive variable names
-
-### Understanding What You've Built
-
-**Your JavaScript skills now include**:
-
-- **Variable creation and manipulation** using proper syntax
-- **Data type understanding** (strings, numbers, booleans)
-- **Console output** for debugging and displaying results
-- **Basic operations** (math and string concatenation)
-- **Browser console usage** for immediate JavaScript execution
-- **Best practices** for naming and code organization
-
-**This foundation enables**:
-
-- **Interactive web pages** with user input and response
-- **Data processing** and calculations in programs
-- **Building larger applications** with multiple files and functions
-- **Learning advanced JavaScript** concepts like functions and objects
-
-### JavaScript Quick Reference
+These return `true` or `false`:
 
 ```javascript
-// Variables (modern approach)
-const permanent = "cannot be changed"; // Default choice
-let changeable = "can be updated"; // Only when reassignment needed
-
-// Data types
-const text = "Hello"; // String
-const number = 42; // Number
-const decimal = 3.14; // Number
-const truth = true; // Boolean
-const falsy = false; // Boolean
-
-// Output
-console.log("Display this message");
-console.log("Variable value:", text);
-console.log(text, number, truth);
-
-// Operations
-const sum = 5 + 3; // 8
-const difference = 10 - 4; // 6
-const product = 6 * 7; // 42
-const quotient = 15 / 3; // 5
-const remainder = 17 % 5; // 2
-
-// String concatenation
-const full = "Hello" + " " + "World"; // "Hello World"
-const modern = `Hello ${text}`; // Template literal
-
-// Browser console usage
-// Type commands directly and press Enter
-// Use ↑/↓ keys to navigate history
+5 === 5; // true (strict equal—same value, same type)
+5 === "5"; // false (different types)
+5 !== 5; // false (strict not equal)
+5 > 3; // true
+5 < 3; // false
+5 >= 5; // true
+5 <= 3; // false
 ```
 
-### Quick Assessment
+**Always use `===` and `!==`.** Never use `==` or `!=` (they have weird behavior).
 
-**Test your understanding:**
+### Logical Operators
 
-1. **What's the difference between `let` and `const`?**
-   - Answer: `const` prevents reassignment (use by default), `let` allows reassignment (use when needed)
+These combine boolean values:
 
-2. **How do you execute JavaScript code in the browser?**
-   - Answer: Open developer console and type code, then press Enter
+```javascript
+true && true; // true (AND—both must be true)
+true && false; // false
+true || false; // true (OR—at least one must be true)
+false || false; // false
+!true; // false (NOT—reverses the value)
+!false; // true
+```
 
-3. **Which is correct for storing text?**
-   - a) `const name = Alex;`
-   - b) `const name = "Alex";`
-   - Answer: b) - strings need quotes
+---
 
-### HW: Hands-On Practice Screenshots
+## Template Literals: Combine Strings and Variables
 
-**Submit screenshots of your completed exercises:**
+You can insert variables into strings using backticks and `${}`:
 
-**✅ Required Submissions:**
+```javascript
+const name = "Alex";
+const age = 25;
 
-1. **Variable Types Exercise**:
-   - Screenshot showing your 4 personal variables
-   - Screenshot of the `typeof` results
-   - Screenshot of your display output
+console.log(`My name is ${name} and I'm ${age} years old.`);
+```
 
-2. **Operations Practice**:
-   - Screenshot of your math calculations with your numbers
-   - Screenshot of your string combination
-   - Screenshot of your counter example
+Output:
 
-3. **About Me Program**:
-   - Screenshot of your complete "About Me" program
-   - Screenshot showing at least one template literal implementation
+```
+My name is Alex and I'm 25 years old.
+```
 
-**✅ Completion Criteria:**
+**Inside `${}`, you can use expressions:**
 
-- Used your actual personal information (not placeholder text)
-- Screenshots show working final results (errors during development are normal!)
-- Demonstrated understanding of `const` vs `let`
-- Applied template literals in at least one example
+```javascript
+const x = 5;
+const y = 3;
 
-### HW: Pre-Work Reflection
+console.log(`${x} + ${y} = ${x + y}`); // 5 + 3 = 8
+```
 
-**Submit as a separate Markdown (.md) file addressing these questions:**
+**Old way (don't do this):**
 
-1. **How did the pre-work readings help you?** Did reading about program structure and variables before the hands-on practice make the concepts clearer? What connections did you make between the reading and the console exercises?
+```javascript
+console.log("My name is " + name + " and I'm " + age + " years old.");
+```
 
-2. **Building on previous knowledge**: We covered values, types, and operators in the previous lesson. How did today's focus on variables and program structure build on what you already learned? What felt familiar vs. new?
+Template literals are cleaner and more readable.
 
-3. **If you're taking other programming classes**: Was there anything surprising about JavaScript compared to other languages you've encountered? How does JavaScript's approach to variables and types compare to what you've seen elsewhere?
+---
 
-4. **If this is your first programming experience**: How are you feeling about programming so far? What aspects feel natural and which feel challenging? Are you starting to see how these basic building blocks (values, types, operators, variables) work together?
+## Type Coercion: When JavaScript Changes Types
 
-5. **The octopus analogy**: Eloquent JavaScript uses the tentacle/binding analogy for variables. Did this mental model help you understand how variables work? Do you have your own way of thinking about variables?
+JavaScript is **dynamically typed**, meaning it tries to make sense of operations even when types don't match:
 
-**Note**: This helps us understand your learning process and adjust future lessons accordingly.
+```javascript
+"5" + 5; // "55" (string concatenation—"5" forces addition to concat)
+"5" * 2; // 10 (numeric multiplication—2 forces coercion to number)
+"5" - 2; // 3 (subtraction requires numbers)
+true + 1; // 2 (true is treated as 1)
+false + 1; // 1 (false is treated as 0)
+```
 
-### Next Steps
+**Key takeaway:** `+` with strings concatenates. Other operators coerce to numbers.
 
-With JavaScript basics mastered, you're ready to:
+If something unexpected happens, type coercion might be the culprit.
 
-1. **Complete practice exercises** and homework assignments
-2. **Learn functions** for organizing and reusing code
-3. **Build interactive programs** that respond to user input
-4. **Explore web development** with HTML, CSS, and JavaScript
+---
 
-**Congratulations!** You've written your first JavaScript programs and understand the fundamental building blocks of programming.
+## Hands-On: Explore in Your Browser Console
+
+### What's the Browser Console?
+
+You've used DevTools to inspect HTML and CSS. The **Console tab** is different—it's a **complete JavaScript runtime** built into your browser. You can type JavaScript directly and see results instantly.
+
+The console is a **REPL** (Read-Eval-Print-Loop):
+
+- **Read** your code
+- **Evaluate** it (run it)
+- **Print** the result
+- **Loop** (wait for the next line)
+
+You'll see REPLs in many languages and tools. It's just a way to type code and get instant feedback.
+
+Why use it?
+
+- **Quick experimentation**: Try code ideas without creating files
+- **Immediate feedback**: Type, press Enter, see output
+- **No setup needed**: Works in any browser, right now
+- **Perfect for learning**: Test concepts before writing real programs
+
+### Getting to the Console
+
+1. Open your browser (Chrome, Firefox, Edge, Safari)
+2. Press **F12** (or right-click → "Inspect")
+3. Click the **Console** tab (you'll see a `>` prompt)
+4. Start typing JavaScript
+
+### Try These Examples
+
+Type each line, press Enter, and see the result:
+
+#### Strings
+
+```javascript
+"Hello";
+"Hello" + " " + "World"`Hello ${"World"}`;
+("5");
+```
+
+#### Numbers
+
+```javascript
+5;
+5 + 3;
+10 / 3;
+10 % 3;
+NaN;
+```
+
+#### Booleans
+
+```javascript
+true;
+false;
+5 > 3;
+5 === 5;
+5 === "5";
+```
+
+#### Variables
+
+```javascript
+const name = "Alex";
+const age = 25;
+name;
+age`${name} is ${age} years old`;
+```
+
+#### Type Coercion
+
+```javascript
+"5" + 5;
+5 + 5;
+"5" * 2;
+true + 1;
+```
+
+**Experiment.** Try combinations that surprise you. Break things. That's how you learn what's valid.
+
+**Using Warp to Learn:** If you get confused about why something works the way it does, open Warp and use the AI (type `#` followed by your question). Ask "Why does `"5" + 5` equal `"55"`?" and let the AI explain it.
+
+If you still have questions, ask the class in Teams or reach out to the instructor directly. Don't get stuck—that's what we're here for.
+
+---
+
+## Common Mistakes
+
+### Forgetting Quotes on Strings
+
+```javascript
+const name = Alex; // ❌ Error—JS looks for a variable named Alex
+const name = "Alex"; // ✅ Correct
+```
+
+### Mixing Up `=` and `===`
+
+```javascript
+const x = 5; // ✅ Assignment
+5 === 5; // ✅ Comparison (returns true)
+if ((x = 5)) {
+} // ❌ Assigns 5 to x (probably not what you meant)
+if (x === 5) {
+} // ✅ Compares x to 5
+```
+
+### Using `==` Instead of `===`
+
+```javascript
+5 == "5"; // true (weird—avoids type checking)
+5 === "5"; // false (correct—checks type too)
+```
+
+Always use `===`.
+
+### Treating Strings Like Numbers
+
+```javascript
+"5" + 5; // "55" (concatenation, not addition)
+Number("5") + 5; // 10 (explicitly convert to number first)
+```
+
+### Forgetting `const` or `let`
+
+```javascript
+x = 5; // ❌ Creates a global variable (bad)
+const x = 5; // ✅ Correct
+```
+
+---
+
+## Key Takeaways
+
+- **Primitives**: strings (text), numbers (math), booleans (true/false)
+- **Variables**: use `const` by default, `let` only if reassigning
+- **Assignment (`=`)**: stores value on right into variable on left
+- **Comparison (`===`)**: checks if values are equal
+- **Semantic naming**: make variable names describe their content
+- **Template literals**: use backticks and `${}` to combine strings and variables
+- **Type coercion**: JS tries to make sense of mixed types (be careful)
+
+---
+
+## Self-Check: Do You Understand?
+
+Try answering these without looking back:
+
+1. What's the difference between `"5"` and `5`?
+2. When would you use `let` instead of `const`?
+3. What does `===` do? How is it different from `=`?
+4. Write a template literal that combines two variables into a sentence.
+5. What does `5 % 2` return, and why is that useful?
+6. What's the difference between `5 + 3` and `"5" + 3`? Why?
+7. Why is semantic naming important?
+
+If you can answer these, you're ready for the next lesson where you'll actually write and run code.
+
+---
+
+## Next: Your First Program
+
+In the next lesson, you'll apply these concepts. You'll create variables, use template literals, and run actual JavaScript code with Bun. But now you understand what's happening under the hood.
