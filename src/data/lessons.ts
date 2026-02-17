@@ -171,6 +171,17 @@ const lessons = [
           "Understanding the foundational concepts of how computers process information and how the web functions under the hood.",
         video: null,
       },
+      {
+        id: "bun-biome-template",
+        title: "Bun Biome Template",
+        description:
+          "Learn what this template provides, clone it, and understand the project structure you'll use for the next few weeks.",
+        video: {
+          duration: 780,
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/bun.svg",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/biome-template.mp4",
+        },
+      },
     ],
   },
   {

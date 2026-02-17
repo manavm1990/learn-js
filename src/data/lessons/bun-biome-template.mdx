@@ -1,0 +1,450 @@
+# Bun Biome Template: Your JavaScript Project Starter
+
+Learn what this template provides, clone it, and understand the project structure you'll use for the next few weeks.
+
+## Introduction
+
+You've written JavaScript in the browser console. Now you'll work with a real project structure - the kind professional developers use.
+
+**What is this template?** A pre-configured JavaScript project with:
+
+- **Bun**: Fast JavaScript runtime (runs your code)
+- **Biome**: Code formatter and linter (keeps code clean)
+- **VS Code settings**: Auto-formatting and error detection
+- **Git**: Already initialized and ready to push
+
+Instead of setting up these tools manually for every assignment, you clone this template and start coding immediately.
+
+**The pattern**: Each assignment gives you a fresh copy of this template through GitHub Classroom. Same tools, same structure, different code challenges.
+
+### What You'll Learn Today
+
+- How to accept and clone GitHub Classroom assignments
+- What JSON is and why it matters
+- What `package.json` does
+- Why VS Code extensions matter
+- Where to write your code
+
+**Important**: You'll clone this template for each assignment. Same structure, fresh start each time.
+
+## Hands-On Application
+
+### Step 1: Clone the Template
+
+Navigate to your Dev folder:
+
+```bash
+cd ~/Dev
+```
+
+Clone the template using the link your instructor provided:
+
+1. Click the GitHub Classroom assignment link (from BrightSpace or Teams)
+2. Accept the assignment - GitHub creates your personal copy
+3. On the repository page, click the green "Code" button
+4. Select "GitHub CLI" and copy the command
+5. Paste it in your terminal and press Enter
+
+The command will look like:
+
+```bash
+gh repo clone 177-ss-2026/bun-biome-template-yourname
+```
+
+(Your actual command will have your GitHub username at the end)
+
+Navigate into the project (use your actual folder name):
+
+```bash
+cd bun-biome-template-yourname
+ls
+```
+
+You should see several files. We'll examine each one.
+
+### Step 2: Verify Bun Works
+
+Before installing dependencies, confirm Bun is installed:
+
+```bash
+bun --version
+```
+
+You should see a version number like `1.x.x`.
+
+**If you get "command not found"**: Bun isn't installed. Go back to your OS setup guide and install it:
+
+- [Mac Setup Guide](/mac-setup-guide)
+- [Windows Setup Guide](/windows-setup-guide)
+
+### Step 3: Install Dependencies
+
+```bash
+bun install
+```
+
+This downloads the tools the project needs. You'll see output showing packages being installed.
+
+### Step 4: Open in VS Code
+
+```bash
+code .
+```
+
+**CRITICAL**: When VS Code opens, you'll see a notification asking to install recommended extensions.
+
+**CLICK "INSTALL ALL".**
+
+<Figure
+  src="https://d8n3.c1.e2-8.dev/swic/extensions.png"
+  alt="VS Code recommended extensions prompt"
+  width={600}
+  height={200}
+  caption="When VS Code opens the project, install all recommended extensions. These are required for code formatting and error detection."
+/>
+
+These extensions are required:
+
+- **Biome**: Formats your code automatically
+- **Error Lens**: Shows errors inline
+- **GitHub Copilot**: AI assistance
+
+Without these extensions, your code won't format correctly and you'll miss errors.
+
+**If you don't see the prompt**, install them manually:
+
+1. Press `Cmd + Shift + X` (Mac) or `Ctrl + Shift + X` (Windows) to open Extensions
+2. Search for each extension by name (copy/paste from the list above)
+3. Click "Install" for each one
+
+**Verify Copilot is working**: Look at the bottom-right corner of VS Code. You should see the Copilot icon with a checkmark. If you see an error or "not authorized", click it and sign in with your GitHub account.
+
+<Figure
+  src="https://d8n3.c1.e2-8.dev/swic/copilot.png"
+  alt="GitHub Copilot status indicator"
+  width={400}
+  height={300}
+  caption="Click the Copilot icon to verify it's working. For this initial setup, click 'Disable Completions for 5 Minutes' to avoid distractions while exploring the template files."
+/>
+
+**Tip**: While exploring the template, disable Copilot completions temporarily so you can focus on understanding the files without AI suggestions popping up.
+
+### Step 5: Run the Project
+
+In your terminal (still inside the project folder):
+
+```bash
+bun run index.js
+```
+
+**Expected output**:
+
+```
+Hello via Bun (plain JS)!
+```
+
+**If you see this message, everything works.** You've successfully:
+
+- Cloned the template
+- Installed dependencies
+- Verified Bun installation
+- Run JavaScript code with Bun
+
+**If you get an error**:
+
+- Make sure you're in the right folder (`pwd` should show your template folder name)
+- Make sure you ran `bun install`
+- Check that `index.js` exists (`ls` should list it)
+
+## Understanding the Files
+
+### What is JSON?
+
+Open `package.json` in VS Code. You'll see something like this:
+
+```json
+{
+  "name": "bun-biome-template",
+  "type": "module",
+  "main": "index.js"
+}
+```
+
+**JSON** stands for **JavaScript Object Notation**. It's a way to store structured data in plain text.
+
+**Key features**:
+
+- Uses curly braces `{}`
+- Key-value pairs separated by colons
+- Keys must be in double quotes
+- Values can be strings, numbers, booleans, arrays, or objects
+
+**Sound familiar?** JSON looks like JavaScript objects because it IS based on JavaScript syntax. You'll learn objects soon - for now, just know JSON is how we store configuration.
+
+### `package.json`: The Project Manifest
+
+This file describes your project. Every JavaScript project has one.
+
+**Important sections**:
+
+```json
+{
+  "name": "bun-biome-template",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "bun run index.js",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.12"
+  }
+}
+```
+
+**What each part means**:
+
+- `name`: Project identifier
+- `type`: "module" means we use modern JavaScript imports
+- `main`: Entry file - what runs when you execute the project
+- `scripts`: Commands you can run with `bun run`
+- `devDependencies`: Tools needed for development
+
+**Other languages have similar files**:
+
+- Python: `pyproject.toml` (modern) or `requirements.txt` (older)
+- Java: `pom.xml` (Maven) or `build.gradle` (Gradle)
+- C#: `.csproj` files
+- Ruby: `Gemfile`
+- Rust: `Cargo.toml`
+
+Think of `package.json` as the blueprint for your project - it defines what the project is, what it needs, and how to run it.
+
+### `.vscode/settings.json`: Editor Configuration
+
+Open `.vscode/settings.json`. You'll see settings that control VS Code behavior:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "biomejs.biome",
+  "files.autoSave": "onFocusChange",
+  "editor.bracketPairColorization.enabled": true
+}
+```
+
+**What these settings do**:
+
+- **`formatOnSave`**: Automatically formats your code when you save (Cmd+S or Ctrl+S)
+- **`defaultFormatter`**: Uses Biome to format code consistently
+- **`autoSave`**: Saves your file when you click away from VS Code
+- **`bracketPairColorization`**: Colors matching brackets to help you spot errors
+
+**Other helpful settings in this file**:
+
+- **`autoClosingBrackets`**: Automatically adds closing brackets when you type opening ones
+- **`linkedEditing`**: Renames matching HTML/JSX tags together
+- **`codeActionsOnSave`**: Fixes errors and organizes imports automatically when you save
+
+**Why this matters**: These settings save you from tedious formatting work and catch mistakes automatically. You'll never submit code with inconsistent spacing or missing brackets.
+
+**Don't change these settings.** They're configured to match course standards.
+
+### `.vscode/extensions.json`: Required Extensions
+
+This file tells VS Code which extensions you need:
+
+```json
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "biomejs.biome",
+    "github.copilot-chat",
+    "htmlhint.vscode-htmlhint",
+    "ms-vsliveshare.vsliveshare",
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "yzhang.markdown-all-in-one"
+  ]
+}
+```
+
+When you opened the project, VS Code read this file and prompted you to install extensions.
+
+**What each extension does**:
+
+- **Biome**: Formats and lints your JavaScript code automatically
+- **GitHub Copilot Chat**: AI assistant for explaining code and answering questions
+- **Error Lens**: Shows errors directly in your code (red text inline instead of just squiggly lines)
+- **Code Spell Checker**: Catches typos in variable names and comments
+- **Better Comments**: Color-codes different types of comments (TODO, FIXME, etc.)
+- **HTMLHint**: Checks HTML for common mistakes
+- **Markdown All in One**: Helps write and preview Markdown files
+- **Live Share**: Lets you pair program with classmates in real-time
+
+**If you didn't install them**, do it now:
+
+1. Press `Cmd + Shift + X` (Mac) or `Ctrl + Shift + X` (Windows)
+2. Search for each extension by name
+3. Click Install
+
+**These extensions work together**: Error Lens shows you what's wrong, Biome fixes it automatically when you save, Copilot explains why it happened, and Code Spell Checker catches typos before they become bugs.
+
+### `biome.json`: Code Quality Rules
+
+Open `biome.json`. You'll see rules for formatting and linting:
+
+```json
+{
+  "formatter": {
+    "indentWidth": 2
+  },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useConst": "error",
+        "useNamingConvention": "error"
+      }
+    }
+  }
+}
+```
+
+**What this does**:
+
+- **Formatting**: Sets 2-space indentation (spaces, not tabs)
+- **Linting**: Catches errors and enforces code quality standards
+
+**Key rules you'll encounter**:
+
+- **`useConst`**: Forces you to use `const` instead of `let` when variables don't change
+- **`noVar`**: Prevents using old `var` keyword (we only use `const` and `let`)
+- **`useNamingConvention`**: Enforces camelCase for variables and functions
+- **`useSingleVarDeclarator`**: One variable per line (clearer code)
+- **`organizeImports`**: Automatically sorts your import statements
+
+**When you'll see these in action**:
+
+- Write `let x = 5` but never change `x` → Biome shows error: "Use const instead"
+- Name a variable `my_variable` → Error: "Use camelCase"
+- Use `var` → Error: "Use const or let"
+
+These errors appear as red squiggly lines. When you save, Biome auto-fixes what it can. For the rest, Error Lens shows you exactly what's wrong.
+
+**Don't change this file.** These rules match the course coding standards and prepare you for professional development.
+
+**Warning**: If Copilot or AI suggests disabling a rule to "fix" an error, don't do it. The error exists because your code violates a standard. Fix the code, not the rule. If you're stuck, ask your instructor.
+
+### `index.js`: Where Your Code Goes
+
+Open `index.js`:
+
+```javascript
+console.log("Hello via Bun (plain JS)!");
+```
+
+**THIS IS WHERE YOU WRITE CODE.**
+
+For JavaScript assignments using this template:
+
+- All your code goes in `index.js`
+- One file, no complicated structure
+- Focus on learning JavaScript, not project organization
+
+**To run your code**:
+
+```bash
+bun run index.js
+```
+
+## The Workflow
+
+**Every time you work on this project**:
+
+1. Open terminal, navigate to project:
+
+   ```bash
+   cd ~/Dev/bun-biome-template-yourname
+   ```
+
+   (Replace with your actual folder name)
+
+2. Open VS Code:
+
+   ```bash
+   code .
+   ```
+
+3. Edit `index.js`
+
+4. Save file (`Cmd + S` or `Ctrl + S`)
+   - Biome automatically formats your code
+
+5. Run code:
+
+   ```bash
+   bun run index.js
+   ```
+
+6. Commit changes:
+   ```bash
+   git add index.js
+   git commit -m "Add feature X"
+   git push
+   ```
+
+## Key Takeaways
+
+**The only file you edit**:
+
+- `index.js`: Where you write code
+
+**Files you need to understand** (but don't edit):
+
+- `package.json`: Project manifest - lists dependencies and scripts
+- `.vscode/settings.json`: Editor configuration - auto-formatting and auto-save
+- `.vscode/extensions.json`: Required extensions - what to install
+- `biome.json`: Code quality rules - enforces standards
+- `bun.lock`: Dependency versions - Bun manages this automatically
+
+**Critical setup steps** (for every assignment):
+
+1. Accept GitHub Classroom link
+2. Clone your repository
+3. Verify Bun is installed (`bun --version`)
+4. Run `bun install`
+5. Install VS Code extensions when prompted
+6. Write code in `index.js`
+
+**JSON preview**:
+
+- JSON is structured data
+- Uses curly braces and key-value pairs
+- Similar to JavaScript objects (you'll learn these soon)
+
+## Self-Check
+
+Answer in your notebook:
+
+1. Where do you get the clone command for assignments?
+2. What file describes your project's metadata and dependencies?
+3. Where do you write your JavaScript code in this template?
+4. What happens when you save a file in VS Code with Biome installed?
+5. What is JSON and why does it look familiar?
+
+## What's Next
+
+You now understand the template structure. Every assignment follows the same pattern:
+
+1. Accept GitHub Classroom link
+2. Clone repository
+3. Verify Bun is installed
+4. Install dependencies
+5. Install extensions
+6. Code in `index.js`
+7. Commit and push
+
+The next lesson teaches JavaScript values, types, and operators - the building blocks you'll use in `index.js`.
+
+The template is ready. The workflow is clear. Now you'll write real code.
