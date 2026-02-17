@@ -1,6 +1,6 @@
 # Windows Setup Guide
 
-Complete setup instructions for Windows users: VS Code, Node.js, Git, and developer tools.
+Complete setup instructions for Windows users: VS Code, Bun, Git, and developer tools.
 
 <VideoYT
   url="https://youtu.be/ABfJNoKmPCE?si=3TkXefl5c6x3Y5h0"
@@ -19,7 +19,7 @@ The following instructions are specifically for Windows users. Mac users should 
 ### What You'll Install Today
 
 - **Visual Studio Code**: Your primary code editor
-- **Node.js LTS**: JavaScript runtime for executing code outside browsers
+- **Bun**: All-in-one JavaScript toolkit (runtime + package manager + bundler + test runner)
 - **Git**: Version control system for tracking code changes
 - **Warp Terminal**: Modern terminal with integrated AI assistance
 - **GitHub CLI**: Command-line interface for GitHub operations
@@ -32,7 +32,7 @@ The following instructions are specifically for Windows users. Mac users should 
 
 **Visual Studio Code** functions as a powerful code editor created by Microsoft. It provides syntax highlighting for code readability, integrated terminal access, comprehensive file management, and thousands of extensions for added functionality. The editor serves as your primary workspace for writing and editing code.
 
-**Node.js** enables JavaScript execution directly on your computer rather than exclusively in web browsers. It includes npm (Node Package Manager) for installing code libraries and packages. We install the LTS (Long Term Support) version for maximum stability.
+**Bun** is an all-in-one JavaScript toolkit that runs JavaScript on your computer, manages packages, bundles code, and runs tests—all in one fast tool. It replaces the need for separate tools like Node.js and npm. Bun is 17-33x faster than npm for package installation and is designed as a drop-in replacement for Node.js with 100% compatibility as the goal.
 
 **Git** provides version control capabilities essential for professional development. It tracks changes in your code over time, enables collaboration with other developers, and creates snapshots of your work for recovery purposes.
 
@@ -54,13 +54,33 @@ On the "Select Additional Tasks" screen, ensure you check all the following opti
 
 Complete the installation by clicking Install and waiting for the process to finish. Launch VS Code to verify successful installation. You should see the Welcome screen with a dark theme by default.
 
-### Step 2: Install Node.js
+### Step 2: Install Bun
 
-Visit the Node.js website at `https://nodejs.org/`. You will see two download options. Select the LTS version (marked as "Recommended for Most Users") rather than the Current version. This downloads a file named like `node-v20.XX.X-x64.msi`.
+Bun is a modern all-in-one JavaScript toolkit that's faster than Node.js. We'll install it using a simple command in your terminal.
 
-Run the Node.js installer from your Downloads folder, granting Windows permission when requested. Progress through the installation wizard, accepting the license agreement and keeping the default installation location. On the Custom Setup screen, verify that "Add to PATH" is selected before proceeding.
+**Important**: Bun installation requires Git Bash or Warp Terminal. If you haven't set up either yet, you can return to this step after completing Step 3 (Git) and Step 4 (Warp).
 
-After installation completes, you'll verify Node.js works correctly from your terminal once Git Bash and/or Warp are set up in later steps. After installing Git in the next step, open **Git Bash** from the Start menu (or **Warp Terminal** if you've already installed it) and run `node --version` and `npm --version`; you should see version numbers such as `v20.11.0` and `10.2.4`.
+1. **Open Git Bash or Warp Terminal** (Git Bash comes with Git installation in Step 3)
+
+2. **Run the installation command**:
+
+   ```bash
+   curl -fsSL https://bun.sh/install | bash
+   ```
+
+   - This downloads and installs Bun automatically
+   - Wait for the installation to complete (1-2 minutes)
+   - You'll see output showing the installation progress
+
+3. **Restart your terminal**:
+   - Close and reopen Git Bash or Warp Terminal
+   - This ensures the Bun command is available
+
+4. **Verify Bun installation**:
+   - Type: `bun --version`
+   - You should see something like `1.3.9` (version number may be higher)
+
+**Optional Node.js Fallback**: If you encounter issues with Bun or need Node.js for a specific project, you can install Node.js from `https://nodejs.org/` as a backup. Select the LTS version and follow the installer instructions. Both Bun and Node.js can coexist on the same system.
 
 ### Step 3: Install Git
 
@@ -136,8 +156,7 @@ Open Warp Terminal and run these verification commands to confirm successful ins
 # Check each tool's version
 git --version
 code --version
-node --version
-npm --version
+bun --version
 gh --version
 gh auth status
 ```
@@ -154,18 +173,19 @@ Use these basic commands to navigate your file system in Warp Terminal:
 
 ### Troubleshooting Quick Reference
 
-If VS Code will not open, check your Start menu for "Visual Studio Code" or try running the installer again as administrator. For Node commands not found, restart your computer to refresh PATH, then reinstall Node.js if necessary, ensuring "Add to PATH" is selected. Git recognition issues may require checking for Git Bash in your Start menu or restarting your computer. If you cannot create the Code folder, verify you are in your user folder with appropriate permissions.
+If VS Code will not open, check your Start menu for "Visual Studio Code" or try running the installer again as administrator. For Bun commands not found, restart your terminal and try again. If issues persist, try the optional Node.js installation as a fallback. Git recognition issues may require checking for Git Bash in your Start menu or restarting your computer. If you cannot create the Dev folder, verify you are in your user folder with appropriate permissions.
 
 ### Keep Your Tools Updated
 
 Windows tools don’t auto‑upgrade as nicely as on Mac, so plan to refresh them **every 1–2 months**:
 
-- **VS Code, Node.js, Git, Warp, GitHub CLI**: Revisit their official download pages, grab the latest installers, and run them—this will update in place.
+- **VS Code, Git, Warp, GitHub CLI**: Revisit their official download pages, grab the latest installers, and run them—this will update in place.
+- **Bun**: Update by running `bun upgrade` in your terminal
 - Put a simple recurring reminder on your phone (for example, first weekend of every other month) to do this quick maintenance pass.
 
 ### What You've Accomplished
 
-You have successfully established a professional Windows development environment including Visual Studio Code for code editing, Node.js for JavaScript execution, Git for version control, Warp Terminal for enhanced command-line access, GitHub CLI for repository management, and an organized folder structure for your projects. This setup matches what professional developers use at technology companies worldwide.
+You have successfully established a professional Windows development environment including Visual Studio Code for code editing, Bun for JavaScript execution and package management, Git for version control, Warp Terminal for enhanced command-line access, GitHub CLI for repository management, and an organized folder structure for your projects. This setup uses modern, fast tools that professional developers are adopting at technology companies worldwide.
 
 ### Next Steps
 

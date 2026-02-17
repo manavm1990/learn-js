@@ -1,12 +1,12 @@
 # JavaScript Values, Types, and Operators
 
-Your first steps with JavaScript: variables, console.log, and running files with Node.js.
+Your first steps with JavaScript: **variables,** `console.log`, and **running files with Bun**.
 
 ## Introduction
 
 ### Welcome to JavaScript!
 
-You're about to write your first JavaScript code! JavaScript is the programming language of the web - it runs in every browser and powers interactive websites. But it's also much more: with Node.js, JavaScript runs on servers, mobile apps, and even desktop applications.
+You're about to write your first JavaScript code! JavaScript is the programming language of the web - it runs in every browser and powers interactive websites. But it's also much more: with Bun (and other runtimes), JavaScript runs on servers, mobile apps, and even desktop applications.
 
 **Real-world scenario**: When you click "Like" on a social media post, submit a form on a website, or see a live chat message appear, that's JavaScript in action. Companies like Facebook, Netflix, and Spotify rely heavily on JavaScript for their user interfaces and server operations.
 
@@ -30,7 +30,7 @@ You're about to write your first JavaScript code! JavaScript is the programming 
 **JavaScript is a programming language that:**
 
 - Makes websites interactive and dynamic
-- Runs in web browsers and on servers or just your local computer outside of a browser via Node.js
+- Runs in web browsers and on servers or just your local computer outside of a browser via Bun (or Node.js, Deno, etc.)
 - Is used for front-end (user interface) and back-end (server) development
 - Enables features like animations, form validation, and real-time updates
 - Powers web applications like Gmail, Facebook, and Twitter
@@ -46,7 +46,7 @@ You're about to write your first JavaScript code! JavaScript is the programming 
 ### What is EcmaScript?
 
 - The standardized specification that JavaScript follows
-- Ensures consistency across different environments (browsers, Node.js)
+- Ensures consistency across different environments (browsers, Bun, Node.js, Deno)
 - New versions introduce modern features (ES6, ES7, etc.). As of this writing ✍️, we are currently on ES2024.
 
 **Before continuing on,** please reference [Mozilla's explanation on JS and EcmaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction#javascript_and_the_ecmascript_specification) You can stop when you get to, "Getting Started with JavaScript."
@@ -54,10 +54,10 @@ You're about to write your first JavaScript code! JavaScript is the programming 
 ### JavaScript Environments, Runtimes, and Engines
 
 - **Environment**: Where JavaScript runs (browser, server, etc.)
-- **Runtime**: The platform that executes JavaScript code (Node.js, V8 engine)
-- **Engine**: The core component that interprets and runs JavaScript (V8, SpiderMonkey)
+- **Runtime**: The platform that executes JavaScript code (Bun, Node.js, Deno)
+- **Engine**: The core component that interprets and runs JavaScript (JavaScriptCore, V8, SpiderMonkey)
 
-Summarily, each browser has its own JavaScript engine (e.g., Chrome uses V8, Firefox uses SpiderMonkey). Node.js uses the V8 engine from Chrome to run JavaScript on servers and local machines.
+Summarily, each browser has its own JavaScript engine (e.g., Chrome uses V8, Firefox uses SpiderMonkey). Bun uses JavaScriptCore (from Safari) to run JavaScript on servers and local machines with exceptional speed. Node.js uses V8 (from Chrome).
 
 Because of EcmaScript, JavaScript behaves similarly across different environments, but there can be some edge cases where behavior differs slightly.
 
