@@ -33,5 +33,13 @@
   "workbench.colorCustomizations": {
     "@import": "./src/app/syntax-theme.json"
   },
-  "cSpell.words": ["bject", "Blockquotes", "Cilufo", "firstname"]
+  "cSpell.words": [
+    "bject",
+    "Blockquotes",
+    "Cilufo",
+    "ction",
+    "esult",
+    "firstname",
+    "ituation"
+  ]
 }
