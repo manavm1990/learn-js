@@ -98,6 +98,50 @@ The Git installer presents numerous configuration screens. Maintain the default 
 
 After installation, verify Git functionality by opening **Git Bash** or **Warp Terminal** and typing `git --version`. You should see output like `git version 2.42.0.windows.1`.
 
+#### Configure Git's Default Branch Name
+
+When you create a new Git repository, Git automatically creates a default branch as the starting point for your work. **Older versions and some Windows installations use `master` as the default branch name. We use `main` instead** for the following reasons:
+
+1. **Inclusivity**: The tech industry moved away from "master" language years ago to avoid outdated terminology
+2. **Consistency**: Modern platforms like GitHub use `main` by default, so we match that standard
+3. **Alignment**: Our course materials and examples all use `main`, so this ensures consistency in your workflows
+
+**Check your current default branch setting:**
+
+Open Git Bash or Warp Terminal and run:
+
+```bash
+git config --global init.defaultBranch
+```
+
+- If the output shows `main`, you're all set—your system uses the modern standard
+- If the output shows `master` or is blank, you need to update it
+
+**Update to use `main` as your default branch:**
+
+Run this command:
+
+```bash
+git config --global init.defaultBranch main
+```
+
+What this command does:
+
+- `git config` → Tells Git to store a configuration setting
+- `--global` → Saves this setting for your entire user account (not just one project)
+- `init.defaultBranch` → Specifies we're setting the default branch for new repositories
+- `main` → The branch name we want to use going forward
+
+**Verify the change:**
+
+Run the check command again:
+
+```bash
+git config --global init.defaultBranch
+```
+
+You should now see `main` as the output.
+
 ### Step 4: Install Warp Terminal
 
 Warp provides a modern terminal experience with integrated AI assistance. Download [Warp](https://app.warp.dev/referral/2KPYGE) by clicking "Download for Windows". Run the installer with default options and launch Warp when installation completes.
