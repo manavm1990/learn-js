@@ -59,7 +59,7 @@ export default async function Page({
               )}
             </div>
           </div>
-          <div className="hidden w-66 flex-shrink-0 lg:block">
+          <div className="hidden w-66 shrink-0 lg:block">
             <TableOfContents contentId="content" />
           </div>
         </div>
