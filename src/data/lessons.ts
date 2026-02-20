@@ -211,7 +211,7 @@ const lessons = [
       },
       {
         id: "js-comp-sci-1",
-        title: "Computer Science Fundamentals in JavaScript",
+        title: "Comp. Sci. Fundamentals 1",
         description:
           "Explore some computer science fundamentals through JavaScript, including conditional statements",
         video: null,
