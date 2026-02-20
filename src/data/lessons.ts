@@ -210,10 +210,10 @@ const lessons = [
         },
       },
       {
-        id: "js-values-types-ops",
-        title: "Values, Types, and Operators",
+        id: "js-comp-sci-1",
+        title: "Computer Science Fundamentals in JavaScript",
         description:
-          "Explore JavaScript's core data types, operators, and how to work with them effectively.",
+          "Explore some computer science fundamentals through JavaScript, including conditional statements",
         video: null,
       },
       {

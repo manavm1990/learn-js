@@ -1,0 +1,624 @@
+# Computer Science Fundamentals: How JavaScript Works
+
+## Introduction
+
+### Icebreaker: What Happens Behind the Scenes?
+
+Have you ever wondered what actually happens when you write `const name = "Alex"`? Where does that data go? How does JavaScript keep track of it? What's really going on when you reassign a variable?
+
+Today, you'll peek behind the curtain and understand **how JavaScript manages data in memory**—and why that matters when you write code.
+
+And unlike magic shows or professional wrestling, peeking behind the curtain doesn't spoil the fun. It makes you a better programmer by giving you a deeper understanding of how your code works.
+
+### What You Already Know
+
+In [Program Structure](/program-structure), you learned:
+
+- ✅ JavaScript's primitive types (strings, numbers, booleans)
+- ✅ How to create variables with `const` and `let`
+- ✅ Basic operators (arithmetic, comparison, logical)
+- ✅ Template literals for combining strings and variables
+
+**This lesson builds on that foundation.** You know the "what"—now you'll learn the "how" and "why."
+
+### What You'll Learn Today
+
+- **Memory model**: Where data lives and how JavaScript finds it
+- **References vs. values**: What variables actually store
+- **Immutability**: Why primitive values can't be changed (in depth)
+- **Type system deep-dive**: How JavaScript decides what's valid
+- **Conditional logic**: Teaching computers to make decisions (NEW)
+
+### Before You Begin
+
+**GitHub Classroom Repository**: You should have received a link to a GitHub Classroom assignment. Accept the assignment and clone the repository to your local machine. This is where you'll write code exercises and projects for this lesson. See the `README.md` in your repository for setup instructions. Those instructions are meant to work hand-in-hand with the content of this lesson, so make sure to follow along with both.
+
+## Core Concept: The Memory Model
+
+### Data and The Heap
+
+Every value you create in JavaScript lives somewhere in your computer's memory:
+
+```javascript
+"Hello, World!"; // This string exists in memory
+42; // This number exists in memory
+true; // This boolean exists in memory
+```
+
+JavaScript uses a region of memory called **the heap** to store all data. Think of it as a warehouse where every value gets a storage location.
+
+**Key insight**: When you create a value, JavaScript:
+
+1. Allocates space in the heap
+2. Stores the value there
+3. Gives you a way to access it (a reference)
+
+### References: How We Access Data
+
+A **reference** is like an address label—it points to where the actual data lives.
+
+```javascript
+const name = "Alex"; // `name` is a REFERENCE to the string "Alex"
+```
+
+**What's happening:**
+
+1. JavaScript stores `"Alex"` somewhere in the heap
+2. `name` holds a **reference** (pointer) to that location
+3. When you use `name`, JavaScript follows the reference to retrieve `"Alex"`
+
+**Analogy**: Think of variables as mailbox labels. The label (`name`) isn't the mail—it just tells you where to find it.
+
+### Garbage Collection: Automatic Cleanup
+
+When a value has no references pointing to it, JavaScript **automatically removes it from memory** (garbage collection):
+
+```javascript
+let x = "temporary"; // Create value, `x` references it
+x = "new value"; // `x` now references something else
+// "temporary" has no references → GARBAGE COLLECTED
+```
+
+**Why this matters**: You don't manually manage memory in JavaScript. Understand references, and memory takes care of itself.
+
+---
+
+### Checkpoint 1: Memory Model
+
+Before moving on, write answers to these in your **handwritten** notes ✍️. Handwriting slows you down just enough to actually process what you're reading instead of skimming past it.
+
+1. When you create a value like `42`, where does it get stored?
+2. What is a variable actually storing—the value itself, or something else?
+3. What happens to a value when nothing references it anymore?
+4. Draw a simple diagram: show a variable `age` that references the number `25` in the heap.
+
+---
+
+## Binding Data to References
+
+You've used `const` and `let` before. Now let's understand what they're really doing.
+
+### Creating References
+
+```javascript
+/**
+ * `=` is an ASSIGNMENT OPERATOR. It takes whatever is on the right side
+ * and assigns it to the left.
+ *
+ * Right side: A STRING (we know because it's wrapped in quotes)
+ * Left side:
+ *   1. `const` reserves space in memory
+ *   2. `js` is the name for that memory location
+ *   3. `=` binds the string value to this reference
+ */
+const js = "JavaScript"; // Semicolons are optional but recommended
+const java = "Java"; // Each creates a separate reference
+
+// If we intend to RE-ASSIGN, use `let`
+let x = 3;
+
+/**
+ * RE-ASSIGN the reference `x` to a NEW value.
+ *
+ * What happens to `3`?
+ * - If nothing else references it, garbage collector removes it
+ * - A NEW value `4` is created in the heap
+ * - `x` now points to this new location
+ */
+x = 4;
+```
+
+**Key distinction**:
+
+- `const`: Reference is permanent (can't rebind)
+- `let`: Reference can be updated (rebind to a new value)
+
+### Quick Review: Primitives You Know
+
+From [Program Structure](/program-structure), recall the primitive types. Here's a brief refresher with **memory context**:
+
+#### Numbers
+
+Any numeric value without quotes: `42`, `3.14`, `-7`, `0`, `2.998e8` (scientific notation)
+
+JavaScript doesn't distinguish between integers and decimals—they're all type `number`.
+
+**Edge cases:**
+
+- `Infinity` and `-Infinity` (result of division by zero)
+- `NaN` ("Not a Number"—ironically, it IS type `number`)
+
+If you see `NaN`, something went wrong with a calculation (e.g., `0/0` or `"hello" * 2`).
+
+**Memory note**: Each number is a separate value in the heap.
+
+#### Strings
+
+Text wrapped in quotes: `"Hello, World!"`, `'JavaScript'`, `` `template literal` ``
+
+Key point: **If it's in quotes, it's a string.** Even `"25"` is a string, not a number.
+
+For simplicity, use double quotes for regular strings like you would in English dialogue.
+
+**Memory note**: Each string, even identical ones created separately, occupies space in the heap.
+
+#### Booleans
+
+Logical values: `true` or `false` (no quotes!)
+
+Used for decision-making: "Is this condition true? Then do this."
+
+**Not booleans:**
+
+- `"true"` and `"false"` are strings
+- `1` and `0` are numbers (though they coerce to boolean in some contexts)
+
+**Memory note**: Just two possible values, but still stored in the heap when referenced.
+
+#### Empty Values
+
+JavaScript has two special values that represent the absence of a meaningful value: `null` and `undefined`.
+
+> The difference in meaning between undefined and null is an accident of JavaScript's design, and it doesn't matter most of the time. In cases where you actually have to concern yourself with these values, I recommend treating them as mostly interchangeable.
+> [Eloquent JavaScript](https://eloquentjavascript.net/01_values.html#h-FewqJ8K2E+)
+
+**For now, just know they exist.** JavaScript returns them to you; you rarely create them intentionally.
+
+---
+
+### Checkpoint 2: References and Primitives
+
+Answer these before moving on:
+
+1. What's the difference between `const` and `let` in terms of references?
+2. True or false: When you reassign a `let` variable, you're changing the original value in memory.
+3. What happens to the old value when you reassign a variable?
+4. Is `"42"` a number or a string? How can you tell?
+5. Write code that creates a reference to the string `"JavaScript"`, then reassigns it to `"TypeScript"`. Which keyword should you use?
+
+---
+
+## Types: The Classification System
+
+You know JavaScript has types (string, number, boolean). Now understand **why types matter**.
+
+### What Types Do
+
+Types tell JavaScript:
+
+- **What operations are valid**: You can multiply numbers but not strings (usually)
+- **How to interpret data**: `"5"` vs `5` are fundamentally different
+- **What to return**: Operators behave differently based on types
+
+### Primitive Data Types
+
+The types you just reviewed (numbers, strings, booleans, null, undefined) are all **primitives**.
+
+**What makes them primitive?**
+
+1. **Single, indivisible values**: A number is just a number. A string (even the entire text of _Moby Dick_ in quotes) is one value.
+2. **Immutable**: They cannot be changed or broken apart. You can only create new values.
+
+### Type Checking with `typeof`
+
+```javascript
+typeof 42; // "number"
+typeof "hello"; // "string"
+typeof true; // "boolean"
+typeof undefined; // "undefined"
+typeof null; // "object" (⚠️ JS quirk—this is a bug, ignore it)
+```
+
+**Note**: `typeof` always returns a **string**.
+
+### Immutability: Deep Dive
+
+Primitives cannot be modified. This is crucial to understand:
+
+```javascript
+// We use `let` (not `const`) because we intend to reassign
+let name = "Mark";
+
+/**
+ * Where's "Mark"?
+ * - His memory reference to `name` was destroyed
+ * - He was garbage collected to clear up memory
+ * - "Mark" didn't 'change into' "John". He was REPLACED!
+ */
+name = "John";
+```
+
+**Another example:**
+
+```javascript
+let count = 5;
+count = count + 1; // Creates NEW number (6), rebinds `count`
+// Doesn't modify the original 5
+```
+
+**One more example — two references, one value:**
+
+```javascript
+let greeting = "Hello";
+const snapshot = greeting; // snapshot holds a reference to "Hello"
+
+greeting = "Goodbye"; // greeting now points to a NEW string in the heap
+// Reassigning `greeting` does NOT affect `snapshot`
+// Each variable holds its own independent reference
+
+console.log(greeting); // "Goodbye"
+console.log(snapshot); // "Hello"
+```
+
+When you assign one variable to another, you copy the reference — you don't link the variables together. After that, they're independent. Whatever happens to `greeting` later has no effect on `snapshot`.
+
+**Why this matters**: Later, you'll work with **objects and arrays** (mutable types). Understanding primitive immutability now prepares you for that contrast.
+
+---
+
+### Checkpoint 3: Types and Immutability
+
+Write answers to these in your **handwritten** notes ✍️. This is the concept students most often get wrong — slowing down here pays off.
+
+1. Why does JavaScript have types? What problem do they solve?
+2. What does `typeof "123"` return?
+3. Explain immutability in your own words. Give an example.
+4. When you write `let x = 5; x = x + 1;`, does the original `5` change in memory? Why or why not?
+5. Name the five primitive types covered so far.
+
+---
+
+## Operators: Quick Review in Context
+
+You learned operators in [Program Structure](/program-structure). Let's reinforce them with the **memory model** in mind.
+
+**Key insight**: All operations **create new values**. Nothing mutates primitives.
+
+### Arithmetic
+
+```javascript
+5 + 3; // Creates NEW number (8) in memory
+5 * 2; // Creates NEW number (10)
+5 % 2; // Creates NEW number (1)—remainder
+```
+
+### Comparison
+
+These return `true` or `false`:
+
+```javascript
+5 === 5; // Compares VALUES in memory → true
+5 === "5"; // Different TYPES → false
+5 > 3; // true
+5 <= 3; // false
+```
+
+**Remember**: Always use `===` and `!==` (strict equality checks type AND value). Never use `==` or `!=`.
+
+### Logical
+
+These combine boolean values:
+
+```javascript
+true && false; // AND: both must be true → false
+true || false; // OR: at least one must be true → true
+!true; // NOT: reverses the value → false
+```
+
+### String Operations
+
+**Concatenation** (old way):
+
+```javascript
+"Hello " + "World"; // Creates NEW string → "Hello World"
+```
+
+**Template literals** (modern way):
+
+```javascript
+const name = "Alex";
+`Hello ${name}`; // Creates NEW string → "Hello Alex"
+```
+
+**Inside `${}`, you can use expressions:**
+
+```javascript
+const x = 5;
+const y = 3;
+`${x} + ${y} = ${x + y}`; // "5 + 3 = 8"
+```
+
+### Unary Operators
+
+**`typeof`** returns the type as a string:
+
+```javascript
+typeof 42; // "number"
+typeof "hello"; // "string"
+```
+
+**Increment/Decrement** create new values:
+
+```javascript
+let x = 5;
+x++; // Creates 6, rebinds x (doesn't modify the original 5)
+```
+
+---
+
+### Checkpoint 4: Operators
+
+Answer these before moving on:
+
+1. What's the difference between `===` and `==`? Which should you use?
+2. What does `5 + 3` return? What type is the result?
+3. What does `"5" + 3` return? Why?
+4. Write a template literal that displays "The sum of 10 and 5 is 15".
+5. What does `!true` evaluate to?
+
+---
+
+## Dynamic Typing: JavaScript's Flexibility
+
+JavaScript is **dynamically typed**, which means three things:
+
+1. **No explicit type declarations**: You don't write `const name: string = "Alex"`—JavaScript figures it out
+2. **Types determined at runtime**: JavaScript decides types as code runs
+3. **Type coercion**: JavaScript converts types automatically when needed
+
+### Type Coercion Examples
+
+```javascript
+"5" + 5; // "55" (string concatenation—`+` with string converts number)
+"5" * 2; // 10 (multiplication forces string → number)
+"5" - 2; // 3 (subtraction requires numbers)
+true + 1; // 2 (boolean → number: true = 1, false = 0)
+```
+
+**Pattern**: `+` with strings = concatenation. Other operators = numeric coercion.
+
+**When it goes wrong**:
+
+```javascript
+"hello" * 2; // NaN (can't convert "hello" to number)
+```
+
+### Why This Matters
+
+Dynamic typing makes JavaScript flexible but can lead to unexpected behavior. Understanding type coercion helps you:
+
+- Predict results of mixed-type operations
+- Debug `NaN` errors
+- Write safer code by avoiding implicit conversions
+
+**Best practice**: Be explicit about types when combining operations.
+
+---
+
+### Checkpoint 5: Dynamic Typing
+
+Answer these before moving on:
+
+1. What does "dynamically typed" mean?
+2. Why does `"5" + 5` give `"55"` but `"5" * 2` gives `10`?
+3. When you see `NaN`, what does it tell you?
+4. Is `true + true` valid JavaScript? If so, what does it return?
+5. How can you convert the string `"42"` to the number `42`?
+
+---
+
+## Conditional Logic: Teaching Computers to Decide
+
+So far, your programs run the same way every time. But real programs need to **adapt** based on different situations:
+
+- "If it's raining, suggest an umbrella"
+- "If the user is logged in, show the dashboard"
+- "If the temperature is above 80, display a warning"
+
+**Conditionals** let you write code that branches based on whether something is true or false.
+
+### The Problem and Solution
+
+**Problem**: How do you make a program respond differently to different inputs?
+
+**Solution**: Use `if` statements to evaluate conditions and execute different code paths.
+
+<Figure
+  src="https://file.notion.so/f/f/f260517f-b741-4b93-b79a-5aebc1ddfab7/3e527fe1-e9f4-44da-a22d-5e3400d3ae42/Untitled.png?table=block&id=c5a84126-40d4-4b35-9eb5-bb5e44819cd4&spaceId=f260517f-b741-4b93-b79a-5aebc1ddfab7&expirationTimestamp=1771574400000&signature=4EJcvvGwsvCh1aPUcJPAx4FUkbniRfpcScWNetmr6us&downloadName=Untitled.png"
+  alt="If statement syntax showing if (Thing is True) with curly braces for code block"
+  width={1200}
+  height={400}
+  caption="Basic if statement structure"
+/>
+
+<Figure
+  src="https://file.notion.so/f/f/f260517f-b741-4b93-b79a-5aebc1ddfab7/605ac800-78dc-4de5-a468-621707914acb/Untitled.png?table=block&id=1d23f9b2-6e52-4f9d-a4e8-e1d2330a45b7&spaceId=f260517f-b741-4b93-b79a-5aebc1ddfab7&expirationTimestamp=1771574400000&signature=AsMJdn2SlQBbgx2rwpP3UOfPxtT7kUByCslKonEQcno&downloadName=Untitled.png"
+  alt="Flowchart of conditional logic with decision path: if something is true, do one thing; otherwise do another"
+  width={1200}
+  height={500}
+  caption="If-else decision flow (Credit: Free Code Camp)"
+/>
+
+- **The most basic conditional statement is the If Statement**
+  - If something is True do this, otherwise do something else
+
+```javascript
+const isRaining = true;
+
+if (isRaining) {
+  console.log("Don't forget your umbrella!");
+} else {
+  console.log("Enjoy the sunshine!");
+}
+```
+
+Oft times, we have more than two conditions to check. In that case, we can use `else if` statements to check for additional conditions:
+
+```javascript
+const weather = "cloudy";
+
+/**
+ * COMPARISON OPERATOR: `===` checks for strict equality (value and type).
+ *
+ * 1. Go into memory and find the value associated with the `weather` reference.
+ * 2. Compare that value to the string "sunny".
+ * 3. If they are strictly equal, run the code block in the curly braces.
+ * 4. If not, move on to the next condition and repeat the process.
+ */
+if (weather === "sunny") {
+  console.log("It's a bright day!");
+} else if (weather === "cloudy") {
+  console.log("It might rain later.");
+} else if (weather === "rainy") {
+  console.log("Don't forget your umbrella!");
+} else {
+  console.log("Weather condition unknown.");
+}
+```
+
+We can also apply some of the logical operators we learned about earlier to create more complex conditions:
+
+```javascript
+const temperature = 75;
+
+if (temperature > 80) {
+  console.log("It's a hot day!");
+} else if (temperature > 60) {
+  console.log("The weather is pleasant.");
+} else {
+  console.log("It's a bit chilly.");
+}
+```
+
+### Combining Conditions
+
+Use logical operators (`&&`, `||`, `!`) to create more sophisticated decisions:
+
+```javascript
+const temperature = 75;
+const isRaining = false;
+
+// Using && (AND) - both must be true
+if (temperature > 70 && !isRaining) {
+  console.log("Perfect day for a picnic!");
+}
+
+// Using || (OR) - at least one must be true
+if (temperature < 32 || isRaining) {
+  console.log("Better stay inside.");
+}
+
+// Complex condition
+if (temperature > 80 && temperature < 100 && !isRaining) {
+  console.log("Great day for the pool!");
+}
+```
+
+**Key insight**: Conditionals make your programs **dynamic**—they respond differently based on data.
+
+---
+
+### Checkpoint 6: Conditional Logic
+
+Write answers to these in your **handwritten** notes ✍️. Writing out conditionals by hand helps lock in the syntax before you start typing it.
+
+1. What does an `if` statement do?
+2. What's the difference between `if...else if` and two separate `if` statements?
+3. Write a conditional: If `age` is 18 or older, log "Adult". Otherwise, log "Minor".
+4. What does this evaluate to: `5 > 3 && 10 < 5`? Why?
+5. How would you check if a variable `score` is between 80 and 90 (inclusive)?
+
+---
+
+## Wrap-Up
+
+### Key Takeaways
+
+**Memory Model:**
+
+- All data lives in the heap
+- Variables are references (addresses) to data
+- Garbage collection removes unreferenced values
+
+**Types & Immutability:**
+
+- Primitives (string, number, boolean, null, undefined) can't be modified
+- Operations create new values, never change originals
+- JavaScript is dynamically typed (types determined at runtime)
+
+**Conditional Logic:**
+
+- `if` statements make programs respond to conditions
+- Use `===` for comparisons (checks type AND value)
+- Chain conditions with `else if`, combine with `&&` / `||`
+
+### You're Building a Mental Model
+
+This lesson wasn't about memorizing syntax—you already know the basics from [Program Structure](/program-structure). It's about understanding **how JavaScript thinks**:
+
+- Where data lives (heap)
+- How references work (variables point to values)
+- Why types matter (operations depend on them)
+- How to make decisions (conditionals)
+
+This foundation supports everything you'll build next.
+
+---
+
+### Self-Check: Do You Understand?
+
+Before moving on, test your understanding:
+
+1. Draw a diagram: Variable `x` references the number `10` in the heap. Then `x` is reassigned to `20`. What happens to `10`?
+2. Why can't you modify a primitive value?
+3. What's the difference between `"5"` and `5` in memory?
+4. Write a conditional: If `score` is 90 or above, log "A". If 80-89, log "B". Otherwise, log "C".
+5. Why does `"hello" - 5` give `NaN`?
+6. Explain the difference between `const` and `let` in terms of what they allow you to do with references.
+
+---
+
+### Next Steps
+
+With the fundamentals in place, you're ready to:
+
+- Write functions that encapsulate logic
+- Work with loops to repeat operations
+- Build interactive programs that respond to user input
+
+Keep your notes handy—you'll reference these concepts throughout your programming journey.
+
+---
+
+### Key Terms
+
+- **Heap**: Region of memory where all JavaScript values are stored
+- **Reference**: A pointer to a location in memory (what variables actually store)
+- **Garbage Collection**: Automatic removal of unreferenced values from memory
+- **Primitive Data Types**: Basic, immutable types (number, string, boolean, null, undefined)
+- **Immutable**: Cannot be changed—new values must be created instead
+- **Type Coercion**: Automatic conversion of values between types
+- **Dynamically Typed**: Types determined at runtime, not declared explicitly
+- **Conditional Statement**: Code that executes different paths based on conditions
+- **Comparison Operators**: Operators that compare values and return booleans (`===`, `>`, `<`, etc.)
+- **Logical Operators**: Operators that combine boolean values (`&&`, `||`, `!`)
