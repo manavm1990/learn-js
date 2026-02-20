@@ -150,7 +150,15 @@ When you first open Warp, you'll be prompted to sign up for a Warp account. **Ch
 
 Warp improves upon Command Prompt and PowerShell through its modern interface with tabs, intelligent autocompletion, built-in AI help accessible with the `#` symbol, and superior text rendering. Use Warp as your primary terminal moving forward.
 
-**Note:** If you encounter permission issues when running commands in Warp, try running Warp as administrator by right-clicking its icon and selecting "Run as administrator". Also keep **Git Bash** (installed with Git for Windows) as a backup terminal in case Warp is unavailable.
+**⚠️ Windows Administrator Mode (IMPORTANT for some systems)**
+
+If you later encounter permission errors when running commands (especially the Bun installation command or other setup commands), **Windows is blocking access**. This is more common on older laptops or corporate machines.
+
+**How to fix it**: Right-click the Warp icon on your desktop or in your Start menu and select "Run as administrator". Then try your command again. This gives Warp permission to execute the command.
+
+**When to try this**: If any course command fails with a permission error message or simply produces no output, admin mode often solves it immediately.
+
+**Backup option**: Keep **Git Bash** (installed with Git for Windows) as a backup terminal. If Warp gives you trouble, Git Bash often works just fine and doesn't require admin mode.
 
 **Important Note About PowerShell**: While PowerShell will technically work for most course commands, you will miss significant benefits by not using Warp Terminal. The integrated AI assistance in Warp helps you learn commands, debug errors, and understand what you are doing in real-time. PowerShell users will need to rely on external resources for the same support. Additionally, some course instructions may reference Warp-specific features that PowerShell lacks. We strongly recommend using Warp Terminal to ensure the best learning experience and to stay aligned with course materials.
 
@@ -217,7 +225,20 @@ Use these basic commands to navigate your file system in Warp Terminal:
 
 ### Troubleshooting Quick Reference
 
-If VS Code will not open, check your Start menu for "Visual Studio Code" or try running the installer again as administrator. For Bun commands not found, restart your terminal and try again. If issues persist, try the optional Node.js installation as a fallback. Git recognition issues may require checking for Git Bash in your Start menu or restarting your computer. If you cannot create the Dev folder, verify you are in your user folder with appropriate permissions.
+**Command fails with a permission error or produces no output?**
+→ Run Warp or Git Bash as administrator (right-click the icon, select "Run as administrator"), then try the command again. This fixes most Windows permission issues.
+
+**VS Code will not open?**
+→ Check your Start menu for "Visual Studio Code" or try running the installer again as administrator.
+
+**Bun commands not found?**
+→ Close and reopen Warp completely (not just a new tab). If it still doesn't work, try running Warp as administrator. If issues persist, try the optional Node.js installation as a fallback.
+
+**Git not recognized?**
+→ Check your Start menu for "Git Bash" to verify it installed. If Git Bash exists but `git --version` doesn't work in Warp, try running Warp as administrator. You may need to restart your computer.
+
+**Cannot create the Dev folder?**
+→ Verify you are in your user folder with appropriate permissions. Try right-clicking and selecting "New → Folder" again.
 
 ### Keep Your Tools Updated
 
