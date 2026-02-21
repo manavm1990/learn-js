@@ -1,13 +1,13 @@
 import clsx from "clsx";
 
-export function CheckmarkIcon({
-  className,
-  ...props
-}: React.ComponentProps<"svg">) {
+export function CheckmarkIcon({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <svg
       viewBox="0 0 16 16"
       fill="none"
+      // Decorative by default; callers can override via props.
+      aria-hidden="true"
+      focusable="false"
       className={clsx(className, "h-4 shrink-0")}
       {...props}
     >

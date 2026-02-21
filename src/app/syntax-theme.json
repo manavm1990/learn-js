@@ -352,31 +352,21 @@
     },
     {
       "name": "[HTML] - Attribute Values",
-      "scope": [
-        "text.html string.quoted",
-        "text.html punctuation.definition.string"
-      ],
+      "scope": ["text.html string.quoted", "text.html punctuation.definition.string"],
       "settings": {
         "foreground": "var(--color-sky-300)"
       }
     },
     {
       "name": "[HTML] - Punctation",
-      "scope": [
-        "text.html punctuation",
-        "text.html keyword.operator",
-        "text.html meta.tag"
-      ],
+      "scope": ["text.html punctuation", "text.html keyword.operator", "text.html meta.tag"],
       "settings": {
         "foreground": "var(--color-gray-400)"
       }
     },
     {
       "name": "[HTML] - Doctype",
-      "scope": [
-        "text.html meta.tag.sgml",
-        "text.html meta.tag.sgml punctuation"
-      ],
+      "scope": ["text.html meta.tag.sgml", "text.html meta.tag.sgml punctuation"],
       "settings": {
         "foreground": "color-mix(in oklab, var(--color-blue-300) 75%, transparent)"
       }
@@ -435,10 +425,7 @@
     },
     {
       "name": "[CSS] - @ - eg. @media",
-      "scope": [
-        "source.css keyword.control.at-rule",
-        "source.css punctuation.definition.keyword"
-      ],
+      "scope": ["source.css keyword.control.at-rule", "source.css punctuation.definition.keyword"],
       "settings": {
         "foreground": "var(--color-gray-300)"
       }
@@ -591,10 +578,7 @@
     },
     {
       "name": "[HTML in JS] - JSX tags",
-      "scope": [
-        "source.js support.class.component",
-        "source.ts support.class.component"
-      ],
+      "scope": ["source.js support.class.component", "source.ts support.class.component"],
       "settings": {
         "foreground": "var(--color-purple-300)"
       }
@@ -643,10 +627,7 @@
     },
     {
       "name": "[JS] - Import String - eg. '../location/file",
-      "scope": [
-        "meta.import string",
-        "meta.import string punctuation.definition.string"
-      ],
+      "scope": ["meta.import string", "meta.import string punctuation.definition.string"],
       "settings": {
         "foreground": "var(--color-purple-300)"
       }

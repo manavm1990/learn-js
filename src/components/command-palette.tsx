@@ -66,20 +66,12 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
         </div>
 
         <div className="max-h-80 overflow-y-auto px-1 py-2 text-sm">
-          {isLoading && (
-            <div className="px-3 py-2 text-gray-500">Loading…</div>
-          )}
+          {isLoading && <div className="px-3 py-2 text-gray-500">Loading…</div>}
 
-          {error && (
-            <div className="px-3 py-2 text-red-600">
-              Failed to load search index.
-            </div>
-          )}
+          {error && <div className="px-3 py-2 text-red-600">Failed to load search index.</div>}
 
           {!isLoading && !error && !results.length && query && (
-            <div className="px-3 py-2 text-gray-500">
-              No results for “{query}”.
-            </div>
+            <div className="px-3 py-2 text-gray-500">No results for “{query}”.</div>
           )}
 
           {!query && !isLoading && (

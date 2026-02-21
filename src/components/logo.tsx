@@ -4,6 +4,9 @@ export function Logo(props: React.ComponentProps<"svg">) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 209 90"
       fill="currentColor"
+      // Decorative by default; callers can override via props.
+      aria-hidden="true"
+      focusable="false"
       {...props}
     >
       <defs>

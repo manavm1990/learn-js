@@ -1,11 +1,11 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import { ContentLink } from "@/components/content-link";
 import { Logo } from "@/components/logo";
 import { PageSection } from "@/components/page-section";
 import { SidebarLayoutContent } from "@/components/sidebar-layout";
 import { getModules } from "@/data/lessons";
 import { PlayIcon } from "@/icons/play-icon";
-import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "SWIC Web Development",
@@ -28,10 +28,9 @@ export default function Page() {
               <Logo className="h-8 fill-gray-950 dark:fill-white" />
               <h1 className="sr-only">Course overview</h1>
               <p className="mt-7 max-w-lg text-base/7 text-pretty text-gray-600 dark:text-gray-400">
-                A modern web development course that teaches you how to build
-                using real world tools and practices. From getting comfortable
-                with the terminal and Git to understanding JavaScript as a
-                programming language and onwards to React and NextJS.
+                A modern web development course that teaches you how to build using real world tools
+                and practices. From getting comfortable with the terminal and Git to understanding
+                JavaScript as a programming language and onwards to React and NextJS.
               </p>
 
               <div className="mt-10">
@@ -47,11 +46,7 @@ export default function Page() {
 
             <div className="grid grid-cols-1 gap-y-16 pb-10 sm:px-4">
               {modules.map((module, index: number) => (
-                <PageSection
-                  key={module.id}
-                  id={module.id}
-                  title={`Part ${index + 1}`}
-                >
+                <PageSection key={module.id} id={module.id} title={`Part ${index + 1}`}>
                   <div className="max-w-2xl">
                     <h2 className="text-2xl/7 font-medium tracking-tight text-pretty text-gray-950 dark:text-white">
                       {module.title}

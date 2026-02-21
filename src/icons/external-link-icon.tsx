@@ -6,6 +6,9 @@ export function ExternalLinkIcon({ className }: { className?: string }) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
+      // Decorative by default.
+      aria-hidden="true"
+      focusable="false"
       className={className}
     >
       <path

@@ -1,20 +1,14 @@
 "use client";
 
+import { CloseButton, Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { clsx } from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { createContext, useContext, useState } from "react";
 import { useCommandPalette } from "@/components/command-palette-provider";
 import { IconButton } from "@/components/icon-button";
 import { SidebarIcon } from "@/icons/sidebar-icon";
 import type { Video } from "@/types/video.types";
-import {
-  CloseButton,
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-} from "@headlessui/react";
-import { clsx } from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-import { createContext, useContext, useState } from "react";
 
 // Define readonly module type
 type ReadonlyModule = Readonly<{
@@ -87,9 +81,7 @@ function CourseNavigation({
                 >
                   <Link
                     href={`/${lesson.id}`}
-                    aria-current={
-                      `/${lesson.id}` === pathname ? "page" : undefined
-                    }
+                    aria-current={`/${lesson.id}` === pathname ? "page" : undefined}
                     {...(onNavigate && { onClick: onNavigate })}
                     className="aria-[current=page]:font-medium aria-[current=page]:text-gray-950 dark:aria-[current=page]:text-white"
                   >
@@ -127,11 +119,7 @@ function MobileNavigation({
             </CloseButton>
           </div>
         </div>
-        <CourseNavigation
-          modules={modules}
-          onNavigate={onClose}
-          className="px-4 pb-4 sm:px-6"
-        />
+        <CourseNavigation modules={modules} onNavigate={onClose} className="px-4 pb-4 sm:px-6" />
       </DialogPanel>
     </Dialog>
   );
@@ -156,10 +144,7 @@ export function SidebarLayout({
         setIsMobileDialogOpen,
       }}
     >
-      <div
-        data-sidebar-collapsed={isSidebarOpen ? undefined : ""}
-        className="group"
-      >
+      <div data-sidebar-collapsed={isSidebarOpen ? undefined : ""} className="group">
         <aside className="fixed inset-y-0 left-0 w-2xs overflow-y-auto border-r border-gray-950/10 group-data-sidebar-collapsed:hidden max-xl:hidden dark:border-white/10">
           <nav aria-label="Course" className="px-6 py-4">
             <div className="sticky top-4 flex h-6">
@@ -177,29 +162,18 @@ export function SidebarLayout({
             </div>
           </nav>
         </aside>
-        <div className="xl:not-group-data-sidebar-collapsed:ml-(--container-2xs)">
-          {children}
-        </div>
+        <div className="xl:not-group-data-sidebar-collapsed:ml-(--container-2xs)">{children}</div>
       </div>
     </SidebarContext.Provider>
   );
 }
 
-export function SidebarLayoutContent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const {
-    isSidebarOpen,
-    setIsSidebarOpen,
-    isMobileDialogOpen,
-    setIsMobileDialogOpen,
-  } = useContext(SidebarContext);
+export function SidebarLayoutContent({ children }: { children: React.ReactNode }) {
+  const { isSidebarOpen, setIsSidebarOpen, isMobileDialogOpen, setIsMobileDialogOpen } =
+    useContext(SidebarContext);
   const { openPalette } = useCommandPalette();
 
-  const isMac =
-    typeof navigator !== "undefined" && navigator.platform.includes("Mac");
+  const isMac = typeof navigator !== "undefined" && navigator.platform.includes("Mac");
 
   return (
     <>
@@ -217,10 +191,7 @@ export function SidebarLayoutContent({
             <SidebarIcon className="shrink-0 stroke-gray-950 dark:stroke-white" />
           </IconButton>
           {!isSidebarOpen && (
-            <IconButton
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="max-xl:hidden"
-            >
+            <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="max-xl:hidden">
               <SidebarIcon className="shrink-0 stroke-gray-950 dark:stroke-white" />
             </IconButton>
           )}

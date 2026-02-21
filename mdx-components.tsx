@@ -1,13 +1,13 @@
-import { Accordion } from "@/components/accordion";
-import { CopyableCode } from "@/components/code-block";
-import { Figure } from "@/components/figure";
-import { VideoYT } from "@/components/video-yt";
-import { ExternalLinkIcon } from "@/icons/external-link-icon";
 import { transformerColorizedBrackets } from "@shikijs/colorized-brackets";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import React, { type ReactNode } from "react";
 import { createHighlighter, type Highlighter } from "shiki";
+import { Accordion } from "@/components/accordion";
+import { CopyableCode } from "@/components/code-block";
+import { Figure } from "@/components/figure";
+import { VideoYT } from "@/components/video-yt";
+import { ExternalLinkIcon } from "@/icons/external-link-icon";
 import theme from "./src/app/syntax-theme.json";
 
 const IMAGE_PROPS_REGEX = /^[^|]+\|\d+x\d+(\|unoptimized)?$/;
@@ -20,9 +20,7 @@ function getTextContent(node: ReactNode): string {
   if (Array.isArray(node)) return node.map(getTextContent).join("");
 
   if (typeof node === "object" && "props" in node)
-    return getTextContent(
-      (node as { props: { children: ReactNode } }).props.children,
-    );
+    return getTextContent((node as { props: { children: ReactNode } }).props.children);
 
   return "";
 }
@@ -71,6 +69,7 @@ async function CodeBlock({ code, lang }: { code: string; lang: string }) {
   return (
     <div
       className="max-w-full overflow-x-auto rounded-lg bg-gray-100 p-3 sm:p-4 dark:bg-gray-800"
+      // Shiki produces HTML for syntax highlighting.
       dangerouslySetInnerHTML={{ __html: out }}
     />
   );
@@ -80,8 +79,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     a: ({ href, children, ...props }) => {
       // Check if it's an external link
-      const isExternal =
-        href && (href.startsWith("http") || href.startsWith("https"));
+      const isExternal = href && (href.startsWith("http") || href.startsWith("https"));
 
       if (isExternal) {
         return (
@@ -147,7 +145,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
     img: ({ alt, ...props }) => {
       const schemePlaceholder = encodeURIComponent("{scheme}");
-      let width, height, unoptimized;
+      let width: number | undefined;
+      let height: number | undefined;
+      let unoptimized: boolean | undefined;
 
       /**
        * MD is annotated with image dimensions after the alt tag
@@ -188,15 +188,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           </>
         );
 
-      return (
-        <Image
-          {...props}
-          alt={alt}
-          width={width}
-          height={height}
-          unoptimized={unoptimized}
-        />
-      );
+      return <Image {...props} alt={alt} width={width} height={height} unoptimized={unoptimized} />;
     },
     async pre(props) {
       const child = React.Children.only(props.children);
@@ -207,8 +199,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     },
     code: ({ children, className }) => {
       // If it's inside a pre tag, let pre handle it
-      if (className?.startsWith("language-"))
-        return <code className={className}>{children}</code>;
+      if (className?.startsWith("language-")) return <code className={className}>{children}</code>;
 
       // Otherwise, it's inline code
       return (
@@ -220,23 +211,15 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Table components for proper MDX table rendering
     table: ({ children }) => (
       <div className="my-4 overflow-x-auto">
-        <table className="min-w-full border-collapse text-sm">
-          {children}
-        </table>
+        <table className="min-w-full border-collapse text-sm">{children}</table>
       </div>
     ),
-    thead: ({ children }) => (
-      <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>
-    ),
+    thead: ({ children }) => <thead className="bg-gray-100 dark:bg-gray-800">{children}</thead>,
     tbody: ({ children }) => <tbody>{children}</tbody>,
     tr: ({ children }) => (
-      <tr className="border-b border-gray-200 dark:border-gray-700">
-        {children}
-      </tr>
+      <tr className="border-b border-gray-200 dark:border-gray-700">{children}</tr>
     ),
-    th: ({ children }) => (
-      <th className="px-4 py-2 text-left font-semibold">{children}</th>
-    ),
+    th: ({ children }) => <th className="px-4 py-2 text-left font-semibold">{children}</th>,
     td: ({ children }) => <td className="px-4 py-2">{children}</td>,
     VideoYT: VideoYT,
     Figure: Figure,

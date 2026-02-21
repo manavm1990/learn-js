@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import Fuse from "fuse.js";
+import { useCallback, useEffect, useState } from "react";
 
 type SearchDoc = {
   id: string;

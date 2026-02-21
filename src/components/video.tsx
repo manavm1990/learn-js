@@ -1,9 +1,8 @@
 "use client";
 
-import { PlayIcon } from "@/icons/play-icon";
 import { clsx } from "clsx";
-
 import { useEffect, useRef } from "react";
+import { PlayIcon } from "@/icons/play-icon";
 
 function formatTime(seconds: number) {
   const h = Math.floor(seconds / 3600);
@@ -79,6 +78,7 @@ export function TimestampButton({
 }) {
   return (
     <button
+      type="button"
       onClick={() => {
         const video = document.getElementById(videoId) as HTMLVideoElement;
         if (video) {

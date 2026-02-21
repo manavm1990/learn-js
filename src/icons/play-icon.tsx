@@ -5,6 +5,9 @@ export function PlayIcon({ className, ...props }: React.ComponentProps<"svg">) {
     <svg
       viewBox="0 0 8 8"
       fill="none"
+      // Decorative by default; callers can override via props.
+      aria-hidden="true"
+      focusable="false"
       className={clsx(className, "h-2 shrink-0")}
       {...props}
     >

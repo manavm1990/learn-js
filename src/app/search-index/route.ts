@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { NextResponse } from "next/server";
 
 import { getModules } from "@/data/lessons";
 
@@ -37,13 +37,7 @@ export async function GET() {
   for (const mod of modules) {
     for (const lesson of mod.lessons) {
       const slug = lesson.id;
-      const filePath = path.join(
-        process.cwd(),
-        "src",
-        "data",
-        "lessons",
-        `${slug}.mdx`,
-      );
+      const filePath = path.join(process.cwd(), "src", "data", "lessons", `${slug}.mdx`);
 
       let raw = "";
       try {

@@ -1,10 +1,10 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { NextPageLink } from "@/components/next-page-link";
 import { SidebarLayoutContent } from "@/components/sidebar-layout";
 import TableOfContents from "@/components/table-of-contents";
 import { Video } from "@/components/video";
 import { getLesson, getLessonContent } from "@/data/lessons";
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -19,11 +19,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const slug = (await params).slug;
   const lesson = await getLesson(slug);
 
@@ -36,11 +32,7 @@ export default async function Page({
       <div className="mx-auto max-w-7xl">
         <div className="-mx-2 sm:-mx-4">
           {lesson.video && (
-            <Video
-              id="video"
-              src={lesson.video.url}
-              poster={lesson.video.thumbnail}
-            />
+            <Video id="video" src={lesson.video.url} poster={lesson.video.thumbnail} />
           )}
         </div>
         <div className="mx-auto flex max-w-2xl gap-x-10 py-10 sm:py-14 lg:max-w-5xl">

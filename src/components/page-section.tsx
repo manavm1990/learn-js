@@ -17,9 +17,7 @@ export function PageSection({
           </div>
         </div>
       </div>
-      <div className="col-span-full pt-6 sm:col-span-3 sm:pt-10">
-        {children}
-      </div>
+      <div className="col-span-full pt-6 sm:col-span-3 sm:pt-10">{children}</div>
     </section>
   );
 }

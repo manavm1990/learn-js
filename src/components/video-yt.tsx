@@ -37,9 +37,7 @@ export function VideoYT({
         />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-sm text-gray-600 dark:text-gray-500">
-          {caption}
-        </figcaption>
+        <figcaption className="mt-3 text-sm text-gray-600 dark:text-gray-500">{caption}</figcaption>
       )}
     </figure>
   );

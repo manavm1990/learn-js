@@ -11,6 +11,9 @@ function useTableOfContents(contentId: string) {
   const pathname = usePathname();
 
   useEffect(() => {
+    // We want to re-scan headings when the route changes.
+    void pathname;
+
     const root = document.getElementById(contentId);
     if (!root) return;
 
@@ -18,7 +21,7 @@ function useTableOfContents(contentId: string) {
       Array.from(root.querySelectorAll("h2, h3")).map((heading) => ({
         id: heading.id,
         text: heading.textContent || "",
-        level: parseInt(heading.tagName?.[1] ?? "2"),
+        level: parseInt(heading.tagName?.[1] ?? "2", 10),
         active: false,
       })),
     );
@@ -27,10 +30,7 @@ function useTableOfContents(contentId: string) {
     let currentHeadingId: string | null = null;
 
     Array.from(root.children).forEach((element) => {
-      if (
-        element.id &&
-        (element.tagName === "H2" || element.tagName === "H3")
-      ) {
+      if (element.id && (element.tagName === "H2" || element.tagName === "H3")) {
         currentHeadingId = element.id;
       }
       if (!currentHeadingId) return;
@@ -49,9 +49,9 @@ function useTableOfContents(contentId: string) {
           }
         });
 
-        const firstVisibleContentElement = Array.from(
-          contentElements.entries(),
-        ).find(([element]) => visibleElements.has(element));
+        const firstVisibleContentElement = Array.from(contentElements.entries()).find(([element]) =>
+          visibleElements.has(element),
+        );
 
         setHeadings((current) =>
           current.map((heading) => ({
@@ -65,9 +65,9 @@ function useTableOfContents(contentId: string) {
       },
     );
 
-    Array.from(contentElements.keys()).forEach((element) =>
-      observer.observe(element),
-    );
+    Array.from(contentElements.keys()).forEach((element) => {
+      observer.observe(element);
+    });
 
     return () => observer.disconnect();
   }, [pathname, contentId]);
@@ -80,9 +80,7 @@ export default function TableOfContents({ contentId }: { contentId: string }) {
 
   return (
     <nav className="sticky top-16">
-      <h2 className="text-sm/6 font-semibold text-gray-950 dark:text-white">
-        On this page
-      </h2>
+      <h2 className="text-sm/6 font-semibold text-gray-950 dark:text-white">On this page</h2>
       <ul className="mt-3 flex flex-col gap-3 border-l border-gray-950/10 text-sm/6 text-gray-700 dark:border-white/10 dark:text-gray-400">
         {headings.map((heading) => (
           <li

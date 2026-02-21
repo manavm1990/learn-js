@@ -1,9 +1,9 @@
-import { SidebarLayout } from "@/components/sidebar-layout";
-import { CommandPaletteProvider } from "@/components/command-palette-provider";
-import { getModules } from "@/data/lessons";
 import { clsx } from "clsx";
 import { GeistMono } from "geist/font/mono";
 import localFont from "next/font/local";
+import { CommandPaletteProvider } from "@/components/command-palette-provider";
+import { SidebarLayout } from "@/components/sidebar-layout";
+import { getModules } from "@/data/lessons";
 
 import "./globals.css";
 
@@ -15,11 +15,7 @@ const InterVariable = localFont({
   ],
 });
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

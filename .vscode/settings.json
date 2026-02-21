@@ -3,22 +3,37 @@
   "editor.autoClosingBrackets": "beforeWhitespace",
   "editor.autoClosingComments": "beforeWhitespace",
   "editor.bracketPairColorization.enabled": true,
-  "editor.codeActionsOnSave": {
-    "addMissingImports": "explicit",
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Biome (formatter + linter)
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    // Apply Biome's safe fixes + import sorting on save.
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+
+    // Keep TypeScript's missing-imports helper available.
+    "source.addMissingImports": "explicit"
+  },
+
+  // Ensure the Biome formatter is used for the languages we care about.
+  "[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[json]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[css]": { "editor.defaultFormatter": "biomejs.biome" },
+
+  // Biome doesn't format MDX; don't auto-format lesson content on save.
+  "[mdx]": { "editor.formatOnSave": false },
+  "[markdown]": { "editor.formatOnSave": false },
+
+  // ESLint/Prettier are deprecated in this repo.
+  "eslint.enable": false,
+
   "editor.linkedEditing": true,
   "editor.wordWrap": "wordWrapColumn",
-  "eslint.rules.customizations": [
-    {
-      "rule": "*",
-      "severity": "warn"
-    }
-  ],
-  "eslint.validate": ["mdx", "typescript", "typescriptreact"],
   "files.autoSave": "onFocusChange",
   "html.autoClosingTags": true,
   "tailwindCSS.experimental.classRegex": [

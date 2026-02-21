@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { ArticleIcon } from "@/icons/article-icon";
 import { CheckmarkIcon } from "@/icons/checkmark-icon";
 import { CirclePlayIcon } from "@/icons/circle-play-icon";
-import Link from "next/link";
 
 export function ContentLink({
   title,
@@ -33,9 +33,7 @@ export function ContentLink({
         </div>
         <div>
           <div>
-            <span className="font-semibold text-gray-950 dark:text-white">
-              {title}
-            </span>
+            <span className="font-semibold text-gray-950 dark:text-white">{title}</span>
           </div>
           <p className="text-gray-700 dark:text-gray-400">{description}</p>
         </div>

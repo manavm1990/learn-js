@@ -25,9 +25,7 @@ export async function getLesson(slug: string): Promise<
     })
   | null
 > {
-  const lessonModule = lessons.find(({ lessons }) =>
-    lessons.some(({ id }) => id === slug),
-  );
+  const lessonModule = lessons.find(({ lessons }) => lessons.some(({ id }) => id === slug));
 
   if (!lessonModule) return null;
 
@@ -104,8 +102,7 @@ const lessons = [
         video: {
           duration: 338,
           url: "https://videos.learnjs.tech/swic/videos/sp26/customize-warp.mp4",
-          thumbnail:
-            "https://videos.learnjs.tech/swic/videos/sp26/customize-warp.png",
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/customize-warp.png",
         },
       },
       {
@@ -116,8 +113,7 @@ const lessons = [
         video: {
           duration: 511,
           url: "https://videos.learnjs.tech/swic/videos/sp26/customize-vsc.mp4",
-          thumbnail:
-            "https://videos.learnjs.tech/swic/videos/sp26/customize-vsc.webp",
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/customize-vsc.webp",
         },
       },
       {
@@ -135,15 +131,13 @@ const lessons = [
         video: {
           duration: 171,
           url: "https://videos.learnjs.tech/swic/videos/sp26/terminal-files.mp4",
-          thumbnail:
-            "https://videos.learnjs.tech/swic/videos/sp26/terminal.jpg",
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/terminal.jpg",
         },
       },
       {
         id: "learn-md",
         title: "Learn Markdown",
-        description:
-          "Master the basics of Markdown syntax for formatting text documents.",
+        description: "Master the basics of Markdown syntax for formatting text documents.",
         video: {
           duration: 189,
           thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/md.png",
@@ -205,8 +199,7 @@ const lessons = [
         video: {
           duration: 306,
           url: "https://videos.learnjs.tech/swic/videos/sp26/program-structure.mp4",
-          thumbnail:
-            "https://videos.learnjs.tech/swic/videos/sp26/program-structure.jpg",
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/program-structure.jpg",
         },
       },
       {
@@ -310,8 +303,7 @@ const lessons = [
           "Learn to build reusable UI components with JavaScript functions that return DOM elements. Understand component structure and composition.",
         video: {
           duration: 703,
-          thumbnail:
-            "https://d8n3.c1.e2-8.dev/swic/videos/function-components.png",
+          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/function-components.png",
           url: "https://videos.learnjs.tech/swic/videos/function-components.mp4",
         },
       },
@@ -322,8 +314,7 @@ const lessons = [
           "Learn to work with HTML forms using JavaScript: reading values, handling submissions, and understanding form behavior in the browser.",
         video: {
           duration: 532,
-          thumbnail:
-            "https://d8n3.c1.e2-8.dev/swic/videos/form-fundamentals.png",
+          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/form-fundamentals.png",
           url: "https://videos.learnjs.tech/swic/videos/form-fundamentals.mp4",
         },
       },
@@ -439,8 +430,7 @@ const lessons = [
           "Walk through Vite’s React starter: index.html root mount point, createRoot/StrictMode in main.jsx, App component with useState and HMR.",
         video: {
           duration: 1084,
-          thumbnail:
-            "https://d8n3.c1.e2-8.dev/swic/videos/vite-react-count.png",
+          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/vite-react-count.png",
           url: "https://videos.learnjs.tech/swic/videos/vite-react-count.mp4",
         },
       },
@@ -483,8 +473,7 @@ const lessons = [
           "Build a registration form with live validation, password strength indicators, and controlled inputs using value and onChange.",
         video: {
           url: "https://videos.learnjs.tech/swic/videos/react-controlled.mp4",
-          thumbnail:
-            "https://d8n3.c1.e2-8.dev/swic/videos/react-controlled.png",
+          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/react-controlled.png",
           duration: 662,
         },
       },
