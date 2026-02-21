@@ -26,7 +26,10 @@
   "[css]": { "editor.defaultFormatter": "biomejs.biome" },
 
   // Biome doesn't format MDX; don't auto-format lesson content on save.
-  "[mdx]": { "editor.formatOnSave": false },
+  "[mdx]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "unifiedjs.vscode-mdx"
+  },
   "[markdown]": { "editor.formatOnSave": false },
 
   // ESLint/Prettier are deprecated in this repo.
