@@ -670,6 +670,44 @@ Write answers in your **handwritten** notes ✍️.
 
 5. Why is refactoring a professional habit, not optional polish?
 
+### Conventional Commits: Communicating Your Intent
+
+So far, you've been writing commits in imperative style — short, action-first descriptions:
+```bash
+Add navigation menu
+Update README with setup instructions
+Fix typo in contact form
+```
+
+That's correct and you should keep doing it. **Conventional Commits** builds on top of that style by adding a prefix that communicates *what kind of change* you made:
+```
+type: short imperative description
+```
+
+The three types you need right now:
+
+| Type | When to use it |
+|------|---------------|
+| `feat:` | You added something new |
+| `fix:` | You corrected something broken |
+| `refactor:` | You improved code without changing behavior |
+
+**Examples:**
+```bash
+feat: add user age validation
+fix: correct off-by-one error in grade calculation
+refactor: replace if-else with ternary for status assignment
+refactor: extract magic numbers into named constants
+```
+
+Notice that last one — extracting magic numbers into `CONSTANT_CASE` variables is a refactor. The behavior doesn't change. The *reasoning* becomes visible. That's exactly the cognitive debt fix you just learned.
+
+The commits you've been writing were already good. This just adds one word of context that tells the whole team — and your future self — what kind of work was done.
+
+You'll use these prefixes in the homework repo. They help your future self (and your teammates) understand the intent behind each change. When you see `refactor:`, you know to look for improvements in readability and maintainability, not new features or bug fixes.
+
+In real life, I tend to mix and match imperative vs conventional commits. For small, self-explanatory changes, I might skip the prefix. For anything that adds new functionality, fixes a bug, or improves code quality, I use the appropriate prefix to communicate my intent clearly.
+
 ---
 
 ## Wrap-Up
