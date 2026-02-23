@@ -1,0 +1,721 @@
+# Computer Science Fundamentals 2: Advanced Conditionals & Refactoring
+
+## Introduction
+
+### Icebreaker: Your Code Works—But Is It Clean?
+
+You've written working conditionals. They make your programs smarter. But here's the truth: **working code and good code are not the same thing.**
+
+You're working on a group project. You write notes to yourself: "Use the blue folder, not the red one—Sarah has the old version." Makes complete sense when you write it.
+
+Two weeks later: what blue folder? Who's Sarah? What old version?
+
+The notes still exist. They're just useless without the context you've lost.
+
+Code works the same way. **Cognitive debt** is what happens when the *reasoning* behind your code disappears—even if the code itself still works.
+
+You can have clean, readable code and still have high cognitive debt if the reasoning behind it has disappeared.
+
+**Why this matters now:** AI tools can generate working code instantly. But working isn't the same as understandable. When you feed an AI poorly documented, context-free code, it makes assumptions—and then builds on those assumptions. Mistakes compound fast.
+
+Your job is to maintain code that humans *and* AI tools can reason about. That means writing code that explains its intent, not just its behavior.
+
+This lesson teaches you patterns to write cleaner conditionals and the mindset of **refactoring**: improving code without changing what it does.
+
+### What You Already Know
+
+In [Comp. Sci. Fundamentals 1](/js-comp-sci-1), you learned:
+
+- ✅ How conditionals work (`if`, `else if`, `else`)
+- ✅ Comparison operators (`===`, `>`, `<`)
+- ✅ Logical operators (`&&`, `||`, `!`)
+- ✅ Type coercion and dynamic typing
+
+**This lesson builds on that.** You'll deepen your conditional mastery and learn to write code that's not just correct—it's also readable.
+
+### What You'll Learn Today
+
+- **Ternary operators**: Concise syntax for simple true/false decisions
+- **Truthiness & falsiness**: How JavaScript evaluates non-booleans in conditionals
+- **Switch statements**: An alternative to giant if/else chains
+- **Refactoring mindset**: Technical debt, cognitive debt, and why clean code matters
+
+---
+
+## Ternary Operators: Concise Conditionals
+
+### The Problem: Verbose If-Else
+
+Sometimes you need to assign a value based on a condition:
+
+```javascript
+const age = 20;
+let status;
+
+if (age >= 18) {
+  status = "adult";
+} else {
+  status = "minor";
+}
+```
+
+This works, but it's **verbose** for such a simple decision. Four lines for one value assignment.
+
+### The Solution: Ternary Operator
+
+JavaScript offers a shorter syntax for this exact pattern:
+
+```javascript
+const age = 20;
+const status = age >= 18 ? "adult" : "minor";
+```
+
+**That's it.** One line instead of five.
+
+### Anatomy of a Ternary Operator
+
+The ternary operator has three parts (that's why it's "ternary"):
+
+```javascript
+condition ? valueIfTrue : valueIfFalse
+```
+
+- **`condition`**: An expression that evaluates to true or false
+- **`? valueIfTrue`**: What to use if the condition is true
+- **`: valueIfFalse`**: What to use if the condition is false
+
+**Example breakdown:**
+
+```javascript
+const temperature = 75;
+
+/**
+ * condition: temperature > 80
+ * valueIfTrue: "It's hot!"
+ * valueIfFalse: "It's pleasant"
+ */
+const weather = temperature > 80 ? "It's hot!" : "It's pleasant";
+console.log(weather); // "It's pleasant"
+```
+
+There's a country song by George Strait called 'Check Yes or No' that maps surprisingly well to the ternary operator...
+
+> "Do you love me? Do you wanna be my friend?\
+And if you do\
+Well then don't be afraid to take me by the hand\
+If you want to\
+I think this is how love goes\
+Check yes or no"
+
+```javascript
+// "Do you love me?"
+const loveAnswer = doYouLoveMe ? "yes" : "no";
+
+// "Do you wanna be my friend?"
+const friendAnswer = wannaBeFriends ? "yes" : "no";
+
+// "And if you do, take me by the hand"
+const action = doYouLoveMe && wannaBeFriends ? "take my hand" : "stay put";
+
+// The final check — the ternary in its simplest form
+const note = lovesMe ? "✅ Check yes" : "❌ Check no";
+```
+
+### When to Use Ternary vs. If-Else
+
+**Use ternary when:**
+- You're assigning a value based on a condition
+- The condition is simple (one comparison or logical operation)
+- You have two clear choices (true/false)
+
+**Use if-else when:**
+- The body of each branch is more than one line
+- You have more than two branches (`else if`)
+- You're performing actions, not just returning values
+
+**Bad (don't do this):**
+
+```javascript
+// Ternary with complex logic—hard to read
+const discount = isStudent && hasValidID && !isExpired ? 0.15 : 0;
+
+// Nested ternaries ("ternary hell")
+const status = age < 13 ? "child" : age < 18 ? "teen" : age < 65 ? "adult" : "senior";
+```
+
+**Good:**
+
+```javascript
+// Use ternary for simple decisions
+const greeting = isNight ? "Good evening!" : "Good morning!";
+
+// Use if-else when logic is complex or you have multiple branches
+if (isStudent && hasValidID && !isExpired) {
+  applyDiscount(0.15);
+  sendConfirmationEmail();
+  logAnalytics();
+} else {
+  // other logic
+}
+```
+
+Reminder:
+
+```javascript
+// `!` flips a boolean: !true === false, !false === true
+if (isStudent && hasValidID && !isExpired) {
+```
+
+### Ternary in Real Code
+
+Here's a realistic use case from web development:
+
+```javascript
+const isPremium = true;
+
+const buttonText = isPremium ? "Upgrade ✓" : "Upgrade Now";
+const buttonClass = isPremium ? "btn-premium" : "btn-standard";
+```
+
+The logic above might be used to present different *U*ser *I*nterface (UI) elements in a web app based on user status. It's concise and clear.
+
+---
+
+### Checkpoint: Ternary Operators
+
+Write answers in your **handwritten** notes ✍️. Don't just skim—engage with the concept.
+
+1. Convert this if-else into a ternary:
+   ```javascript
+   let access;
+   if (hasPassword) {
+     access = "granted";
+   } else {
+     access = "denied";
+   }
+   ```
+
+2. What does this return? `5 > 3 ? "yes" : "no"`
+
+3. Rewrite as a ternary: "If isLoggedIn is true, show 'Welcome back!' else show 'Sign up!'"
+
+---
+
+## Truthiness & Falsiness: Deep Dive
+
+### The Question: When Is Something True?
+
+You've seen `if (condition)` where `condition` is a boolean. But what if it isn't?
+
+```javascript
+if (5) { }        // Is 5 "true"?
+if ("hello") { }  // Is "hello" "true"?
+if (0) { }        // Is 0 "true"?
+if ("") { }       // Is "" "true"?
+if (null) { }     // Is null "true"?
+```
+
+JavaScript evaluates non-boolean values as either **truthy** or **falsy** in boolean contexts. This is type coercion at work — the same concept you saw in [Program Structure](/program-structure).
+
+### Falsy Values
+
+Exactly **seven values** are falsy in JavaScript. Everything else is truthy.
+
+| Value | Why It's Falsy |
+|-------|----------------|
+| `false` | It's literally false |
+| `0` | Zero — nothing |
+| `-0` | Negative zero (rare, but falsy) |
+| `""` | Empty string — no content |
+| `null` | Intentional absence of value |
+| `undefined` | Variable declared but never assigned |
+| `NaN` | Result of a failed calculation |
+
+### Truthy Values
+
+Everything not on that list is truthy:
+
+```javascript
+if (1) { }        // truthy — non-zero number
+if (-1) { }       // truthy — non-zero number
+if ("0") { }      // truthy — non-empty string
+if ("false") { }  // truthy — non-empty string
+```
+
+**Watch out for these two**: `"0"` and `"false"` look like they should be falsy, but they're strings with content — so they're truthy. The falsy versions are the actual values `0` and `false`, not their string representations.
+
+### Why This Matters
+
+Truthiness lets you write cleaner conditionals:
+
+```javascript
+const username = "";
+
+// Instead of this:
+if (username !== "") {
+  console.log(`Welcome, ${username}!`);
+}
+
+// You can write this:
+if (username) {
+  console.log(`Welcome, ${username}!`);
+}
+```
+
+Both do the same thing. The second is cleaner because an empty string is falsy — the condition fails automatically.
+
+### Practical Truthiness: Checking If Values Exist
+
+Because of truthiness, you can write concise checks:
+
+```javascript
+const name = "Alex";
+
+// Verbose (explicit)
+if (name !== null && name !== undefined && name !== "") {
+  console.log("Name exists!");
+}
+
+// Concise (using truthiness)
+if (name) {
+  console.log("Name exists!");
+}
+```
+
+The second is shorter and **idiomatic** — meaning it's the style experienced JavaScript developers expect to see. Writing `if (name)` instead of `if (name !== null && name !== undefined && name !== "")` is like saying "it's raining" instead of "precipitation is currently occurring." Both mean the same thing, but one sounds natural and the other sounds like a robot. You'll see this pattern constantly in real codebases.
+
+That's nice, but here's the gotcha ⚠️:
+
+```javascript
+const count = 0;
+
+// WRONG: 0 is falsy, so this skips even if count is a valid number
+if (count) {
+  console.log(`You have ${count} items`);
+}
+
+// RIGHT: Check explicitly for the value you care about
+if (count >= 0) {
+  console.log(`You have ${count} items`);
+}
+```
+
+Truthiness is a shortcut, not a universal rule. When `0` or an empty string are valid values in your program, check explicitly.
+
+---
+
+### Checkpoint: Truthiness & Falsiness
+
+Write answers in your **handwritten** notes ✍️.
+
+1. Which of these are falsy? `false`, `1`, `"hello"`, `0`, `""`, `null`, `"0"`, `[]` Write out all that apply.
+
+2. What does this output?
+   ```javascript
+   if ("0") {
+     console.log("truthy");
+   } else {
+     console.log("falsy");
+   }
+   ```
+   Why?
+
+3. Rewrite with explicit comparison instead of truthiness:
+   ```javascript
+   if (userName) {
+     console.log("Welcome!");
+   }
+   ```
+
+4. What's wrong with this code?
+   ```javascript
+   const count = 0;
+   if (count) {
+     processItems(count);
+   }
+   ```
+
+5. What does `!null` return?
+
+---
+
+## Switch Statements: Handling Multiple Values
+
+### The Problem: The Giant If-Else Chain
+
+Imagine you're writing a traffic light system. You check the color and log a message:
+
+```javascript
+const light = "yellow";
+
+if (light === "red") {
+  console.log("Stop!");
+} else if (light === "yellow") {
+  console.log("Slow down");
+} else if (light === "green") {
+  console.log("Go!");
+} else {
+  console.log("Unknown color");
+}
+```
+
+This works, but it's repetitive. You're checking the same variable (`light`) against different values over and over. **Switch statements** handle this pattern more elegantly.
+
+### The Solution: Switch Statement
+
+```javascript
+const light = "yellow";
+
+switch (light) {
+  case "red":
+    console.log("Stop!");
+    break;
+  case "yellow":
+    console.log("Slow down");
+    break;
+  case "green":
+    console.log("Go!");
+    break;
+  default:
+    console.log("Unknown color");
+}
+```
+
+### Anatomy of a Switch Statement
+
+```javascript
+switch (expression) {
+  case value1:
+    // code if expression === value1
+    break;
+  case value2:
+    // code if expression === value2
+    break;
+  default:
+    // code if no cases match
+}
+```
+
+- **`switch (expression)`**: The value to check
+- **`case value:`**: Check if `expression === value`
+- **`break;`**: Stop executing and jump out of the switch
+- **`default:`**: Fallback if no cases match (optional, like `else`)
+
+### The Critical `break` Keyword
+
+**Without `break`, execution "falls through" to the next case:**
+
+```javascript
+const grade = "A";
+
+switch (grade) {
+  case "A":
+    console.log("Excellent!");
+    // FORGOT break!
+  case "B":
+    console.log("Good!");
+    // FORGOT break!
+  case "C":
+    console.log("Standard");
+    break;
+  default:
+    console.log("Other");
+}
+
+// Output:
+// "Excellent!"
+// "Good!"
+// "Standard"
+```
+
+This is called **fall-through**. It's almost always a bug, but sometimes it's intentional (grouping cases):
+
+```javascript
+const day = "saturday";
+
+switch (day) {
+  case "saturday":
+  case "sunday":
+    console.log("It's the weekend!");
+    break;
+  case "monday":
+  case "tuesday":
+  case "wednesday":
+  case "thursday":
+  case "friday":
+    console.log("It's a weekday.");
+    break;
+  default:
+    console.log("Unknown day");
+}
+// Output: "It's the weekend!"
+```
+
+Here, the fall-through is intentional: both "saturday" and "sunday" execute the same code.
+
+### Switch vs If-Else: When to Use Each
+
+**Use switch when:**
+- Checking one variable against many discrete values
+- All cases are simple comparisons (`===`)
+- Code is cleaner and more readable
+
+**Use if-else when:**
+- Checking different variables or complex conditions
+- You have boolean logic (`&&`, `||`)
+- You have range checks (`x > 5` and `x < 10`)
+
+**Example: Switch is better**
+
+```javascript
+const userRole = "admin";
+
+switch (userRole) {
+  case "admin":
+    console.log("Welcome, admin. Full access granted.");
+    break;
+  case "moderator":
+    console.log("Welcome, moderator. Limited access granted.");
+    break;
+  case "user":
+    console.log("Welcome! Standard access granted.");
+    break;
+  default:
+    console.log("Access denied.");
+}
+```
+
+**Example: If-Else is better**
+
+```javascript
+const score = 85;
+
+if (score >= 90) {
+  console.log("A");
+} else if (score >= 80) {
+  console.log("B");
+} else if (score >= 70) {
+  console.log("C");
+} else {
+  console.log("F");
+}
+
+// Switch wouldn't work here—you'd need separate cases for 90-100, 80-89, etc.
+```
+
+---
+
+### Checkpoint: Switch Statements
+
+Write answers in your **handwritten** notes ✍️.
+
+1. Write a switch statement for a color and log a hex code:
+   - "red" → "#FF0000"
+   - "blue" → "#0000FF"
+   - "green" → "#00FF00"
+   - default →"Unknown color"
+
+2. What would happen if you forgot `break` in your switch?
+
+3. Would a switch be better or worse than if-else for this? Why?
+   ```javascript
+   if (temperature > 80) {
+     console.log("Hot");
+   } else if (temperature > 60) {
+     console.log("Warm");
+   } else {
+     console.log("Cold");
+   }
+   ```
+
+4. Rewrite this using grouped cases:
+   ```javascript
+   switch (month) {
+     case "january":
+       console.log("Winter");
+       break;
+     case "february":
+       console.log("Winter");
+       break;
+     case "march":
+       console.log("Spring");
+       break;
+   }
+   ```
+
+5. What is the purpose of the `default` case?
+
+---
+
+## Refactoring Deep Dive: The Professional Mindset
+
+### What Is Refactoring?
+
+**Refactoring** means **improving code without changing its behavior**.
+
+Your code works. The program produces the right output. But the code itself might be:
+
+- Hard to read
+- Duplicated in multiple places
+- Nested too deeply
+- Using outdated patterns
+
+Refactoring fixes these problems.
+
+```javascript
+// BEFORE: Works, but ugly
+let x;
+if (a === true) {
+  x = "yes";
+} else {
+  x = "no";
+}
+
+// AFTER: Same behavior, cleaner code
+const x = a ? "yes" : "no";
+```
+
+Both do the same thing. The second is just... better.
+
+### Technical Debt: Shortcuts That Cost
+
+Think of code like financial debt. Borrow money now, pay interest later.
+
+**Technical debt** works the same way:
+
+```javascript
+// Shortcut: Copied the same conditional five times
+const result1 = score >= 90 ? "A" : "B";
+const result2 = score >= 90 ? "A" : "B";
+const result3 = score >= 90 ? "A" : "B";
+const result4 = score >= 90 ? "A" : "B";
+const result5 = score >= 90 ? "A" : "B";
+
+// Now the rules change (80 instead of 90).
+// You have to update five places. You'll probably miss one.
+// That's the interest you pay.
+```
+
+We'll fix this properly when we cover functions. For now, recognize the pattern — repeated logic is a warning sign.
+
+### Cognitive Debt: The Brain Tax
+
+**Cognitive debt** is what happens when the *reasoning* behind your code disappears — even if the code itself still works.
+
+```javascript
+// Works perfectly. But why 1.0875? Why 500?
+const total = price * 1.0875;
+const maxLength = 500;
+```
+
+Six months later, someone needs to update the tax rate or the character limit. The code is readable — but the *why* is gone. Was `1.0875` Illinois sales tax? A specific county? An old rate that's no longer accurate? Nobody knows.
+
+```javascript
+// Low cognitive debt: The reasoning is preserved
+const IL_SALES_TAX = 1.0875;
+const MAX_COMMENT_LENGTH = 500;
+
+const total = price * IL_SALES_TAX;
+const maxLength = MAX_COMMENT_LENGTH;
+```
+
+Notice the naming convention: `CONSTANT_CASE` (all caps, underscores) signals that this value is intentional and fixed. The reasoning is right there in the name.
+
+Cognitive debt adds up quietly. The code keeps working — but the knowledge of *why* slowly disappears.
+
+### AI-Generated Code & The Refactoring Imperative
+
+**AI tools can generate working code fast.** You ask Copilot to "write a form validator," and it spits out something functional in seconds.
+
+There's a term for just accepting whatever the AI generates and shipping it: **vibe coding**. It's popular on social media, and it works fine for throwaway scripts and personal experiments. But in a professional codebase — or in this course — it's a trap.
+
+Here's what the AI **doesn't** do automatically:
+
+- Verify the reasoning behind its choices
+- Remove duplicated logic
+- Name things clearly
+- Reduce technical or cognitive debt
+
+**You have to do that.**
+
+If you take every snippet the AI generates and ship it as-is, you'll end up with code that works but nobody — including you — can maintain or explain.
+
+**Professional developers treat AI-generated code like a first draft.** You review it, refactor it, and make it your own before committing. That's not optional — it's the 🤬 job.
+
+---
+
+### Checkpoint: Refactoring & Debt
+
+Write answers in your **handwritten** notes ✍️.
+
+1. Define **technical debt** and give an example from code you've seen or written.
+
+2. What is **cognitive debt**? How does it affect your work?
+
+3. Is this refactored code better or worse? Why?
+   ```javascript
+   // BEFORE
+   let result;
+   if (x > 5) {
+     result = "high";
+   } else {
+     result = "low";
+   }
+
+   // AFTER
+   const result = x > 5 ? "high" : "low";
+   ```
+
+4. You ask AI to write a form validator. The code works, but it has 10 nested conditionals. What should you do?
+
+5. Why is refactoring a professional habit, not optional polish?
+
+---
+
+## Wrap-Up
+
+### Key Takeaways
+
+**Ternary Operators:**
+- Use for simple, single-condition assignments
+- Syntax: `condition ? valueIfTrue : valueIfFalse`
+- Avoid nesting — it becomes unreadable fast
+
+**Truthiness & Falsiness:**
+- Seven falsy values: `false`, `0`, `-0`, `""`, `null`, `undefined`, `NaN`
+- Everything else is truthy
+- Be explicit when `0` or `""` are valid values in your program
+
+**Code Debt:**
+- **Technical debt**: repeated logic that forces multiple updates when rules change
+- **Cognitive debt**: code that works but loses its reasoning over time
+- AI-generated code is a first draft — review and refactor before committing
+
+**Switch Statements:**
+- Use when checking one variable against many discrete values
+- Always include `break` to prevent fall-through
+- Use `default` as the fallback case
+- Better than if-else for equality checks; worse for range checks
+
+### Self-Check
+
+Write these out ✍️:
+
+1. When would you use a ternary instead of `if/else`?
+2. Name the seven falsy values.
+3. What does `"0"` evaluate to in a boolean context? Why?
+4. Define technical debt and give an original example.
+5. Define cognitive debt. How is it different from technical debt?
+6. Refactor this to a ternary:
+```javascript
+   let access;
+   if (hasKey) {
+     access = "allowed";
+   } else {
+     access = "denied";
+   }
+```
+
+7. Why do you need to refactor AI-generated code?
+8. Write a switch statement that checks a `season` variable ("spring", "summer", "fall", "winter") and logs an appropriate message for each.
+9. What is fall-through and when is it a bug vs. intentional?

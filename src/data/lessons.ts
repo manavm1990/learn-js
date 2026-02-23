@@ -210,6 +210,13 @@ const lessons = [
         video: null,
       },
       {
+        id: "js-comp-sci-2",
+        title: "Comp. Sci. Fundamentals 2",
+        description:
+          "Master ternary operators, switch statements, guard clauses, and the art of refactoring. Learn why clean code matters—especially when working with AI.",
+        video: null,
+      },
+      {
         id: "control-flow-and-loops",
         title: "Control Flow, Conditionals and Loops",
         description:
