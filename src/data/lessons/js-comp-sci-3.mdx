@@ -1,0 +1,349 @@
+# Computer Science Fundamentals 3: Arrays & Loops
+
+## Introduction
+
+### Icebreaker: The Hard Way
+
+```javascript
+"Let's learn about ➿s. Let's learn about ➿s. Let's learn about ➿s."
+```
+
+You have five classmates. Log each of their names to the console.
+
+Easy enough:
+
+```javascript
+console.log("Alice");
+console.log("Bob");
+console.log("Carol");
+console.log("Dave");
+console.log("Eve");
+```
+
+Now imagine you have 500 classmates. Or 5,000 grocery items. Or every student at SWIC.
+
+Writing that out by hand isn't just tedious — it's the wrong tool for the job. This is exactly the kind of work computers were built to do: repeat the same task, tirelessly, without making mistakes.
+
+Today you'll learn the two tools that make that possible: **arrays** and **loops**.
+
+### What You Already Know
+
+In [Comp. Sci. Fundamentals 2](/js-comp-sci-2), you learned:
+
+- ✅ Ternary operators for concise decisions
+- ✅ Truthiness and falsiness
+- ✅ Switch statements
+- ✅ The refactoring mindset
+
+**This lesson builds on that.** You know how to make decisions. Now you'll learn how to repeat them.
+
+### What You'll Learn Today
+
+- **Arrays**: Storing ordered lists of values
+- **`for` loops**: Repeating code a specific number of times
+- **`while` loops**: Repeating code until a condition changes
+- **Iterating over arrays**: Connecting loops and arrays to process lists
+
+### Before You Begin
+
+**GitHub Classroom Repository**: Accept the assignment and clone the repository. See the `README.md` for setup instructions — follow along with both the repo and this lesson.
+
+---
+
+## Arrays: Lists of Values
+
+### The Problem with Separate Variables
+
+What if you need to store five names?
+
+```javascript
+const name1 = "Alice";
+const name2 = "Bob";
+const name3 = "Carol";
+const name4 = "Dave";
+const name5 = "Eve";
+```
+
+This falls apart immediately. Five variables for five names. What happens at 500?
+
+### The Solution: Arrays
+
+An **array** is an ordered list of values stored in a single variable.
+
+```javascript
+const classmates = ["Alice", "Bob", "Carol", "Dave", "Eve"];
+```
+
+One variable. Five values. And it scales to any size.
+
+### Array Syntax
+
+Create an array with square brackets `[]`. Separate items with commas:
+
+```javascript
+// Array of strings
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+
+// Array of numbers
+const scores = [95, 87, 72, 100, 68];
+
+// Array of booleans
+const answers = [true, false, true, true, false];
+```
+
+### Accessing Items by Index
+
+Every item in an array has a position called an **index**. Indexes start at `0`, not `1`.
+
+```javascript
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+//                        0          1       2      3       4       5
+
+console.log(groceryList[0]); // "Apples"
+console.log(groceryList[1]); // "Bananas"
+console.log(groceryList[5]); // "🥚s"
+```
+
+**The last index is always one less than the total number of items.**
+
+### `array.length`
+
+Every array has a `length` property that tells you how many items it contains:
+
+```javascript
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+
+console.log(groceryList.length); // 6
+```
+
+Length is `6`. Last index is `5`. That off-by-one relationship matters — you'll see why shortly.
+
+To access the **last item** without hardcoding its index:
+
+```javascript
+// Last index = length - 1
+console.log(groceryList[groceryList.length - 1]); // "🥚s"
+```
+
+This works no matter how long the array gets.
+
+**Note:** The dot (`.`) is how you access information ℹ️ attached to a value. JavaScript provides easy access to this information ℹ️ based upon the data type of the value. `length` is one piece of information arrays carry around — it tells you how many items are inside.
+
+---
+
+### Checkpoint: Arrays
+
+Write answers in your **handwritten** notes ✍️.
+
+1. Create an array called `colors` with three color names.
+2. Access the first item. Access the last item without hardcoding the index.
+3. What is the index of the third item in any array?
+4. If an array has 10 items, what is the last valid index?
+
+---
+
+## The `for` Loop
+
+Computers are great at repetitive tasks. A **loop** is a statement that runs the same block of code repeatedly.
+
+The `for` loop runs code **a specific number of times**. It needs three pieces of information:
+
+```javascript
+// for (start; condition; increment)
+for (let i = 0; i <= 10; i++) {
+  // runs while condition is true
+}
+```
+
+### The Three Parts
+
+**1. Initialization expression** — runs once, at the start:
+```javascript
+let i = 0
+```
+`i` is a counter variable. It starts at `0`. We use `let` (not `const`) because its value changes on every loop. `i` is a convention — it stands for "index."
+
+**2. Conditional expression** — checked before *each* loop:
+```javascript
+i <= 10
+```
+As long as this is `true`, the loop keeps running. When it becomes `false`, the loop stops.
+
+**3. Final expression** — runs after *each* loop:
+```javascript
+i++
+```
+This increments `i` by `1`. Without this, `i` never reaches `10`, and the loop runs forever — an **infinite loop**. Don't skip it.
+
+> ⚠️ **Infinite Loop Warning**: If your program freezes or stops responding, you likely have an infinite loop. In the terminal, press `Ctrl + C` to kill it.
+
+### A Simple Example
+
+```javascript
+// Log numbers 1 through 5
+for (let i = 1; i <= 5; i++) {
+  console.log(i);
+}
+// 1
+// 2
+// 3
+// 4
+// 5
+```
+
+Walk through it manually:
+- `i = 1` → `1 <= 5` is true → log `1` → `i` becomes `2`
+- `i = 2` → `2 <= 5` is true → log `2` → `i` becomes `3`
+- ...
+- `i = 5` → `5 <= 5` is true → log `5` → `i` becomes `6`
+- `i = 6` → `6 <= 5` is false → loop ends
+
+---
+
+## The `while` Loop
+
+The `while` loop is simpler in structure. Use it when you don't know exactly how many times you'll loop — just that you want to keep going *while* some condition is true.
+
+```javascript
+let i = 0;
+
+while (i < 10) {
+  i++; // don't forget this — same infinite loop risk as `for`
+}
+
+// i is now 10
+```
+
+The structure: declare your counter *before* the loop, check the condition, update the counter *inside* the loop.
+
+### `for` vs. `while`: A Rule of Thumb
+
+- Use `for` when you know the number of iterations upfront (e.g., loop over an array).
+- Use `while` when you're waiting for something to change (e.g., keep trying until a condition is met).
+
+In practice, `for` is more common for working with arrays.
+
+---
+
+## Iterating Over an Array
+
+Here's where it comes together. Remember the grocery list problem?
+
+```javascript
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+
+// The painful way
+console.log(groceryList[0]); // Apples
+console.log(groceryList[1]); // Bananas
+console.log(groceryList[2]); // TP
+console.log(groceryList[3]); // Bars
+console.log(groceryList[4]); // Bacon
+console.log(groceryList[5]); // 🥚s
+```
+
+That's not good. 😫
+
+### With a `for` Loop
+
+```javascript
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+
+/**
+ * The first index is 0.
+ * The last index is groceryList.length - 1 (which is 5).
+ * So: start at 0, keep going while i < groceryList.length.
+ * `i` matches the current index on every iteration.
+ */
+for (let i = 0; i < groceryList.length; i++) {
+  console.log(groceryList[i]);
+}
+```
+
+`i < groceryList.length` is the key. The length is `6`, so the loop runs while `i` is `0` through `5` — exactly the valid indexes.
+
+### With a `while` Loop
+
+```javascript
+const groceryList = ["Apples", "Bananas", "TP", "Bars", "Bacon", "🥚s"];
+
+let i = 0;
+
+while (i < groceryList.length) {
+  console.log(groceryList[i]);
+  i++;
+}
+```
+
+Same result. Same logic. The `for` version is more common for arrays because it keeps the counter setup, condition, and increment in one place.
+
+---
+
+## Doing More Inside a Loop
+
+A loop doesn't have to just log values. You can run any code inside it.
+
+Here's an example that modifies each value:
+
+```javascript
+const numbers = [1, 2, 3];
+
+for (let i = 0; i < numbers.length; i++) {
+  numbers[i] += 1;
+}
+
+// numbers is now [2, 3, 4]
+```
+
+**Notice something:** `numbers` is declared with `const`, yet we're changing its contents. This works because `const` prevents *reassigning the variable* — it doesn't prevent *modifying what's inside* the array.
+
+This pattern is called **mutation** — you're directly changing the original array. It works, but it can cause problems as programs grow, especially when multiple parts of your code share the same array. A safer approach — transforming an array into a *new* array without touching the original — is something you'll learn when you get to array methods.
+
+---
+
+### Checkpoint: Loops
+
+Write answers in your **handwritten** notes ✍️.
+
+1. What are the three parts of a `for` loop? What does each one do?
+2. What is an infinite loop? What causes one?
+3. Why do we use `i < array.length` instead of `i <= array.length`?
+4. Why is `let` used for the counter variable instead of `const`?
+5. Write a `for` loop that logs each item in this array with its position number:
+   ```javascript
+   const tasks = ["Laundry", "Dishes", "Homework"];
+   // Expected output:
+   // 1: Laundry
+   // 2: Dishes
+   // 3: Homework
+   ```
+6. Rewrite the same loop using `while`.
+
+---
+
+## Wrap-Up
+
+### Key Takeaways
+
+**Arrays:**
+- Ordered lists stored in a single variable
+- Index-based access starting at `0`
+- Last index is always `array.length - 1`
+
+**`for` loops:**
+- Three parts: initialization, condition, increment
+- Use when you know the iteration count upfront
+- `i < array.length` is the standard pattern for arrays
+
+**`while` loops:**
+- Simpler structure, same infinite loop risk
+- Use when you're waiting on a condition, not counting steps
+
+**Mutation:**
+- You can modify array contents inside a loop
+- Direct mutation works but has tradeoffs — a better pattern is coming
+
+### What's Next
+
+You can now loop over arrays of strings and numbers. But what if each item in the array was more complex — say, a student with a name, a grade, and an ID?
+
+That's where objects come in. In the next lesson, you'll learn how to store and work with more complex data using objects — the other fundamental data structure in JavaScript.

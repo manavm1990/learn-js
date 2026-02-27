@@ -217,6 +217,12 @@ const lessons = [
         video: null,
       },
       {
+        id: "js-comp-sci-3",
+        title: "Comp. Sci. Fundamentals 3",
+        description: "Let's learn about ➿s. Let's learn about ➿s. Let's learn about ➿s.",
+        video: null,
+      },
+      {
         id: "control-flow-and-loops",
         title: "Control Flow, Conditionals and Loops",
         description:
