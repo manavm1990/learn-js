@@ -1,0 +1,391 @@
+# Computer Science Fundamentals 4: Objects
+
+## Introduction
+
+### The Problem with Arrays
+
+In the last lesson, you learned that arrays make working with lists easy:
+
+```javascript
+const me = ["Manav", 23];
+
+console.log(me[0]); // Manav
+console.log(me[1]); // 23
+```
+
+But look at that code. Do you know what `me[0]` is? A name? An 🆔❔ Without looking back at the comment, it's unclear. What about `me[1]`? Is it an age? A price? A grade?
+
+Numerical indices tell you the *position*, not the *meaning*.
+
+### The Solution: Objects
+
+What if you could replace numbered indices with your own meaningful names?
+
+```javascript
+const me = {
+  name: "Manav",
+  age: 23,
+};
+
+console.log(me.name); // Manav (obviously the name)
+console.log(me.age);  // 23 (obviously the age)
+```
+
+**That** is an object. A collection of named properties instead of numbered positions.
+
+### What You'll Learn Today
+
+- **Objects**: Storing data with meaningful property names
+- **Accessing properties**: Using dot notation (preferred) and bracket notation (flexible)
+- **Dynamic access**: Using variables to access properties
+- **Arrays of objects**: Working with many objects at once
+- **Nested objects**: Objects containing objects for complex data
+- **Bonus**: A quick introduction to `Object.keys()`
+
+### Before You Begin
+
+You already know arrays and loops. That foundation is perfect for understanding objects.
+
+---
+
+## Objects: Named Containers
+
+### Object Syntax
+
+Create an object with curly braces `{}` and list properties as key-value pairs:
+
+```javascript
+const student = {
+  name: "Alice",
+  age: 19,
+  enrolled: true,
+};
+```
+
+Each property has two parts:
+- **Key** (the name): Always a string. You don't need quotation marks in the literal.
+- **Value** (the data): Can be anything — string, number, boolean, array, or even another object.
+
+### The Key Principle: Properties Must Be Unique
+
+Like real keys, each property name must be unique. You can't have two `name` keys in the same object. But values can repeat:
+
+```javascript
+const locks = {
+  age: 23,
+  siblings: 23, // Same value, different property name. That's fine.
+  childrenCount: 2,
+};
+```
+
+### Values Can Be Any Type
+
+```javascript
+const person = {
+  name: "Jordan",           // String
+  age: 25,                  // Number
+  active: true,             // Boolean
+  hobbies: ["coding", "surfing"], // Array
+};
+```
+
+---
+
+## Accessing Properties: Two Ways
+
+Every object property can be accessed two different ways.
+
+### Dot Notation (Preferred)
+
+Use a dot followed by the property name:
+
+```javascript
+const user = {
+  name: "Lydia",
+  age: 20,
+  nationality: "Dutch",
+};
+
+console.log(user.name);        // Lydia
+console.log(user.age);         // 20
+console.log(user.nationality); // Dutch
+```
+
+Dot notation is cleaner and more readable. Use it when you know the property name ahead of time.
+
+### Bracket Notation (Flexible)
+
+Use square brackets with the property name *in quotation marks*:
+
+```javascript
+const user = {
+  name: "Lydia",
+  age: 20,
+  nationality: "Dutch",
+};
+
+console.log(user["name"]);        // Lydia
+console.log(user["age"]);         // 20
+console.log(user["nationality"]); // Dutch
+```
+
+**Note:** The above example is taken from [Lydia Hallie's JavaScript materials.](https://www.theavocoder.com/complete-javascript/)
+
+The quotation marks tell JavaScript: "This is a string, treat it as a property name."
+
+**Without quotation marks**, JavaScript looks for a *variable* with that name — which is the key to bracket notation's power.
+
+### Dynamic Property Access
+
+Here's where bracket notation shines. You can use a variable to access a property:
+
+```javascript
+const user = {
+  name: "Lydia",
+  age: 20,
+  nationality: "Dutch",
+};
+
+const propertyWeWant = "age";
+
+console.log(user[propertyWeWant]); // 20
+console.log(user.propertyWeWant);  // undefined (there's no key called "propertyWeWant")
+```
+
+When you use `user[propertyWeWant]`, JavaScript looks at what `propertyWeWant` holds (`"age"`) and accesses that property. When you use `user.propertyWeWant`, JavaScript looks for a key literally named `propertyWeWant` — which doesn't exist.
+
+Accessing a 🔑 that doesn't exist in an object returns `undefined` (not an error 🥅).
+
+**This is why bracket notation matters**: It lets you write flexible, reusable code.
+
+### Dot vs. Bracket: Decision Guide
+
+- **Use dot notation**: When you know the property name (e.g., `user.name`)
+- **Use bracket notation**: When the property name is dynamic or in a variable (e.g., `user[variableName]`)
+
+Basically, 99.8% of the time, you'll use dot notation. But that 0.2% is crucial for writing dynamic code.
+
+---
+
+## Checkpoint: Access Properties
+
+Write your answers in **handwritten** notes ✍️.
+
+1. Create an object for a product with properties: `name`, `price`, and `inStock`.
+2. Access all three properties using dot notation.
+3. Access all three properties using bracket notation (with quotation marks).
+4. Create a variable `property = "price"`. Use bracket notation to access the price. Why doesn't `obj.property` work?
+5. When would you prefer bracket notation over dot notation? Give one real-world example.
+
+---
+
+## Arrays of Objects
+
+One object is useful. Many objects together? That's power.
+
+Store multiple objects in an array:
+
+```javascript
+const users = [
+  {
+    name: "Lydia Hallie",
+    age: 20,
+    nationality: "Dutch",
+  },
+  {
+    name: "John Doe",
+    age: 21,
+    nationality: "English",
+  },
+];
+
+// Access the first user's name
+console.log(users[0].name); // Lydia Hallie
+
+// Access the second user's age
+console.log(users[1].age); // 21
+```
+
+This pattern — an array of objects — is everywhere in real applications:
+- Databases return arrays of user records
+- APIs send arrays of product data. Here, API stands for "Application Programming Interface" — it's how different software systems talk to each other. When you fetch data from an API, it often comes back as an array of objects.
+- React renders lists by mapping over arrays of objects
+
+The syntax `users[0].name` combines what you know:
+- `users[0]` — access the first item in the array (get the object)
+- `.name` — access the `name` property of that object
+
+---
+
+## Nested Objects
+
+Objects can contain other objects. This is called **nesting** — and it's how you represent relationships in data.
+
+### Example: A User with an Address
+
+```javascript
+const user = {
+  name: "Maria",
+  age: 22,
+  address: {
+    city: "Belleville",
+    state: "Illinois",
+  },
+};
+
+// Access nested properties
+console.log(user.address.city);  // Belleville
+console.log(user.address.state); // Illinois
+```
+
+The chain `user.address.city` reads naturally:
+- "In the `user` object..."
+- "Access the `address` property (which is also an object)..."
+- "Access the `city` property of that address..."
+
+### Nesting with Arrays
+
+Objects can contain arrays, and arrays can contain objects. This combines both patterns:
+
+```javascript
+const course = {
+  title: "Web Development",
+  students: [
+    { name: "Alice", grade: 92 },
+    { name: "Bob", grade: 88 },
+  ],
+};
+
+// Access the first student's grade
+console.log(course.students[0].grade); // 92
+```
+
+This is real JavaScript: an object with a property that contains an array of objects. You can chain dot and bracket notation together.
+
+---
+
+## Object.keys()
+
+Since you know arrays, here's a useful helper: `Object.keys()` returns an array of all property names in an object.
+
+**Note:** `Object.keys()` is called on `Object` itself — JavaScript's built-in toolbox for working with objects. It's a universal helper, not something tied to one specific object. In Object-Oriented Programming (OOP), we call these "static methods." If you've never heard that term before, don't worry about it. Just know that `Object.keys()` is a function you can use on any object to get its keys. 
+
+```javascript
+const user = {
+  name: "Alex",
+  age: 25,
+  city: "NYC",
+};
+
+const keys = Object.keys(user);
+console.log(keys); // ["name", "age", "city"]
+```
+
+Why is this useful? Because now you can loop over an object's properties using the `for` loops you learned:
+
+```javascript
+const user = { name: "Alex", age: 25 };
+
+for (let i = 0; i < Object.keys(user).length; i++) {
+  const key = Object.keys(user)[i];
+  console.log(key, user[key]);
+}
+// name Alex
+// age 25
+```
+
+---
+
+## Chaining ⛓️ and Errors 🥅
+
+### The Problem with Chaining
+
+Chaining is powerful — but it can break if a property doesn't exist.
+
+```javascript
+const user = {
+  name: "Maria",
+  address: {
+    city: "Chicago",
+  },
+};
+
+console.log(user.address.city); // Chicago ✅
+
+// What if address doesn't exist?
+const user2 = { name: "Alex" };
+console.log(user2.address.city); // TypeError: Cannot read property 'city' of undefined ❌
+```
+
+When you try `user2.address`, JavaScript returns `undefined` (the property doesn't exist). Then you try to access `.city` on `undefined`, which throws an **error** — JavaScript can't look for a property on something that doesn't exist.
+
+This crashes your program.
+
+### Solution: Optional Chaining `?.`
+
+Use the optional chaining operator `?.` to safely access nested properties:
+
+```javascript
+const user = { name: "Maria", address: { city: "Chicago" } };
+const user2 = { name: "Alex" };
+
+console.log(user.address?.city);   // Chicago ✅
+console.log(user2.address?.city);  // undefined ✅ (no error)
+```
+
+With `?.`, JavaScript checks:
+- **If the property exists**, access it.
+- **If it doesn't exist** (or is `null`/`undefined`), stop and return `undefined`. No error.
+
+### When to Use Optional Chaining
+
+Use `?.` whenever you're unsure if a nested property exists:
+
+```javascript
+const product = { name: "Laptop", specs: { ram: "16GB" } };
+
+// Risky (might crash if specs is missing)
+// console.log(product.specs.ram);
+
+// Safe (handles missing specs gracefully)
+console.log(product.specs?.ram); // "16GB"
+
+const product2 = { name: "Mouse" };
+console.log(product2.specs?.ram); // undefined (no error)
+```
+
+Optional chaining is especially useful when working with data from APIs or databases — you often don't know which properties will be present.
+
+---
+
+## Checkpoint: Objects in Context
+
+Write your answers in **handwritten** notes ✍️.
+
+1. Create an array of three student objects. Each student should have a `name`, a `grade`, and a `subject`.
+2. Access the grade of the second student using bracket and dot notation together.
+3. Create a user object with nested address information (city, state). Access the city using chained dot notation.
+4. Use `Object.keys()` on one of your objects. What does it return?
+5. Why is an array of objects better than having separate `name1, name2, name3` variables?
+
+---
+
+## Wrap-Up
+
+### Key Takeaways
+
+**Objects solve a fundamental problem**: arrays use numbered indices (unclear), while objects use named properties (self-documenting).
+
+- **Object literals**: `{ key: value }` lets you create named containers
+- **Dot notation**: `obj.property` is clean and readable
+- **Bracket notation**: `obj[variable]` is flexible and powerful
+- **Arrays of objects**: The backbone of real applications
+- **Nested objects**: How you represent complex relationships
+- **Object.keys()**: A quick way to get all property names as an array
+- **Optional chaining `?.`**: Safely access nested properties without crashing on missing data
+
+### What's Next
+
+You can now create objects and access their data. But objects can do more than just sit there. In the next lesson, you'll learn how to add **functions** to objects, making them dynamic and capable of action.
+
+When objects and functions combine, you unlock the power of real programming.

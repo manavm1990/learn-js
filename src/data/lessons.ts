@@ -223,6 +223,13 @@ const lessons = [
         video: null,
       },
       {
+        id: "js-comp-sci-4",
+        title: "Comp. Sci. Fundamentals 4",
+        description:
+          "Move beyond numbered indices. Learn how objects use named properties to store and access complex data.",
+        video: null,
+      },
+      {
         id: "control-flow-and-loops",
         title: "Control Flow, Conditionals and Loops",
         description:
