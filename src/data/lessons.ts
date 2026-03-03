@@ -230,10 +230,10 @@ const lessons = [
         video: null,
       },
       {
-        id: "control-flow-and-loops",
-        title: "Control Flow, Conditionals and Loops",
+        id: "js-comp-sci-5",
+        title: "Comp. Sci. Fundamentals 5",
         description:
-          "Learn how programs make decisions with conditionals and handle repetitive tasks with loops - the building blocks of intelligent programs.",
+          "Wrap code into reusable blocks. Learn how functions reduce duplication and make programs flexible and maintainable.",
         video: null,
       },
       {
