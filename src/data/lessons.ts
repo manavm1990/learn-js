@@ -237,24 +237,6 @@ const lessons = [
         video: null,
       },
       {
-        id: "js-functions",
-        title: "JavaScript Functions",
-        description:
-          "Learn to create reusable blocks of code with functions - the building blocks of organized programming and modular applications.",
-        video: null,
-      },
-      {
-        id: "js-objects-and-arrays-basics",
-        title: "Objects and Arrays: Data Organization",
-        description:
-          "Master JavaScript's fundamental data structures for organizing information - objects for related properties and arrays for collections.",
-        video: {
-          duration: 2134,
-          thumbnail: "https://videos.learnjs.tech/swic/videos/objects.png",
-          url: "https://videos.learnjs.tech/swic/videos/objects-arrays.mp4",
-        },
-      },
-      {
         id: "callbacks-and-array-methods",
         title: "Callbacks and Array Methods",
         description:
