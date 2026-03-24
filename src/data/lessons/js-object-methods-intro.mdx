@@ -1,391 +1,380 @@
-# Object Methods Basics
+# Object Methods and Spread
 
 ## Introduction
 
-**Icebreaker**: Think about your backpack. You know what's inside: notebooks, pens, maybe a laptop. If someone asked you for a list of everything, you'd pull each item out and name it. In JavaScript, when we want a list of the contents of an object, we use helper methods instead of unpacking by hand.
+### The Problem with Objects and `map`
 
-**Real-world scenario**: Apps constantly take objects (like a user profile, product info, or game character) and need to display pieces of them, count things, or turn them into arrays so they can use `map` and `filter`. You just learned how powerful array methods are. Now you'll learn the simple bridge: turning object data into arrays you can process.
+You know how to use `map` and `filter` on arrays. But what happens when your data is an object instead of an array?
+
+```javascript
+const product = {
+  name: "Wireless Headphones",
+  price: 79.99,
+  brand: "SoundCo",
+  inStock: true,
+};
+```
+
+You can't call `product.map(...)`. `map` only works on arrays.
+
+So how do you process the data inside an object? You convert it to an array first — and JavaScript gives you three built-in tools to do exactly that.
 
 ### What You'll Learn Today
 
-- Difference between objects (containers with named properties) and arrays (ordered lists)
-- How to list an object's property names with `Object.keys()`
-- How to list an object's property values with `Object.values()`
+- How to get an object's keys as an array with `Object.keys()`
+- How to get an object's values as an array with `Object.values()`
 - How to get both at once with `Object.entries()`
-- How to copy/merge objects safely using spread (`{ ...obj }`) and `Object.assign()`
-- How these pair with `map`, `filter`, and callbacks
+- How to copy and merge objects safely with the spread operator (`...`)
 
-### Quick Callback Reminder
+### Before You Begin
 
-In the previous lesson you passed **callback functions** to array methods like `map` and `filter`. Those methods loop for you and "call back" your logic. Today you'll see how object helper methods let you convert object data into arrays so you can reuse those same skills.
+Accept the GitHub Classroom assignment and clone the repository. Follow the `README.md` to get set up.
 
-## Core Concept Overview
+---
 
-### Objects vs Arrays (Quick Review)
+## `Object.keys()`: Get the Property Names
+
+`Object.keys()` returns an array of an object's property names.
 
 ```javascript
 const student = {
-  name: "Alex",
+  name: "Alice",
   grade: 92,
   enrolled: true,
 };
 
-const grades = [92, 88, 75];
+const keys = Object.keys(student);
+console.log(keys); // ["name", "grade", "enrolled"]
 ```
 
-- Object: named properties (like labeled drawers)
-- Array: ordered items (like numbered boxes)
-
-### Listing Property Names: Object.keys()
+The result is a regular array — so you can use `map`, `filter`, or anything else you already know on it.
 
 ```javascript
-const student = { name: "Alex", grade: 92, enrolled: true };
-const propertyNames = Object.keys(student);
-console.log(propertyNames); // ["name", "grade", "enrolled"]
+// How many properties does this object have?
+console.log(Object.keys(student).length); // 3
 ```
 
-Use case: Build a dynamic UI listing fields, or check if a property exists.
+You actually used `Object.keys()` back in [CS Fundamentals 4](/js-comp-sci-4) to loop over an object's properties. Now you'll use it with `map` and `filter` instead.
 
-### Listing Property Values: Object.values()
+### Practice 1
 
 ```javascript
-const student = { name: "Alex", grade: 92, enrolled: true };
-const propertyValues = Object.values(student);
-console.log(propertyValues); // ["Alex", 92, true]
+const product = {
+  name: "Laptop",
+  price: 899,
+  inStock: true,
+  brand: "TechCo",
+};
 ```
 
-Use case: Turn values into a readable line: `propertyValues.join(", ")`.
+Use `Object.keys()` to get all property names. Then use `filter` to keep only the keys that are longer than 4 characters.
 
-### Pairing Keys and Values: Object.entries()
+<Accordion question="Hint">
+
+Strings have a `.length` property. `"price".length` is `5`. Chain `Object.keys()` and `filter` — the callback receives one key at a time.
+
+</Accordion>
+
+<Accordion question="Solution">
 
 ```javascript
-const student = { name: "Alex", grade: 92, enrolled: true };
-const entries = Object.entries(student);
-console.log(entries);
-// [["name", "Alex"], ["grade", 92], ["enrolled", true]]
+const longKeys = Object.keys(product).filter((key) => key.length > 4);
+
+console.log(longKeys); // ["price", "inStock", "brand"]
 ```
 
-Each entry is a tiny 2-item array: `[key, value]`. This makes it easy to use `map`:
+</Accordion>
+
+---
+
+## `Object.values()`: Get the Property Values
+
+`Object.values()` returns an array of just the values — no keys.
 
 ```javascript
-const lines = Object.entries(student).map(([key, value]) => `${key}: ${value}`);
-console.log(lines);
-// ["name: Alex", "grade: 92", "enrolled: true"]
-```
-
-### Copying and Merging Objects (Without Mutating)
-
-Mutating means changing an existing object directly. We prefer creating new copies.
-
-```javascript
-const student = { name: "Alex", grade: 92 };
-
-// Spread copy
-const spreadStudent = { ...student };
-
-// Add or override while copying
-const studentWithEnrollmentStatus = { ...student, enrolled: true };
-
-// Merge two objects
-const addlCourse = { major: "Biology", grade: 93 }; // grade overrides
-const studentWithAddlCourse = { ...student, ...addlCourse };
-
-console.log(studentWithAddlCourse); // { name: "Alex", grade: 93, major: "Biology" }
-```
-
-`Object.assign()` does similar work:
-
-```javascript
-const merged2 = Object.assign({}, original, extra);
-```
-
-Always start with an empty `{}` target if you don't want to modify the first argument.
-
-### Key Terms
-
-- Property name (key)
-- Property value (value)
-- Entry: a `[key, value]` pair
-- Spread operator: `...` syntax for copying/merging
-- Immutable update: creating a new object instead of changing the old one
-
-### Conceptual Quiz
-
-1. What does `Object.keys()` return?
-   - a) Only values
-   - b) Array of property names
-   - c) A single string
-   - d) An object
-2. What is an entry from `Object.entries(obj)`?
-   - a) A string
-   - b) A number
-   - c) An array with two items: key and value
-   - d) Always an object
-3. Which creates a new object while adding a property?
-   - a) `original.newProp = 1`
-   - b) `{ ...original, newProp: 1 }`
-   - c) `delete original.prop`
-   - d) `Object.values(original)`
-4. What does immutable mean here?
-   - a) Never log values
-   - b) Avoid changing existing objects; make new ones
-   - c) Use only arrays
-   - d) Remove properties
-
-Answers: 1-b, 2-c, 3-b, 4-b
-
-## Hands-On Application
-
-### Exercise 1: Converting Objects to Arrays for Filtering
-
-The examples below are a bit contrived, as we could just have made an array of objects with the names and the scores. However, if we are not in control of the data source, it could be the case that we have a messy schema like this one, where it's the student names as keys with the scores.
-
-```javascript
-const userScores = {
-  alex: 95,
-  jordan: 72,
-  taylor: 88,
-  casey: 60,
+const student = {
+  name: "Alice",
+  grade: 92,
+  enrolled: true,
 };
 
-// Convert to entries and filter high scorers (>= 80)
-const highScorers = Object.entries(userScores)
-
-  /**
-    * The underscore is just a placeholder to skip over the name, as we just care about filtering by `score`. 
-    * This is using array desctructuring, where now the first item is the name, which we don't care about for the filter,
-    * and the second item is the score, which we do want to use for the filter!
-    */
-  .filter(([_, score]) => score >= 80)
-  .map(([name, score]) => `${name} (${score}%)`);
-
-console.log(highScorers);
-// ["alex (95%)", "taylor (88%)"]
+const values = Object.values(student);
+console.log(values); // ["Alice", 92, true]
 ```
 
-Your turn: Create a new array of objects: `{ name, score }` for those high scorers.
+This is useful when you only care about the data, not what it's called.
 
-### Exercise 2: Merging Settings
+### Practice 2
 
 ```javascript
-const defaultSettings = {
+const gradeBreakdown = {
+  homework: 85,
+  quiz: 62,
+  midterm: 91,
+  final: 88,
+  participation: 95,
+};
+```
+
+Use `Object.values()` and `filter` to get only the scores that are 80 or above.
+
+<Accordion question="Hint">
+
+`Object.values()` gives you an array of just the numbers. From there, `filter` works exactly like it did in [Callbacks and Array Methods](/callbacks-and-array-methods) — the callback receives one score at a time.
+
+</Accordion>
+
+<Accordion question="Solution">
+
+```javascript
+const passing = Object.values(gradeBreakdown).filter((score) => score >= 80);
+
+console.log(passing); // [85, 91, 88, 95]
+```
+
+</Accordion>
+
+---
+
+## `Object.entries()`: Get Keys and Values Together
+
+`Object.entries()` returns an array of `[key, value]` pairs. Each item in the result is a two-element array.
+
+```javascript
+const student = {
+  name: "Alice",
+  grade: 92,
+  enrolled: true,
+};
+
+const entries = Object.entries(student);
+console.log(entries);
+// [
+//   ["name", "Alice"],
+//   ["grade", 92],
+//   ["enrolled", true],
+// ]
+```
+
+This is the most powerful of the three because you have access to both the key and the value at the same time. But each item in the result is a two-element array — so before we use `entries` with `map`, you need one new tool: **array destructuring**.
+
+### Array Destructuring
+
+When you have an array and want to pull values out into variables, you could do it the manual way:
+
+```javascript
+const pair = ["alice", 95];
+
+const name = pair[0];
+const score = pair[1];
+```
+
+Array destructuring does the same thing in one line:
+
+```javascript
+const [name, score] = pair;
+
+console.log(name);  // "alice"
+console.log(score); // 95
+```
+
+The square brackets on the left mirror the shape of the array on the right. JavaScript assigns each variable to the matching position.
+
+### Destructuring in Callbacks
+
+`Object.entries()` gives you an array of `[key, value]` pairs. Callbacks receive each item one at a time — so each item your callback receives is itself a two-element array. You can destructure it right in the callback parameter:
+
+```javascript
+const student = { name: "Alice", grade: 92, enrolled: true };
+
+const lines = Object.entries(student).map(([key, value]) => `${key}: ${value}`);
+
+console.log(lines);
+// ["name: Alice", "grade: 92", "enrolled: true"]
+```
+
+`([key, value])` is **array destructuring** in the callback parameter. Instead of receiving the pair as a single array and then pulling items out manually, you name both items right in the function signature. Here's the same operation written both ways:
+
+```javascript
+const student = { name: "Alice", grade: 92, enrolled: true };
+
+// Without destructuring — pull values out manually
+const lines = Object.entries(student).map((pair) => {
+  const key = pair[0];
+  const value = pair[1];
+  return `${key}: ${value}`;
+});
+
+console.log(lines);
+// ["name: Alice", "grade: 92", "enrolled: true"]
+```
+
+```javascript
+const student = { name: "Alice", grade: 92, enrolled: true };
+
+// With destructuring — same result, less noise
+const lines = Object.entries(student).map(([key, value]) => `${key}: ${value}`);
+
+console.log(lines);
+// ["name: Alice", "grade: 92", "enrolled: true"]
+```
+
+### Practice 3
+
+```javascript
+const inventory = {
+  apples: 50,
+  bananas: 3,
+  oranges: 0,
+  grapes: 14,
+  mangoes: 2,
+};
+```
+
+Use `Object.entries()` and `filter` to keep only items with fewer than 5 in stock. Then use `map` to turn each low-stock entry into a warning string like `"bananas: only 3 left"`.
+
+<Accordion question="Hint">
+
+Chain it: `.entries()` → `.filter(...)` → `.map(...)`
+
+You need both the item name and the count to build the message — that's exactly what `entries` gives you.
+
+</Accordion>
+
+<Accordion question="Solution">
+
+```javascript
+const warnings = Object.entries(inventory)
+  .filter(([_, count]) => count < 5)
+  .map(([item, count]) => `${item}: only ${count} left`);
+
+console.log(warnings);
+// ["bananas: only 3 left", "oranges: only 0 left", "mangoes: only 2 left"]
+```
+
+The `_` in `filter(([_, count]) => ...)` is a convention for "I'm not using this value." The item name is still destructured — we just don't need it until the `map` step. However, we must have something in that position to 'skip over' the first item in the pair and get to the count.
+
+</Accordion>
+
+---
+
+## Checkpoint
+
+Write your answers in **handwritten** notes ✍️.
+
+1. What does `Object.keys()` return?
+2. What does `Object.values()` return?
+3. What does each item in `Object.entries()` look like?
+4. You have an object with 5 properties. You call `Object.values()` then `filter`. How many items could the result have?
+5. What does `([key, value])` mean in a callback parameter? Why the extra parentheses?
+
+---
+
+## Spread: Copying and Merging Objects
+
+You've already used spread with arrays in [Callbacks and Array Methods](/callbacks-and-array-methods):
+
+```javascript
+// ✅ Creates a new object with spread
+const good = students.map((student) => ({
+  ...student,
+  passing: student.grade >= 70,
+}));
+```
+
+That `...student` is the **spread operator**. It copies all properties from one object into a new one. Here's how it works on its own:
+
+### Copying an Object
+
+```javascript
+const student = { name: "Alice", grade: 92 };
+
+// ❌ This doesn't copy — both variables point to the same object
+const copy = student;
+
+// ✅ Spread creates a new object with the same properties
+const spreadCopy = { ...student };
+```
+
+Why does the first version fail? You learned this in [CS Fundamentals 1](/js-comp-sci-1): objects are stored by reference. `copy = student` just makes a second label pointing to the same data. Change one, you change both. It's like 2️⃣ remote controls that control the same TV 📺.
+
+Spread creates a genuinely new object.
+
+### Adding or Overriding Properties
+
+Spread really shines when you want to create a modified copy without touching the original (avoiding mutation). You can add new properties or override existing ones by listing them after the spread.
+
+```javascript
+const student = { name: "Alice", grade: 92 };
+
+// Add a new property
+const withStatus = { ...student, enrolled: true };
+console.log(withStatus); // { name: "Alice", grade: 92, enrolled: true }
+console.log(student);    // { name: "Alice", grade: 92 } — unchanged ✅
+
+// Override an existing property
+const curved = { ...student, grade: 97 };
+console.log(curved);  // { name: "Alice", grade: 97 }
+console.log(student); // { name: "Alice", grade: 92 } — unchanged ✅
+```
+
+Order matters: properties listed after the spread override ones from it.
+
+### Merging Two Objects
+
+```javascript
+const defaults = {
   theme: "light",
   notifications: true,
   itemsPerPage: 10,
 };
 
-const userSettings = {
+const userPreferences = {
   theme: "dark",
-  itemsPerPage: 20,
+  itemsPerPage: 25,
 };
 
-const appliedSettings = { ...defaultSettings, ...userSettings };
-console.log(appliedSettings);
-// { theme: "dark", notifications: true, itemsPerPage: 20 }
+const settings = { ...defaults, ...userPreferences };
+console.log(settings);
+// { theme: "dark", notifications: true, itemsPerPage: 25 }
 ```
 
-Your turn: Add a new setting `language: "en"` while merging.
+`userPreferences` is spread after `defaults`, so its values win on any overlap. `notifications` stays from `defaults` because `userPreferences` doesn't have it.
 
-### Exercise 3: Safe Copy Before Update
+### Practice 4
 
 ```javascript
-const profile = { name: "Alex", level: 3 };
-
-// Bad (mutates): profile.level = 4;
-
-// Good (copy + change)
-const updatedProfile = { ...profile, level: 4 };
-console.log(profile.level); // 3
-console.log(updatedProfile.level); // 4
+const profile = { name: "Alex", level: 3, active: true };
 ```
 
-Your turn: Create `promotedProfile` that also adds `badge: "Gold"`.
+Create a new object `promoted` that has all the same properties, but with `level` bumped to `4` and a new property `badge` set to `"Gold"`. Verify that `profile` is unchanged.
 
-### Exercise 4: Entries with Map for Display
+<Accordion question="Hint">
+
+Spread `profile` first, then list the properties you want to add or override after it. To verify the original is unchanged, `console.log(profile)` after.
+
+</Accordion>
+
+<Accordion question="Solution">
 
 ```javascript
-const product = { name: "Laptop", price: 899, inStock: true };
+const promoted = { ...profile, level: 4, badge: "Gold" };
 
-const labels = Object.entries(product).map(
-  ([key, value]) => `${key.toUpperCase()}: ${value}`,
-);
-console.log(labels);
-// ["NAME: Laptop", "PRICE: 899", "INSTOCK: true"]
+console.log(promoted); // { name: "Alex", level: 4, active: true, badge: "Gold" }
+console.log(profile);  // { name: "Alex", level: 3, active: true } — unchanged ✅
 ```
 
-Your turn: Change the callback to return objects: `{ label: key, value }`.
-
-## Advanced Concepts & Comparisons
-
-### keys vs entries vs values
-
-- Need just the property names? `Object.keys(obj)`
-- Need just the raw data values? `Object.values(obj)`
-- Need both for processing with `map` or `filter`? `Object.entries(obj)`
-
-### When to Use Spread vs Object.assign
-
-- Spread is shorter and common in modern code: `{ ...a, ...b }`
-- `Object.assign({}, a, b)` is similar but more verbose
-- Always avoid using `Object.assign(a, b)` unless you intend to modify `a`
-
-### Combining with Array Methods
-
-```javascript
-const stats = { wins: 12, losses: 5, ties: 2 };
-
-// Sum all numeric values
-const totalGames = Object.values(stats).reduce((sum, n) => sum + n, 0);
-console.log(totalGames); // 19
-```
-
-### Pattern: Transform Object to Array → Process → Back to Object
-
-```javascript
-const grades = { alex: 95, jordan: 72, taylor: 88 };
-
-// Curve everyone +5, then build a new object
-const curvedEntries = Object.entries(grades).map(([name, score]) => [
-  name,
-  score + 5,
-]);
-
-const curvedGrades = Object.fromEntries(curvedEntries);
-console.log(curvedGrades); // { alex: 100, jordan: 77, taylor: 93 }
-```
-
-`Object.fromEntries()` turns `[key, value]` pairs back into an object.
-
-## Troubleshooting & Best Practices
-
-### Common Mistakes
-
-1. Forgetting that `Object.keys()` returns an array (so you can use `length` and `map`).
-2. Accidentally mutating original objects instead of copying.
-3. Mixing up entries shape: it is `[key, value]`, not `{ key, value }`.
-
-### Defensive Checks
-
-```javascript
-const printObject = (obj) => {
-  if (!obj || typeof obj !== "object") return;
-  Object.entries(obj).forEach(([key, value]) => {
-    console.log(`${key}: ${value}`);
-  });
-};
-```
-
-### Choosing Methods Decision Guide
-
-- Want a list of names to loop? `Object.keys()`
-- Want a list of just numbers to add? `Object.values()`
-- Want to build display strings or filter by property names? `Object.entries()`
-- Want to copy/extend data? Spread or `Object.assign({}, ...)`
-
-## Wrap-Up & Assessment
-
-### Key Takeaways
-
-1. Objects store named data; arrays store ordered lists
-2. `Object.keys()`, `values()`, and `entries()` turn object data into arrays
-3. Spread copying keeps code predictable and avoids accidental mutations
-4. Entries pair perfectly with `map`, `filter`, and `reduce`
-5. You can convert entries back into an object using `Object.fromEntries()`
-
-### Quick Advanced Quiz
-
-1. What does `[name, score]` represent inside an `entries.map(([name, score]) => ...)` callback?
-   - a) Two separate arrays
-   - b) Destructured key and value from one entry pair
-   - c) Always numbers
-   - d) A mistake
-2. Which will safely merge without changing originals?
-   - a) `Object.assign(original, extra)`
-   - b) `{ ...original, ...extra }`
-   - c) `original += extra`
-   - d) `merge(original, extra)`
-
-Answers: 1-b, 2-b
-
-### Homework: Data Inspector
-
-Build a data inspector script in `src/data-inspector.js` that demonstrates object method mastery through practical transformations.
-
-#### Setup
-
-```javascript
-const user = {
-  id: 7,
-  name: "Casey",
-  role: "editor",
-  active: true,
-};
-
-const products = {
-  laptop: 899,
-  mouse: 25,
-  keyboard: 0, // out of stock
-  webcam: null, // discontinued
-  headphones: 150,
-};
-```
-
-#### Tasks (Complete All)
-
-**1. Property Report** - Log formatted user properties in uppercase:
-```
-ID: 7
-NAME: Casey
-ROLE: editor
-ACTIVE: true
-```
-
-**2. Long Keys** - Create an array of property names from `user` that are longer than 3 characters. Log the count and the array.
-
-**3. Active Products** - Create a new object containing only products with truthy values (remove out of stock and discontinued items).
-
-**4. Add Timestamp** - Create a new user object with an added `timestamp` property (use `Date.now()`). Verify the original `user` object is unchanged.
-
-**5. Price Analysis** - Calculate and log:
-- Total value of all active products
-- Number of available products vs total products
-
-**6. Transform Pipeline** - Demonstrate the pattern: object → entries → filter/map → back to object:
-- Take the `products` object
-- Filter to items under $100
-- Apply a 10% discount
-- Return as a new object
-
-#### Grading Criteria
-
-- **Correctness (40%)**: Output matches requirements
-- **Method Selection (30%)**: Uses appropriate `Object.keys()`, `values()`, `entries()`, spread
-- **Immutability (20%)**: No mutations, creates new objects/arrays
-- **Code Quality (10%)**: Readable, properly formatted
-
-### Reflection Questions (Required)
-
-Answer these in a markdown file or video:
-
-**1. Method Selection Justification**
-- Why did you use `Object.entries()` for Task 1 instead of `Object.keys()`?
-- In Task 6, why use `Object.fromEntries()` instead of building the object manually with a loop?
-
-**2. Immutability Verification**
-- In Task 4, how do you prove the original `user` wasn't mutated? What would you log to verify?
-- What would break if you used `Object.assign(user, { timestamp: Date.now() })` instead of spread?
-
-**3. Edge Cases**
-- What happens if `products.keyboard` was `undefined` instead of `0`? Would it be filtered out in Task 3?
-- If a product value was `"free"` (string), how would Task 5 break? How would you fix it?
-
-**4. Alternative Approaches**
-- Could you complete Task 2 without using `filter()`? Show the alternative.
-- Could you complete Task 3 without `Object.entries()` and `Object.fromEntries()`? What would you use?
-
-**5. Debugging Scenario**
-Your Task 6 output includes `laptop: 809.1` even though laptops cost $899 (over $100). What's the bug? Walk through your debugging process.
+</Accordion>
 
 ---
 
-Next: You'll continue practicing with data structures while moving toward manipulating the DOM. Keep using your callback + array method skills—they grow more powerful with objects involved!
+## Wrap-Up
+
+### Key Takeaways
+
+- **`Object.keys(obj)`** → array of property names
+- **`Object.values(obj)`** → array of property values
+- **`Object.entries(obj)`** → array of `[key, value]` pairs
+- All three return regular arrays — you can chain `map`, `filter`, and anything else you know
+- **Spread `{ ...obj }`** creates a new object; it doesn't modify the original
+- Adding properties after the spread overrides any matching keys from the original.
