@@ -1,0 +1,291 @@
+# Advanced Array Methods
+
+## Introduction
+
+### What You Already Know
+
+In [Callbacks and Array Methods](/callbacks-and-array-methods), you learned that instead of writing loops ➿ by hand, you can pass a callback to `map` or `filter` and describe *what* you want instead of *how* to do it.
+
+That pattern doesn't change. This lesson adds three more methods that follow the same idea — with one twist for `reduce`.
+
+### What You'll Learn Today
+
+- How `reduce` collapses an array down to a single value
+- How `map` sets you up for building UIs with real data
+- Quick coverage of `sort`, `find`, and `some`/`every`
+
+### Before You Begin
+
+Accept the GitHub Classroom assignment and clone the repository. Follow the `README.md` to get set up.
+
+---
+
+## `reduce`: Collapse an Array to One Value
+
+`map` returns a new array. `filter` returns a new array. `reduce` returns a **single value** — a number, a string, an object, anything.
+
+The classic example is summing an array of numbers:
+
+```javascript
+const ratings = [9.0, 7.8, 8.6, 7.5, 8.6];
+
+const total = ratings.reduce((sum, current) => sum + current, 0);
+
+console.log(total); // 41.5
+```
+
+### The Two Parameters
+
+The callback for `reduce` receives two parameters instead of one:
+
+- **`sum`** — the running result so far. Technically, this is called the **accumulator** because it accumulates the result as you go, but `sum` is a common name when you're doing addition.
+- **`current`** — the current item in the array
+
+On each iteration, whatever you return becomes the new `sum` for the next iteration.
+
+### The Initial Value
+
+Notice the `0` after the callback — that's the **initial value**. It's what `sum` starts as before the first item is processed.
+
+Always provide an initial value. It makes the behavior predictable and avoids bugs:
+
+```javascript
+const ratings = [9.0, 7.8, 8.6];
+
+// ✅ With initial value — accumulator starts at 0
+ratings.reduce((acc, cur) => acc + cur, 0); // 25.4
+
+// ❌ Without initial value — accumulator starts as the first item
+// This works for simple sums but can cause subtle bugs in other cases
+ratings.reduce((acc, cur) => acc + cur);
+```
+
+Get in the habit of always initializing.
+
+### Walking Through It
+
+```javascript
+const ratings = [9.0, 7.8, 8.6];
+
+ratings.reduce((acc, cur) => acc + cur, 0);
+
+// 3️⃣ elements in the array, 3 iterations of the callback:
+// Step 1: acc = 0,    cur = 9.0  → returns 9.0
+// Step 2: acc = 9.0,  cur = 7.8  → returns 16.8
+// Step 3: acc = 16.8, cur = 8.6  → returns 25.4
+//
+// Final result: 25.4
+```
+
+### Practice 1: Sum and Average
+
+```javascript
+const scores = [88, 92, 75, 95, 61, 84];
+```
+
+1. Use `reduce` to get the total of all scores.
+2. Use that total to calculate the average. Log both.
+
+<Accordion question="Hint">
+
+The average is just `total / scores.length`. Get the total with `reduce` first, then divide.
+
+</Accordion>
+
+<Accordion question="Solution">
+
+```javascript
+const scores = [88, 92, 75, 95, 61, 84];
+
+const total = scores.reduce((acc, cur) => acc + cur, 0);
+const average = total / scores.length;
+
+console.log(total);   // 495
+console.log(average); // 82.5
+```
+
+</Accordion>
+
+### Practice 2: Reduce with Objects
+
+`reduce` works on arrays of objects too. Here, the accumulator starts as `0` and we pull the value we want from each object.
+
+```javascript
+const cart = [
+  { name: "Keyboard", price: 49 },
+  { name: "Mouse", price: 25 },
+  { name: "Monitor", price: 299 },
+  { name: "Webcam", price: 79 },
+];
+```
+
+Use `reduce` to calculate the total price of all items in the cart.
+
+<Accordion question="Hint">
+
+Your callback receives the accumulator and one cart item at a time. Add `item.price` to the accumulator on each step.
+
+</Accordion>
+
+<Accordion question="Solution">
+
+```javascript
+const total = cart.reduce((acc, item) => acc + item.price, 0);
+
+console.log(total); // 452
+```
+
+</Accordion>
+
+---
+
+## `map` and Real Data
+
+You've used `map` to transform arrays of numbers and strings. But the most important use of `map` — especially once you get to the browser and React — is turning an array of objects into something you can display.
+
+Think about any website you've used: a list of search results, a product grid, a social media feed. All of it is the same pattern: take an array of data objects, `map` over them, and produce something for each one.
+
+You know HTML. So instead of producing plain strings, you can have `map` produce HTML markup:
+
+```javascript
+const movies = [
+  { title: "Inception", genre: "Sci-Fi", rating: 9.0 },
+  { title: "Frozen", genre: "Animation", rating: 7.5 },
+  { title: "Parasite", genre: "Thriller", rating: 8.6 },
+];
+
+const movieCards = movies.map(
+  (movie) => `<li>${movie.title} (${movie.genre}) — ${movie.rating}</li>`
+);
+
+console.log(movieCards);
+// [
+//   "<li>Inception (Sci-Fi) — 9</li>",
+//   "<li>Frozen (Animation) — 7.5</li>",
+//   "<li>Parasite (Thriller) — 8.6</li>",
+// ]
+```
+
+Your JavaScript is writing HTML for you — one `<li>` per movie, generated from real data. This is the core idea behind reusable templates and components. Instead of copy-pasting the same HTML markup for every item, you define it once inside the `map` callback and let the data drive the output.
+
+To turn that array of strings into one big string you could actually drop into a page, use `.join()`:
+
+```javascript
+const movieList = movieCards.join("");
+
+console.log(movieList);
+// "<li>Inception (Sci-Fi) — 9</li><li>Frozen (Animation) — 7.5</li><li>Parasite (Thriller) — 8.6</li>"
+```
+
+`.join("")` stitches the array items together into a single string — the `""` means no separator between them. Strings have built-in methods just like arrays do. You'll see more of them when we get to the DOM.
+
+When you get to React, `map` does the exact same job — except instead of returning HTML strings, you'll return UI components. The pattern is identical.
+
+### Practice 3
+
+```javascript
+const students = [
+  { name: "Alice", grade: 88, passing: true },
+  { name: "Bob", grade: 61, passing: false },
+  { name: "Carol", grade: 95, passing: true },
+  { name: "Dave", grade: 70, passing: true },
+];
+```
+
+1. Use `filter` to get only passing students.
+2. Chain `map` to turn each passing student into an `<li>` like `<li>Alice — 88</li>`.
+
+<Accordion question="Hint">
+
+Filter first, then chain `map`. Each item in the filtered result is a student object — use dot notation to access `name` and `grade` inside your template literal.
+
+</Accordion>
+
+<Accordion question="Solution">
+
+```javascript
+const passingStudents = students
+  .filter((student) => student.passing)
+  .map((student) => `<li>${student.name} — ${student.grade}</li>`);
+
+console.log(passingStudents);
+// ["<li>Alice — 88</li>", "<li>Carol — 95</li>", "<li>Dave — 70</li>"]
+```
+
+</Accordion>
+
+---
+
+## `sort`: Reorder an Array
+
+`sort` reorders the items in an array. Unlike `map` and `filter`, **`sort` mutates the original array** — it doesn't create a new one.
+
+```javascript
+const scores = [85, 92, 61, 78];
+
+scores.sort((a, b) => a - b); // low to high
+console.log(scores); // [61, 78, 85, 92] — original array changed
+```
+
+The callback receives two items (`a` and `b`) and decides their order:
+- Return a negative number → `a` comes first
+- Return a positive number → `b` comes first
+- `a - b` → ascending (low to high)
+- `b - a` → descending (high to low)
+
+If you want to sort without touching the original, spread a copy first:
+
+```javascript
+const sorted = [...scores].sort((a, b) => a - b);
+```
+
+That's the immutable approach — make a copy, sort the copy.
+
+**Note:** We have learned about using meaningful variable names, but `a` and `b` are a standard convention for sort comparisons — one of those exceptions, like `i` for index in a loop, where the short names are universally understood and expected. Just know that single-letter names are the exception, not the rule.
+
+---
+
+## Honorable Mentions
+
+These follow the same callback pattern you already know. You don't need to memorize them — just recognize them when you see them.
+
+**`some`** — returns `true` if at least one item passes:
+
+```javascript
+const students = [
+  { name: "Alice", grade: 88 },
+  { name: "Bob", grade: 95 },
+];
+
+const hasFailingStudent = students.some((student) => student.grade < 70);
+console.log(hasFailingStudent); // false
+```
+
+**`every`** — returns `true` only if all items pass:
+
+```javascript
+const allPassing = students.every((student) => student.grade >= 70);
+console.log(allPassing); // true
+```
+
+---
+
+## Checkpoint
+
+Write your answers in **handwritten** notes ✍️.
+
+1. What two parameters does a `reduce` callback receive?
+2. What does the initial value in `reduce` do? Why should you always provide one?
+3. `map` and `filter` return new arrays. What does `reduce` return?
+4. Why should you spread a copy before sorting if you don't want to mutate the original?
+
+---
+
+## Wrap-Up
+
+### Key Takeaways
+
+- **`reduce`** collapses an array to a single value — the callback receives an accumulator and the current item; always initialize the accumulator
+- **`map`** is the core tool for turning data into display — you'll use this pattern constantly in the browser and in React
+- **`sort`** mutates — spread a copy first if immutability matters
+- **`some`/`every`** return a boolean — useful for quick checks on a whole array

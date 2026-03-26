@@ -250,6 +250,13 @@ const lessons = [
           "Intro to built-in Object helpers: keys, values, entries, assign, and spread. Learn how they pair with map/filter for shaping and inspecting data.",
         video: null,
       },
+      {
+        id: "js-advanced-array-methods",
+        title: "Advanced Array Methods",
+        description:
+          "Learn powerful array methods like reduce, find, some, and every for complex data manipulation.",
+        video: null,
+      },
     ],
   },
   {
