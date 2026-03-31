@@ -1,0 +1,232 @@
+# Testing with Bun
+
+## Introduction
+
+You've been verifying your functions with `console.log`:
+
+```javascript
+const add = (a, b) => a + b;
+
+console.log(add(2, 3));  // you check: is this 5?
+console.log(add(-1, 1)); // you check: is this 0?
+```
+
+That works when you have two functions. When you have twenty, it breaks down — you're reading output and manually deciding if it's right. One distracted moment and you miss a bug.
+
+Automated testing flips it: you tell the computer what "correct" looks like, and it checks for you. Every time. Automatically.
+
+There's another benefit too: tests are living documentation. A well-named test tells the next developer — or future you — exactly what a function is supposed to do.
+
+---
+
+## Your First Test
+
+Bun has a test runner built in — no install needed.
+
+Create two files:
+
+**`math-utils.js`**
+
+```javascript
+export const add = (a, b) => a + b;
+```
+
+**`math-utils.test.js`**
+
+```javascript
+import { expect, test } from "bun:test";
+import { add } from "./math-utils.js";
+
+test("add returns the sum of two numbers", () => {
+  const result = add(2, 3);
+  expect(result).toBe(5);
+});
+```
+
+Run it:
+```bash
+bun test
+```
+
+You should see:
+```
+✓ add returns the sum of two numbers [0.12ms]
+```
+
+Now break it intentionally — change `add` to return `a - b`. Run again. Watch it fail. Then fix it.
+
+That feedback loop ➿ is the whole point.
+
+---
+
+## The Pattern: Arrange, Act, Assert
+
+Every test follows the same three steps:
+
+1. **Arrange** — set up the inputs and any necessary state.
+2. **Act** — call the function you're testing.
+3. **Assert** — check that the output matches what you expect.
+
+```javascript
+test("add returns the sum of two numbers", () => {
+  // Arrange — set up your inputs
+  const a = 2;
+  const b = 3;
+
+  // Act — call the function
+  const result = add(a, b);
+
+  // Assert — verify the output
+  expect(result).toBe(5);
+});
+```
+
+**Arrange** — set up whatever the function needs.
+**Act** — call it.
+**Assert** — check what came back.
+
+Simple tests can compress all three:
+
+```javascript
+test("add returns the sum of two numbers", () => {
+  expect(add(2, 3)).toBe(5);
+});
+```
+
+Same pattern, fewer lines. Both are fine.
+
+---
+
+## `toBe` vs. `toEqual`
+
+`toBe` works for primitives — numbers, strings, booleans:
+
+```javascript
+expect(add(2, 3)).toBe(5);
+expect(greet("Sam")).toBe("Hello, Sam!");
+expect(isEven(4)).toBe(true);
+```
+
+For arrays and objects, use `toEqual` — it checks that the contents match, not just that they're the same reference in memory:
+
+```javascript
+expect([1, 2, 3]).toEqual([1, 2, 3]); // ✅
+expect([1, 2, 3]).toBe([1, 2, 3]);    // ❌ fails — different arrays
+```
+
+You'll mostly use `toBe` for now. Reach for `toEqual` when testing a function that returns an array or object.
+
+---
+
+## Practice: Write Tests for These
+
+Add these to `math-utils.js`:
+
+```javascript
+export const multiply = (a, b) => a * b;
+export const isEven = (num) => num % 2 === 0;
+```
+
+Write at least two tests for each — one obvious case, one edge case. For `isEven`: what should happen with `0`? With a negative number?
+
+<Accordion question="Example solution">
+```javascript
+test("multiply returns the product of two numbers", () => {
+  expect(multiply(3, 4)).toBe(12);
+  expect(multiply(5, 0)).toBe(0);
+});
+
+test("isEven returns true for even numbers", () => {
+  expect(isEven(4)).toBe(true);
+  expect(isEven(0)).toBe(true);
+  expect(isEven(-2)).toBe(true);
+});
+
+test("isEven returns false for odd numbers", () => {
+  expect(isEven(3)).toBe(false);
+  expect(isEven(-1)).toBe(false);
+});
+```
+
+</Accordion>
+
+---
+
+## Find the Bugs
+
+Some sloppy developer left you these functions. They look fine — they're not.
+
+Add them to `math-utils.js`:
+```javascript
+export const calculateDiscount = (price, discountPercent) =>
+  price - discountPercent;
+
+export const formatGrade = (percentage) => {
+  if (percentage > 90) return "A";
+  if (percentage > 80) return "B";
+  if (percentage > 70) return "C";
+  if (percentage > 60) return "D";
+  return "F";
+};
+
+export const isValidScore = (points, maxPoints) =>
+  points >= 0 && points < maxPoints;
+```
+
+Write tests first based on what these *should* do:
+
+- `calculateDiscount(100, 20)` — 20% off $100 should return `80`
+- `formatGrade(90)` — is a 90 an A or a B?
+- `isValidScore(10, 10)` — is a perfect score valid?
+
+Run your tests. They'll fail. Fix the functions until they pass.
+
+<Accordion question="Hint">
+
+- `calculateDiscount`: subtracting the percent directly isn't the same as subtracting a percentage *of* the price. You need to calculate what that percent *is* first.
+- `formatGrade`: look closely at `>` vs `>=`. What happens to a score of exactly 90?
+- `isValidScore`: should a score equal to `maxPoints` be invalid? What operator would include it?
+
+</Accordion>
+
+<Accordion question="Fixed functions">
+```javascript
+export const calculateDiscount = (price, discountPercent) =>
+  price - price * (discountPercent / 100);
+
+export const formatGrade = (percentage) => {
+  if (percentage >= 90) return "A";
+  if (percentage >= 80) return "B";
+  if (percentage >= 70) return "C";
+  if (percentage >= 60) return "D";
+  return "F";
+};
+
+export const isValidScore = (points, maxPoints) =>
+  points >= 0 && points <= maxPoints;
+```
+
+</Accordion>
+
+---
+
+## Checkpoint ✍️
+
+Handwritten notes.
+
+1. What's the difference between `toBe` and `toEqual`? When do you use each?
+2. Write the three steps of Arrange-Act-Assert in your own words.
+3. Why is automated testing better than checking output with `console.log` as your project grows?
+4. A test fails. Is that a bad thing? Explain.
+
+---
+
+## A Note on Test File Naming
+
+Bun automatically finds files matching `*.test.js` when you run `bun test`. Keep that naming pattern and it just works — no configuration needed. You can have as many test files as you want, and they can be organized however you like. Just make sure they end with `.test.js` so Bun can find them.
+
+When committing test files, use the `test` conventional commit type:
+
+```bash
+git commit -m "test: ✅ add math-utils tests"
+```

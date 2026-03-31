@@ -275,6 +275,20 @@ const lessons = [
     ],
   },
   {
+    id: "js-testing",
+    title: "Testing",
+    description: "Learn how to write automated tests with Bun's built-in test runner.",
+    lessons: [
+      {
+        id: "js-intro-to-testing",
+        title: "Testing with Bun",
+        description:
+          "Write your first automated tests using Bun's test runner and the Arrange-Act-Assert pattern.",
+        video: null,
+      },
+    ],
+  },
+  {
     id: "browser-javascript-dom",
     title: "Browser JavaScript & DOM",
     description:
@@ -393,36 +407,6 @@ const lessons = [
         description:
           "Review the DOM API and learn component-based thinking patterns in vanilla JavaScript - the foundation for React development.",
         video: null,
-      },
-    ],
-  },
-  {
-    id: "js-testing",
-    title: "Testing & Code Quality",
-    description:
-      "Professional testing practices for catching bugs before users do - from manual console debugging to automated testing with modern tools.",
-    lessons: [
-      {
-        id: "js-testing-basics",
-        title: "JavaScript Testing Basics",
-        description:
-          "Learn the fundamentals of testing - from console.log debugging to automated testing with Vitest. Perfect introduction for beginners.",
-        video: {
-          duration: 424,
-          thumbnail: "https://videos.learnjs.tech/swic/videos/vitest.png",
-          url: "https://videos.learnjs.tech/swic/videos/vitest.mp4",
-        },
-      },
-      {
-        id: "js-testing-advanced",
-        title: "JavaScript Testing Advanced",
-        description:
-          "Advanced testing practices including complex data structures, immutability testing, and test-driven development workflow.",
-        video: {
-          duration: 424,
-          thumbnail: "https://videos.learnjs.tech/swic/videos/vitest.png",
-          url: "https://videos.learnjs.tech/swic/videos/vitest.mp4",
-        },
       },
     ],
   },
