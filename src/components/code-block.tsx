@@ -81,7 +81,7 @@ export function CodeBlock({
     <div className={`relative group ${className}`}>
       <div
         className="max-w-full overflow-x-auto rounded-lg bg-gray-100 p-3 sm:p-4 dark:bg-gray-800"
-        // Shiki produces HTML for syntax highlighting.
+        /* biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki produces trusted, sanitized HTML */
         dangerouslySetInnerHTML={{ __html: highlightedCode }}
       />
       {copyable && (
