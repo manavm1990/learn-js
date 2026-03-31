@@ -266,7 +266,7 @@ const lessons = [
       "Learn how to organize JavaScript code using ES Modules (ESM): import, export, and best practices for modular development.",
     lessons: [
       {
-        id: "modules",
+        id: "js-modules",
         title: "JavaScript ES Modules (ESM)",
         description:
           "Understand how to split your code into reusable modules using modern JavaScript import/export syntax.",

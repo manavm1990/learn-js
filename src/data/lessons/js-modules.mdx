@@ -1,0 +1,158 @@
+# JavaScript Modules
+
+## Introduction
+
+So far, all your code has lived in one file — `index.js`.
+
+That works fine for small scripts. But as projects grow, one file becomes a problem:
+
+```javascript
+// index.js — starting to get out of hand
+const TAX_RATE = 0.08;
+const calculateTax = (amount) => amount * TAX_RATE;
+const formatCurrency = (amount) => `$${amount.toFixed(2)}`;
+const getCartTotal = (items) => items.reduce((acc, item) => acc + item.price, 0);
+const applyDiscount = (total, percent) => total - total * (percent / 100);
+const greetUser = (name) => `Welcome back, ${name}!`;
+const formatUserName = (first, last) => `${last}, ${first}`;
+// ...and it keeps growing
+```
+
+Tax logic. Cart logic. User logic. All mixed together. When this file hits 300 lines, good luck finding anything.
+
+**Modules let you split code across files** — each file handles one thing, and files share what they need through `import` and `export`.
+
+---
+
+## Exporting
+
+To make something available to other files, you `export` it.
+
+```javascript
+// tax-utils.js
+export const TAX_RATE = 0.08;
+export const calculateTax = (amount) => amount * TAX_RATE;
+export const formatCurrency = (amount) => `$${amount.toFixed(2)}`;
+```
+
+These are **named exports** — each one is exported by name.
+
+---
+
+## Importing
+
+To use something from another file, you `import` it by name.
+
+```javascript
+// index.js
+import { calculateTax, formatCurrency } from "./tax-utils.js";
+
+const tax = calculateTax(50);
+console.log(formatCurrency(tax)); // $4.00
+```
+
+The `{ }` syntax should look familiar — it's the same destructuring pattern you used with `Object.entries` and array destructuring. You're pulling specific names out of the module.
+
+You only import what you need. If you don't import `TAX_RATE`, you can't use it — it stays inside `tax-utils.js`.
+
+---
+
+## Try It
+
+Create two files in your project:
+
+**`math-utils.js`**
+
+```javascript
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+export const multiply = (a, b) => a * b;
+```
+
+**`index.js`**
+```javascript
+import { add, multiply } from "./math-utils.js";
+
+console.log(add(2, 3));      // 5
+console.log(multiply(4, 5)); // 20
+```
+
+Run it: `bun run index.js`
+
+Now try importing `subtract` without adding it to the import list. What happens?
+
+---
+
+## Default Exports
+
+Named exports are for files that export multiple things. Sometimes a file has **one main thing** to export — for that, use a default export.
+
+```javascript
+// greet.js
+const greet = (name) => `Hello, ${name}!`;
+
+export default greet;
+```
+
+Import a default export without curly braces:
+
+```javascript
+import greet from "./greet.js";
+
+console.log(greet("Maria")); // Hello, Maria!
+```
+
+You can name it whatever you want on import — `greet`, `sayHello`, anything. That's the tradeoff: flexible naming, but less obvious what you're getting.
+
+**One rule:** a file can only have one default export.
+
+---
+
+## Named vs. Default: When to Use Which
+
+| | Named export | Default export |
+|---|---|---|
+| How many per file | As many as you want | One |
+| Import syntax | `import { name }` | `import anything` |
+| Best for | Utility collections | One main thing |
+
+Most files you write will use named exports. Default exports come up more in React — each component file typically has one default export.
+
+---
+
+## A Note on CommonJS
+
+You may encounter older JavaScript code that looks like this:
+
+```javascript
+// Old Node.js syntax — don't write this
+const { add } = require("./math-utils.js");
+module.exports = { add };
+```
+
+That's **CommonJS** — the legacy module system Node.js used before ESM was standardized. You'll see it in old tutorials and older packages.
+
+Don't write it. If you see it, recognize it for what it is and move on.
+
+Your `package.json` already has `"type": "module"` — that's what tells Bun and Node to use ESM.
+
+---
+
+## Checkpoint ✍️
+
+Handwritten notes.
+
+1. What does `export` do? What does `import` do?
+2. What's the difference between a named export and a default export?
+3. Why can't you use something from another file without importing it first?
+4. You have a file with 10 utility functions. Should you use named exports or a default export? Why?
+
+---
+
+## What's Next
+
+You just learned how to export a function from one file and import it in another.
+
+That turns out to be important beyond just organization. When you want to **test** a function — run it automatically and verify it does what you expect — you need to be able to import it into a test file.
+
+That's the next lesson.
