@@ -295,6 +295,13 @@ const lessons = [
       "Bridge from console JavaScript to interactive web applications by mastering DOM manipulation, event handling, and browser APIs.",
     lessons: [
       {
+        id: "semantic-html",
+        title: "Semantic HTML: Why It Matters",
+        description:
+          "Review proper HTML structure using semantic tags like <header>, <nav>, <main>, and <section>. Fix common mistakes like overusing divs, misusing br tags, and using headings for sizing.",
+        video: null,
+      },
+      {
         id: "console-to-browser",
         title: "From Console to Browser",
         description:

@@ -2,416 +2,124 @@
 
 ## Introduction
 
-You've mastered JavaScript fundamentals - variables, functions, arrays, objects, and loops. You can create elegant solutions to programming problems and write clean, functional code. But so far, all of this has happened in the **console** or **Node.js environment**.
+In the last lesson, you used semantic HTML to give your page structure and meaning. Now you will keep that structure and add JavaScript behavior to it.
 
-Now it's time to bring your JavaScript skills to life in the **browser** where they can create interactive, dynamic web experiences that users can actually see and interact with.
+In the terminal, `console.log()` prints text output. In the browser, JavaScript can change visible elements and respond to clicks.
 
-Think of this transition like moving from writing stories in a private notebook to publishing them where readers can enjoy them. Your JavaScript knowledge remains the same - you're just changing the stage where it performs.
+Your JavaScript logic is still the same: variables, conditionals, loops, and functions. The new piece is the browser's `document` object.
 
 ## Learning Objectives
 
-By the end of this lesson, you'll understand:
+- Connect JavaScript to HTML with `document.getElementById()`
+- Update what users see with `.textContent`
+- Respond to clicks with `.addEventListener()`
+- Test quick DOM changes in DevTools
 
-- How JavaScript runs differently in the browser vs. the console
-- What the browser provides that Node.js doesn't (and vice versa)
-- How to set up a proper development environment for browser JavaScript
-- The role of HTML, CSS, and JavaScript working together
-- How to use browser developer tools effectively for JavaScript development
+---
 
-## Console vs. Browser: What's Different?
+## Quick Bridge from Semantic HTML
 
-### Where We've Been: The Console/Node.js Environment
+Semantic HTML answered: **What does this content mean?**
 
-In the console or Node.js, JavaScript runs in a clean, minimal environment:
+Browser JavaScript answers: **How should this content behave?**
 
-```javascript
-// This works great in Node.js console
-const users = [
-  { name: "Sarah", age: 25 },
-  { name: "Mike", age: 32 },
-  { name: "Jessica", age: 28 },
-];
+You already have a Vite template and setup instructions from your instructor. This lesson focuses only on the examples.
 
-const adults = users.filter((user) => user.age >= 21);
-console.log(adults); // We see the result immediately
-```
+---
 
-**Console Environment Characteristics:**
+## Example 1: Change Text on Page Load
 
-- **Input/Output**: Text-based (console.log, prompt, etc.)
-- **Data**: We create data structures directly in code
-- **Interaction**: Limited to what we can type and see in terminal
-- **Purpose**: Perfect for learning logic, algorithms, data processing
-
-### Where We're Going: The Browser Environment
-
-In the browser, JavaScript has access to a rich, interactive environment:
-
-**Browser Environment Additions:**
-
-- **HTML Elements**: Buttons, forms, divs, images - things users can see
-- **User Events**: Clicks, key presses, form submissions, mouse movements
-- **Visual Feedback**: Change colors, hide/show elements, animate
-- **Real Data**: Connect to APIs, handle user input from forms
-- **Persistence**: Local storage, cookies, browser memory
-
-The same JavaScript logic applies, but now we can:
-
-```javascript
-// Same array processing logic...
-const adults = users.filter((user) => user.age >= 21);
-
-// ...but now we can display it on a webpage!
-document.getElementById("user-list").innerHTML = adults
-  .map((user) => `<p>${user.name} (${user.age})</p>`)
-  .join("");
-```
-
-The snippet above would dynamically update the content of a webpage, showing the filtered list of adults. This is an extremely common task in front-end web development. We are taking arrays of objects and rendering them as HTML elements users can see using `map`. You can say that we are MAPPing data to the DOM (Document Object Model).
-
-### What is the DOM?
-
-**Quick explanation**: JavaScript doesn't understand HTML - it only knows about objects, functions, and arrays. The **DOM (Document Object Model)** is how the browser solves this problem by converting your HTML into JavaScript objects that your code can manipulate.
-
-In other words, the browser provides an API in the form of a `document` object that **models the HTML document as a tree of objects**. When we talk about "the DOM", we're talking about this object-based representation of the page that JavaScript can read and update.
-
-![DOM Model Diagram|500x518](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/DOM-model.svg/500px-DOM-model.svg.png)  
-_Source: [Wikimedia Commons - DOM Model](https://commons.wikimedia.org/wiki/File:DOM-model.svg)_
-
-This classic diagram shows the DOM's layered architecture: your JavaScript code interacts with the DOM API, which provides a standardized interface to manipulate the actual document structure.
-
-For all intents and purpose, all of this API is contained within a giant object called `document`. Technically, this sits within a global object called `window`, which represents the browser window itself. You can think of `window` as the parent object, and `document` as a child object that specifically represents the HTML document. We don't need to reference `window` directly because it's the global object, but it's good to know it exists.
-
-`<button id="my-button">Click me</button>`...
-
-```javascript
-// ...becomes this JavaScript object:
-const button = document.getElementById("my-button"); // Returns an object!
-
-button.textContent = "New text"; // Object properties you can change
-
-// `handleClick` is a function you define elsewhere
-button.addEventListener("click", handleClick); // Object methods you can use
-```
-
-We'll dive much deeper into the DOM in our next lesson, but for now just remember: **DOM = HTML converted to JavaScript objects**.
-
-## The Browser's JavaScript Playground
-
-### HTML: The Structure
-
-HTML creates the elements JavaScript can interact with:
+### HTML
 
 ```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My JavaScript App</title>
-  </head>
-  <body>
-    <h1>Task Manager</h1>
-    <button id="add-task">Add Task</button>
-    <ul id="task-list"></ul>
-
-    <script type="module" src="./src/main.js"></script>
-  </body>
-</html>
+<main>
+  <h1 id="title">Console mindset</h1>
+  <p id="message">Waiting for JavaScript...</p>
+</main>
 ```
 
-### JavaScript: The Behavior
-
-JavaScript brings HTML to life:
+### JavaScript (`src/main.js`)
 
 ```javascript
-// main.js
-const button = document.getElementById("add-task");
-const taskList = document.getElementById("task-list");
+const title = document.getElementById(`title`);
+const message = document.getElementById(`message`);
 
-button.addEventListener("click", function () {
-  const newTask = document.createElement("li");
-  newTask.textContent = "New task item";
-  taskList.appendChild(newTask);
+title.textContent = `Browser mindset`;
+message.textContent = `JavaScript found these elements and updated the page.`;
+```
+
+### What Happened
+
+1. JavaScript selected existing HTML elements by id
+2. `.textContent` replaced visible text
+3. You saw results directly in the page, not only in the terminal
+
+---
+
+## Example 2: Add a Click Interaction
+
+### HTML
+
+```html
+<main>
+  <h1 id="greeting">Hello, console habits</h1>
+  <button id="change-greeting" type="button">Update greeting</button>
+  <p id="count">Clicks: 0</p>
+</main>
+```
+
+### JavaScript (`src/main.js`)
+
+```javascript
+let clickCount = 0;
+
+const greeting = document.getElementById(`greeting`);
+const changeButton = document.getElementById(`change-greeting`);
+const count = document.getElementById(`count`);
+
+changeButton.addEventListener(`click`, () => {
+  clickCount = clickCount + 1;
+  greeting.textContent = `Hello, browser habits`;
+  count.textContent = `Clicks: ${clickCount}`;
 });
 ```
 
-When someone clicks the "Add Task" button, JavaScript creates a new list item and adds it to the page. **The user sees this happen instantly!**
+### What to Notice
 
-## Modern Separation of Concerns
+1. `clickCount` is normal JavaScript state
+2. The function runs only when the user clicks
+3. The page updates instantly when `.textContent` changes
 
-### Traditional Approach (Still Good Foundation)
+---
 
-The classic web development principle was **strict separation**:
+## DevTools Mini-Check (1 Minute)
 
-- **HTML**: Structure and content only
-- **CSS**: All styling in separate files
-- **JavaScript**: All behavior in separate files
-
-### Modern Reality (What You'll Actually Use)
-
-Today's development blurs these lines in practical ways:
-
-**With Tailwind CSS:**
-
-```html
-<!-- Styling lives in HTML classes -->
-<button class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
-  Click me
-</button>
-```
-
-**With React (Coming Later):**
-
-```jsx
-// Structure, styling, AND logic all in one component
-function TaskButton({ onClick }) {
-  return (
-    <button className="bg-blue-500 px-4 py-2 text-white" onClick={onClick}>
-      Add Task
-    </button>
-  );
-}
-```
-
-### What Still Matters
-
-- **Keep JavaScript logic organized** in separate files
-- **Semantic HTML structure** (accessibility and SEO)
-- **Consistent styling approach** (whether Tailwind or CSS)
-- **Readable, maintainable code** regardless of where it lives
-
-The **principle** of organized, maintainable code remains - the **implementation** has evolved!
-
-## Project Template
-
-Your instructor provides a pre-configured GitHub template repository that includes:
-
-- **Vite**: Modern build tool for fast development
-- **Tailwind CSS**: Utility-first CSS framework
-- **ESLint**: Code quality and consistency rules
-- **Modern project structure**: Organized files and folders
-
-This gives you a professional development environment from day one.
-
-### Project Structure Overview
-
-```
-my-dom-project/
-├── index.html          // Your main HTML file
-├── main.js             // Your JavaScript entry point
-├── style.css           // Minimal customization of Tailwind styles
-├── package.json        // Project configuration
-├── vite.config.js      // Vite configuration
-└── README.md          // Project documentation
-```
-
-**Key Differences from Console**:
-
-- Instead of running `node`, you use `npm run dev`. This fires up a local server and opens your project in the browser. Note that you will need to open a new instance of our terminal to run commands like `git`.
-- **Vite development server** provides instant hot-reload
-
-## Review of Browser Developer Tools
-
-### Opening Developer Tools
-
-- **Chrome/Edge**: F12 or Ctrl+Shift+I (Windows) / Cmd+Option+I (Mac)
-- **Firefox**: F12 or Ctrl+Shift+I (Windows) / Cmd+Option+I (Mac)
-- **Safari**: Cmd+Option+I (Mac) - enable Develop menu first
-
-#### 1. Elements Tab
-
-- **Purpose**: See the HTML structure, inspect CSS
-- **JavaScript Use**: Verify that your DOM manipulation worked
-- **Tip**: Right-click any element on the page → "Inspect" to jump right to it
-
-#### 2. Console Tab
-
-- **Purpose**: Your familiar console, but in the browser!
-- **JavaScript Use**: Test code, debug, see error messages
-- **Try This**: Type `console.log("Hello browser!")` and press Enter
-
-## Your First Browser JavaScript
-
-Let's create a simple but complete example in the Vite template repo provided by your instructor. Update `index.html` to reflect this.
-
-### HTML File (index.html)
-
-```html
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello Browser JavaScript</title>
-</head>
-<body>
-  <h1 id="greeting">Hello, Console JavaScript!</h1>
-  <button id="change-greeting">Update Greeting</button>
-  <p id="click-count">Button clicks: 0</p>
-  
-    <script type="module" src="./src/main.js"></script>
-</body>
-</html>
-```
-
-Proceed to `src/main.js`
-
-### JavaScript File (main.js)
-
-```js
-// Variables - same as console JavaScript
-let clickCount = 0;
-
-// Get references to HTML elements
-const greetingElement = document.getElementById('greeting');
-const button = document.getElementById('change-greeting');
-const countElement = document.getElementById('click-count');
-
-// Function - same logic as console JavaScript
-function updateGreeting() {
-  clickCount++;
-  greetingElement.textContent = 'Hello, Browser JavaScript!';
-  countElement.textContent = \`Button clicks: \${clickCount}\`;
-}
-
-// Event listener - this is new! Responds to user interaction
-button.addEventListener('click', updateGreeting);
-```
-
-### What's Happening Here?
-
-1. **Same JavaScript fundamentals**: Variables, functions, template literals
-2. **New browser APIs**: `document.getElementById()`, `addEventListener()`
-3. **User interaction**: Button clicks trigger our function
-4. **Visual changes**: Text content updates on the page
-
-## Hands-On Practice
-
-### Exercise 1: Inspect and Experiment
-
-1. **Set up your Vite project** using the template provided by your instructor
-2. **Replace the contents** of `index.html` and `main.js` with the code above
-3. **Start the development server**: `npm run dev`
-4. **Open the provided localhost URL** (usually `http://localhost:5173`)
-5. **Open Developer Tools (F12)** and click the button
-6. **Watch the Elements tab** for changes
-7. **In the Console tab**, try typing:
-   ```javascript
-   greetingElement.textContent = "I changed this from the console!";
-   ```
-
-### Exercise 2: Modify the Example
-
-Add these features using your JavaScript knowledge:
-
-1. **Reset Button**: Add a second button that resets the click count to 0
-2. **Color Change**: Change the heading color after 5 clicks
-3. **Input Field**: Add a text input where users can type a custom greeting
-
-**Hint**: The JavaScript logic is the same as what you already know - you're just applying it to HTML elements instead of console output.
-
-## Homework Assignments
-
-### Assignment 1: Personal Counter App
-
-**Goal**: Create your first interactive browser JavaScript application.
-
-**Instructions**:
-
-1. **Clone the template repository** provided by your instructor
-2. **Run `npm install`** to install dependencies
-3. **Start the development server** with `npm run dev`
-4. **Create a "Personal Counter" app** with these features:
-   - Display your name in an `<h1>` tag
-   - A counter starting at 0
-   - Three buttons: "Increment (+1)", "Decrement (-1)", and "Reset"
-   - Display the current count prominently
-   - Change the background color when count reaches 10
-
-**Requirements**:
-
-- Use **external JavaScript file** (main.js)
-- Use **semantic HTML** structure
-- Include **at least 5 DOM interactions**:
-  - `getElementById()` or `querySelector()`
-  - `textContent` manipulation
-  - `addEventListener()` for all three buttons
-  - `style` property changes
-  - Conditional logic (if/else for color change)
-
-**Deliverable**: Push to GitHub and submit repository link.
-
-### Assignment 2: Browser Console Exploration
-
-**Goal**: Get comfortable with browser developer tools and DOM inspection.
-
-**Instructions**:
-
-1. **Visit your favorite website** (news, social media, etc.)
-2. **Open Developer Tools (F12)**
-3. **Complete these tasks** using the Console tab:
-
-**Tasks to complete**:
-a) **Find and log element information**:
+Open DevTools (`F12` or `Cmd+Option+I`) and run:
 
 ```javascript
-// Find the main heading and log its text
-const heading = document.querySelector("h1");
-console.log("Heading text:", heading?.textContent);
+document.getElementById(`greeting`).textContent = `Changed from DevTools`;
 ```
 
-b) **Change page styling**:
+If the heading text changes, your JavaScript and HTML are connected correctly.
 
-```javascript
-// Change the page background color
-document.body.style.backgroundColor = "lightcoral";
-```
+---
 
-c) **Modify content**:
+## Quick Practice
 
-```javascript
-// Find any paragraph and change its text
-const paragraph = document.querySelector("p");
-if (paragraph) paragraph.textContent = "I changed this with JavaScript!";
-```
+1. Change the button label to `Add 1 click`
+2. Make the greeting switch between two messages every click
+3. Add a second button named `Reset`
+4. Reset should set the counter back to `0`
 
-d) **Count elements**:
+Keep the scope small. The goal is to practice selecting elements, updating text, and handling clicks.
 
-```javascript
-// Count how many links are on the page
-const links = document.querySelectorAll("a");
-console.log("Number of links:", links.length);
-```
+---
 
-**Deliverable**: Take 4 screenshots showing each command and its effect.
+## Key Takeaways
 
-### Assignment 3: Personal Reflection
+- Browser JavaScript is your same JavaScript logic plus the `document` object
+- Semantic HTML gives structure; JavaScript adds behavior
+- `getElementById`, `.textContent`, and `addEventListener` are your first core DOM tools
+- DevTools Console is the fastest place to test tiny DOM changes
 
-**Goal**: Reflect on your journey from console JavaScript to browser development.
-
-**Instructions**: Create a `reflection.md` file and write personal responses to these prompts:
-
-1. **What surprised you most** about moving from console to browser JavaScript?
-
-2. **Describe a specific moment** when something "clicked" for you during this lesson.
-
-3. **What websites do you use differently now** that you know JavaScript is running behind the scenes? Pick 2-3 sites and describe what you think is happening.
-
-4. **What are you most excited to build** once you learn more DOM manipulation?
-
-5. **What's still confusing** or feels overwhelming about browser development?
-
-6. **How do you think** this knowledge will change how you approach web development?
-
-Your reflection should also reflect on the video portion of this lesson. How did the video help/hinder your understanding of the lesson contents. Be specific. Your reflection should 'prove' that you watched the video and made some specific observations.
-
-## Looking Ahead
-
-You now understand how your JavaScript skills translate to the browser environment. In our next lesson, we'll dive deeper into the **Document Object Model (DOM)** - the bridge between your JavaScript and the HTML elements users interact with.
-
-**Coming up:**
-
-- What exactly is the DOM and how does it work?
-- Different types of HTML elements and how to work with them
-- The relationship between HTML structure and JavaScript objects
-- Browser developer tools for DOM inspection
+Next lesson: deeper DOM selection and manipulation patterns.

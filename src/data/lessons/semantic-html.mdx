@@ -1,114 +1,216 @@
 # Semantic HTML: Why It Matters
 
-## Pre-Work
-
-As you watch the video above you may reference the following resources**:**
-
-🎶 **Essential HTML Elements Documentation:**
-
-- 🔗 [Heading Elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements) - The six levels of section headings for structuring your content hierarchy
-- 🔗 [Line Break](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/br) - When and why you should (rarely) use line breaks
-- 🔗 [Contact Address](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/address) - Semantic element for contact information
-- 🔗 [Content Division](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div) - The generic container element and when to use it
-- 🔗 [Content Span](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span) - Inline generic container for styling hooks
-- 🔗 [Navigation Section](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nav) - Semantic element for navigation links
-- 🔗 [Generic Section](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section) - Thematic groupings of content
-- 🔗 [Main Content](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/main) - The primary content area of your document
-- 🔗 [Header Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/header) - Introductory content and navigation aids
-- 🔗 [Footer Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/footer) - Footer information for sections or pages
-- 🔗 [Aside Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/aside) - Content tangentially related to the main content
-- 🔗 [Bring Attention To](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/b) - Stylistically offset text without extra importance
-- 🔗 [Strong Importance](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong) - Text with strong importance or urgency
-- 🔗 [Article Contents](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article) - Self-contained, distributable content
-- 🔗 [Emphasis](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/em) - Stressed emphasis in text
-- 🔗 [Idiomatic Text](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/i) - Text in an alternate voice or mood
-
-🎶 These references will help you understand the semantic meaning and proper usage of each element as you learn to write more meaningful HTML!
-
 ## Introduction
 
-- **Icebreaker:** Have you ever used a heading tag just to make text bigger? Or stacked a bunch of `<br>` tags to add space?
-- **Real-world scenario:** Imagine a visually impaired user navigating your site with a screen reader. Semantic HTML makes their experience possible—and better for everyone.
-- **Lesson objectives:**
-  - Understand what semantic HTML is and why it matters
-  - Identify common mistakes and how to avoid them
-  - Practice writing clean, accessible HTML
-- **Introduction to the concept:**
-  - Semantic HTML uses tags that describe their meaning and role in the document (e.g., `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`).
-  - This helps browsers, search engines, and assistive technologies understand your content.
+You've written HTML to make things look right. But **semantic HTML** is about making things *mean* something.
 
-## Core Concept Overview
+**The problem:** When you use `<div>` for everything, or use `<h1>` just to make text bigger, or stack `<br>` tags for spacing—your HTML works visually but loses meaning. A screen reader, a search engine, another developer—they can't tell what your content actually *is*.
 
-- **Key terms:** semantic, accessibility, landmark elements, structure
-- **Analogy:** Think of semantic HTML as labeling rooms in a house—"kitchen," "bedroom," "bathroom"—so everyone knows what each space is for.
-- **Common mistakes:**
-  - Using headings for size, not structure (multiple `<h1>`, skipping levels)
-  - Using `<br>` for spacing
-  - Overusing `<div>` and `<span>` instead of semantic tags
-  - Not using `<label>` for form fields
-  - Missing `alt` on images
-  - Using `<table>` for layout
-  - Not using lists for list content
-- **Conceptual quiz:**
-  1. What is semantic HTML?
-  2. Why is it important for accessibility?
-  3. Which tag would you use for navigation links?
-  4. What’s wrong with using `<br>` for spacing?
-  5. Why should you avoid multiple `<h1>` tags?
+**Semantic HTML solves this** by using tags that describe their purpose: `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`. The browser, search engines, and assistive technologies understand the structure. Everyone wins.
 
-## Hands-On Application
+## Learning Objectives
 
-- **Example:**
-  ```html
-  <!-- Bad -->
-  <div>
-    <h1>About Us</h1>
-    <br /><br />
-    <div>We are awesome!</div>
-  </div>
-  <!-- Good -->
-  <main>
-    <header><h1>About Us</h1></header>
-    <section><p>We are awesome!</p></section>
-  </main>
-  ```
+- Understand what semantic HTML is and why it matters
+- Identify common mistakes
+- Practice writing clean, accessible HTML
 
-## Troubleshooting & Best Practices
+---
 
-- **Common challenges:**
-  - Unsure which tag to use? Check [MDN’s HTML element reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
-  - Don’t use headings for size—use CSS!
-  - Always use one `<h1>` per page
-- **Best practices:**
-  - Use semantic tags for structure
-  - Use CSS for presentation
-  - Test with a screen reader or accessibility tool
-- **Enhancement:**
-  - Try using ARIA roles only if you can’t use a semantic tag
+## Core Concept: What is Semantic HTML?
 
-## Wrap-Up & Assessment
+**Semantic HTML** uses tags that describe *what your content is*, not just how it looks.
 
-- **Key takeaways:**
-  - Semantic HTML is about meaning, not just appearance
-  - It’s essential for accessibility and maintainability
+**Example:** `<br>` adds a line break visually, but tells nothing about meaning. `<section>` says "this is a thematic grouping." A screen reader understands the difference.
 
-- **Advanced quiz:**
-  1. What’s the difference between `<section>` and `<article>`?
-  2. Why is `<nav>` important?
-  3. How does semantic HTML help SEO?
-  4. What’s wrong with using `<table>` for layout?
-  5. How do you make a form accessible?
-  6. What’s the role of `<main>`?
-  7. Why avoid multiple `<h1>` tags?
-  8. When should you use `<aside>`?
-  9. What’s the best way to add space between elements?
-  10. How do you label a button for screen readers?
+**Quick landmark map for most pages:** use `<header>`, `<nav>`, one `<main>`, and `<footer>`.
 
-  For the quiz, provide answers and explanations after the questions, with adequate reflection in well-formatted MD. How much of this information ℹ️ was new to you? How well did the pre-req course prepare you for this?
+**Common mistakes you might make:**
 
-  What did you learn from the video and/or is there anything that you found and explored on Mozilla's Developer Network (MDN) that you found particularly helpful?
+- Choosing heading levels by visual size instead of page structure. Headings are for document outline, not styling.
+- Using multiple `<h1>` tags on a page without a good reason. HTML allows it, but best practice is one page-level `<h1>`, then `<h2>`, `<h3>` in order.
+- Skipping heading levels (`<h1>` straight to `<h3>`).
+- Forgetting that a page should have only one `<main>` landmark.
+- Overusing `<div>` for everything. It's like writing a book with only paragraphs and no chapters or sections. It works, but it's hard to follow.
+- Using `<br>` tags for spacing. `<br>` is for line breaks inside one block of text (like poetry or an address), not layout spacing. Use CSS margins instead.
+- Mixing up links and buttons. Links navigate to places. Buttons do actions.
+- Missing `<label>` tags on form fields.
+- Missing `alt` text on images.
 
-- **Hands-on assessment / Homework:**
-  - Create any web page you like (a personal homepage, a favorite recipe, a blog post, etc.) using only semantic HTML. **Do not add any styles yet!** Focus on using the correct tags for structure and meaning.
-  - Just use GitHub Gist for this. You can even copy/paste some stuff that you have already done, but make sure to update it to be semantic, using various tags that we have discussed in this lesson.
-  - Share your Gist link in our class Teams channel.
+---
+
+## Hands-On Examples
+
+### Example 1: Page Structure
+
+```html
+<!-- ❌ Bad: Meaningless divs -->
+<div>
+  <h1>About Us</h1>
+  
+  <!-- ❌ Bad: Using <br> for spacing -->
+  <br /><br /> 
+  
+  <div>We're awesome!</div>
+</div>
+
+<!-- ✅ Good: Semantic structure -->
+<header>
+  <h1>About Us</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+  </nav>
+</header>
+<main>
+  <section>
+    <p>We're awesome!</p>
+  </section>
+</main>
+```
+
+`<nav>` is for major navigation links (like a main menu), not every random group of links.
+
+**Checkpoint:** Head over to MDN's [HTML Elements Reference](https://developer.mozilla.org/en-US/docs/Web/HTML/Element). For each element above, explain in your own words what it means and why it is the right choice in this example.
+
+<Accordion question="So...when should I use `<div>`?">
+
+Great question! `<div>` is a generic container with no built-in meaning. Use it when you need a wrapper for styling or scripting and no semantic tag fits.
+
+A common use is as a flexbox parent to align child elements in a row or column.
+
+</Accordion>
+
+**Quick chooser:**  
+- Use `<article>` for content that could stand on its own (like a blog post or news card).  
+- Use `<section>` for grouped content on the current page.  
+- Use `<div>` when you need a wrapper and no semantic tag fits.
+
+> The `<article>` HTML element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry, a product card, a user-submitted comment, an interactive widget or gadget, or any other independent item of content.
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/article)
+
+> The `<section>` HTML element represents a standalone section — which doesn't have a more specific semantic element to represent it — contained within an HTML document. A section, in this context, is a thematic grouping of content, typically with a heading.
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/section)
+
+> As a "pure" container, the `<div>` element does not inherently represent anything. Instead, it's used to group content so it can be easily styled using the class or id attributes...
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div)
+
+### Example 2: Heading Levels Are Structure, Not Style
+
+```html
+<!-- ❌ Bad: Heading levels used for looks, not structure -->
+<h1>Student Portfolio</h1>
+<h3>Projects</h3>
+<p>My JavaScript work...</p>
+<h1>Contact</h1>
+
+<!-- ✅ Good: One page-level h1, then descend in order -->
+<h1>Student Portfolio</h1>
+<h2>Projects</h2>
+<p>My JavaScript work...</p>
+<h2>Contact</h2>
+```
+
+Use headings to show content hierarchy. Use CSS to make text bigger or smaller.
+
+**Heading outline self-check (30 seconds):**
+- Do I have one clear page-level `<h1>`?
+- Do my headings go in order (`<h1>` → `<h2>` → `<h3>`), without skipping?
+- If I remove CSS, do the heading titles still describe the page structure clearly?
+
+> Do not use heading elements to resize text. Instead, use the CSS font-size property.
+> Do not skip heading levels: always start from `<h1>`, followed by `<h2>` and so on.
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#usage_notes)
+
+> While using multiple `<h1>` elements on one page is allowed by the HTML standard (as long as they are not nested), this is not considered a best practice. A page should generally have a single `<h1>` element that describes the content of the page
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements#avoid_using_multiple_h1_elements_on_one_page)
+
+### Example 3: Forms Need Labels
+
+```html
+<!-- ❌ Bad: Placeholder is not a label -->
+<input type="text" placeholder="Your name" />
+
+<!-- ✅ Good: Proper label association -->
+<label for="name">Your name:</label>
+<input type="text" id="name" />
+```
+
+See that `for` attribute? It ties the label to the input. Screen readers can now announce "Your name" when the user focuses on the input. `for` and `id` work together to create that connection.
+
+**Checkpoint:** There are several types of form inputs: text, email, password, checkbox, radio, select dropdowns, and more. Write out the HTML for a simple form that includes at least three different types of inputs, making sure to use proper `<label>` tags for each one. Reference MDN's [Form Elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element#form-associated_elements) to ensure you're using the correct syntax for each input type.
+
+### Example 4: Links vs Buttons
+
+```html
+<!-- ❌ Bad: Link used for an action -->
+<a href="#">Delete item</a>
+
+<!-- ✅ Good: Button for actions, link for navigation -->
+<button type="button">Delete item</button>
+<a href="/items">View all items</a>
+```
+
+Use `<a>` when the user is going somewhere. Use `<button>` when the user is doing something.
+
+### Example 5: When `<br>` Is Actually Correct
+
+```html
+<!-- ✅ Poetry / lyrics -->
+<p>
+  Roses are red,<br />
+  Violets are blue,<br />
+  Semantic HTML helps,<br />
+  Screen readers too.
+</p>
+
+<!-- ✅ Postal address -->
+<address>
+  SWIC<br />
+  2500 Carlyle Ave<br />
+  Belleville, IL 62221
+</address>
+```
+
+Use `<br>` when you need a real line break inside one piece of content. In other words, the `br` IS part of the actual content, and not just decorative spacing. 
+
+For example, in poetry or addresses, `<br>` is appropriate. It is customary to include a hard line break after the street address and before the city, state and zip. Do not use `<br>` to push sections farther down the page. Use CSS margins for that.
+
+Use `<address>` for contact information for a person or organization (not just any random location text).
+
+> The `<br>` HTML element produces a line break in text (carriage-return). It is useful for writing a poem or an address, where the division of lines is significant.
+
+> Note: Do not use `<br>` to create margins between paragraphs; wrap them in `<p>` elements and use the CSS margin property to control their size.
+
+[Source: MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br)
+
+---
+
+## Best Practices
+
+1. **Use semantic tags for structure.** `<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`
+2. **Use headings for structure, not styling.** Prefer one page-level `<h1>`, then `<h2>`, `<h3>` in order—don't skip levels.
+3. **Use one `<main>` landmark per page.**
+4. **Forms need `<label>` tags.** Tie each label to its input using `for` and `id`.
+5. **Images need `alt` text.** Describe the image's purpose; if it's decorative, use `alt=""`.
+6. **Use CSS for looks,** not semantic tags. Don't use `<h1>` just to make text bigger.
+7. **Match element to behavior.** Links navigate. Buttons trigger actions.
+8. **Use `<nav>` for major navigation areas,** like your main site menu.
+9. **Use `<br>` only for real line breaks** inside one piece of content (like poetry or addresses), not for layout spacing.
+
+---
+
+## Wrap-Up & Reflection
+
+**Key takeaway:** Semantic HTML makes your content *accessible and understandable* to browsers, search engines, and assistive technologies.
+
+**Reflect on these:**
+
+1. Where have you used `<br>` or meaningless `<div>` tags before? How would you fix them now?
+2. Do you have experience with screen readers? What surprised you about how they work?
+3. What's one semantic mistake you'll avoid going forward?
