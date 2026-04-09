@@ -289,10 +289,10 @@ const lessons = [
     ],
   },
   {
-    id: "browser-javascript-dom",
-    title: "Browser JavaScript & DOM",
+    id: "html-css-fundamentals",
+    title: "HTML & CSS Fundamentals",
     description:
-      "Bridge from console JavaScript to interactive web applications by mastering DOM manipulation, event handling, and browser APIs.",
+      "Master semantic HTML structure and learn how CSS properties translate to Tailwind utility classes. Build the foundation for styling modern web applications.",
     lessons: [
       {
         id: "semantic-html",
@@ -301,6 +301,25 @@ const lessons = [
           "Review proper HTML structure using semantic tags like <header>, <nav>, <main>, and <section>. Fix common mistakes like overusing divs, misusing br tags, and using headings for sizing.",
         video: null,
       },
+      {
+        id: "css-to-tailwind",
+        title: "CSS to Tailwind",
+        description:
+          "Learn how every CSS property maps to a Tailwind utility class. Understand the direct translation: vanilla CSS on the left, Tailwind on the right.",
+        video: {
+          duration: 471,
+          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/sp26/tailwind.png",
+          url: "https://videos.learnjs.tech/swic/videos/sp26/tailwind.mp4",
+        },
+      },
+    ],
+  },
+  {
+    id: "browser-javascript-dom",
+    title: "Browser JavaScript & DOM",
+    description:
+      "Bridge from console JavaScript to interactive web applications by mastering DOM manipulation, event handling, and browser APIs.",
+    lessons: [
       {
         id: "console-to-browser",
         title: "From Console to Browser",

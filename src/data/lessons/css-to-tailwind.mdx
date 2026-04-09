@@ -1,0 +1,278 @@
+# CSS to Tailwind
+
+## Introduction
+
+As a prerequisite, you should be comfortable writing CSS 💄. This lesson will review some of the most commonly used CSS 💄 rules, while teaching you how to leverage a new way of implementing it - Tailwind 🍄❗
+
+Note that Tailwind doesn't replace your underlying CSS 💄 knowledge. Every Tailwind utility class maps directly to a CSS property you already know, and perhaps a few that you haven't seen before.
+
+## CSS→Tailwind Mappings
+
+### 1. Display & Layout
+
+**Problem:** You need to stack or arrange elements.
+
+```css
+/* Vanilla CSS */
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+```
+
+```html
+<!-- Tailwind -->
+<div class="flex flex-col md:flex-row">
+  <!-- content -->
+</div>
+```
+
+**The pattern:** `display` → `flex`; responsive breakpoint → `md:`, `lg:`, etc.
+
+---
+
+### 2. Spacing: Padding
+
+**Problem:** You need internal space around content.
+
+```css
+/* Vanilla CSS */
+.card {
+  padding: 1rem; /* 16px */
+}
+```
+
+```html
+<!-- Tailwind -->
+<div class="p-4">
+  <!-- content -->
+</div>
+```
+
+**The map:** `p-1` = 0.25rem, `p-2` = 0.5rem, `p-4` = 1rem, `p-8` = 2rem. Scale up as needed.
+
+| Vanilla | Tailwind |
+|---------|----------|
+| `padding: 0.5rem` | `p-2` |
+| `padding: 1rem` | `p-4` |
+| `padding: 2rem` | `p-8` |
+| `padding-left: 1rem` | `pl-4` |
+| `padding-top: 0.5rem` | `pt-2` |
+
+---
+
+### 3. Spacing: Margin
+
+**Problem:** You need external space between elements.
+
+```css
+/* Vanilla CSS */
+.button {
+  margin-bottom: 1rem;
+}
+```
+
+```html
+<!-- Tailwind -->
+<button class="mb-4">Click me</button>
+```
+
+**The map:** Same scale as padding. `m-X` for all sides, `mb-X` for bottom, `mt-X` for top, etc.
+
+| Vanilla | Tailwind |
+|---------|----------|
+| `margin: 1rem` | `m-4` |
+| `margin-bottom: 0.5rem` | `mb-2` |
+| `margin-top: 2rem` | `mt-8` |
+| `margin-left: auto` | `ml-auto` |
+| `margin: 0 auto` | `mx-auto` |
+
+---
+
+### 4. Flexbox: Container Properties
+
+**Problem:** You need to align items horizontally and vertically.
+
+```css
+/* Vanilla CSS */
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+```
+
+```html
+<!-- Tailwind -->
+<header class="flex justify-center items-center gap-4">
+  <!-- content -->
+</header>
+```
+
+**The map:**
+
+| Vanilla | Tailwind |
+|---------|----------|
+| `justify-content: center` | `justify-center` |
+| `justify-content: space-between` | `justify-between` |
+| `justify-content: flex-start` | `justify-start` |
+| `align-items: center` | `items-center` |
+| `gap: 1rem` | `gap-4` |
+
+---
+
+### 5. Width & Height
+
+**Problem:** You need to size elements.
+
+```css
+/* Vanilla CSS */
+.box {
+  width: 100%;
+  height: 50%;
+}
+```
+
+```html
+<!-- Tailwind -->
+<div class="w-full h-1/2">
+  <!-- content -->
+</div>
+```
+
+**Common widths:**
+
+| Vanilla | Tailwind |
+|---------|----------|
+| `width: 100%` | `w-full` |
+| `width: 50%` | `w-1/2` |
+| `width: 33.333%` | `w-1/3` |
+| `max-width: 768px` | `max-w-2xl` |
+| `width: auto` | `w-auto` |
+
+---
+
+### 6. Colors: Text
+
+**Problem:** You need colored text.
+
+```css
+/* Vanilla CSS */
+.error {
+  color: rgb(220, 38, 38);
+}
+```
+
+```html
+<!-- Tailwind -->
+<p class="text-red-600">Error message</p>
+```
+
+**The map:** `text-` + color name + shade (50–950). `text-blue-500`, `text-green-600`, `text-gray-800`.
+
+---
+
+### 7. Colors: Background
+
+**Problem:** You need a colored background.
+
+```css
+/* Vanilla CSS */
+.button {
+  background-color: rgb(59, 130, 246);
+}
+```
+
+```html
+<!-- Tailwind -->
+<button class="bg-blue-500">Button</button>
+```
+
+**The pattern:** Same color palette. `bg-` + color + shade.
+
+---
+
+### 8. Hover & Responsive States
+
+**Problem:** You need styles that change on hover or at larger breakpoints.
+
+```css
+/* Vanilla CSS */
+.button:hover {
+  background-color: rgb(37, 99, 235);
+}
+
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+}
+```
+
+```html
+<!-- Tailwind -->
+<button class="bg-blue-500 hover:bg-blue-600">Button</button>
+<div class="flex flex-col md:flex-row">
+  <!-- content -->
+</div>
+```
+
+**The pattern:**
+- `hover:` prefix for hover states
+- `md:`, `lg:`, `xl:` for breakpoints (min-width)
+- Stack them: `class="text-sm md:text-lg hover:text-red-600"`
+
+---
+
+## Why This Matters
+
+**Old way:**
+
+```css
+/* styles.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: rgb(31, 41, 55);
+  color: white;
+}
+```
+
+```html
+<!-- index.html -->
+<header class="header">Navigation</header>
+```
+
+**Tailwind way:**
+
+```html
+<!-- index.html (no separate CSS file) -->
+<header class="flex justify-between items-center p-4 bg-gray-900 text-white">
+  Navigation
+</header>
+```
+
+No context switching. The class name *is* the style. It's right there in your HTML.
+
+---
+
+## Reflection
+
+1. **Pick one CSS property you use often** (e.g., `margin`, `padding`, `display: flex`). Look it up in the [Tailwind docs](https://tailwindcss.com/docs). What class(es) map to it?
+2. **Write a simple component** (a card, button, or nav bar) in vanilla CSS, then translate it to Tailwind. Compare them side by side.
+3. **What surprised you** about how direct the translation is? What felt awkward?
+
+---
+
+## Next Steps
+
+Your template includes Tailwind. The video shows real examples from the Tailwind docs. Start building with classes and trust the pattern: fewer lines, same results.
