@@ -1,115 +1,158 @@
-# Selecting & Manipulating DOM Elements
+# DOM Fundamentals
 
 ## Introduction
 
-Now you understand that the DOM converts HTML into JavaScript objects. But knowing this conceptually is different from actually **finding** and **manipulating** those objects in your code.
+The browser takes your HTML and converts it into the **DOM**—a tree of JavaScript objects. Each HTML tag becomes an object with properties you can read and methods you can call.
 
-This lesson is entirely practical - we're going to master the essential skills of hunting down HTML elements and changing them. Think of it as learning to be a DOM detective and surgeon rolled into one.
+Understanding the DOM means understanding that **your HTML is not the same as what JavaScript sees**. The browser parses HTML, fixes errors, and builds a live object structure that you can inspect and manipulate.
+
+This lesson focuses on what the DOM *is* and how to work with DOM objects. The next lesson will focus on *finding* those objects efficiently.
 
 ## Learning Objectives
 
 By the end of this lesson, you'll be able to:
 
-- Use CSS selectors to find any element on a page
-- Understand when to use `querySelector` vs `getElementById` vs `querySelectorAll`
-- Navigate between elements using parent/child relationships
-- Change text content, HTML content, and styling
-- Add and remove CSS classes (especially with Tailwind)
-- Create new elements and add them to the page
-- Debug when elements aren't found (null handling)
+- Understand the DOM as a tree of JavaScript objects
+- Know the difference between HTML source code and the live DOM
+- Access DOM objects via `document` and basic selectors
+- Read and change properties of DOM elements (`textContent`, `innerHTML`, `classList`)
+- Add event listeners to respond to user interaction
+- Create and insert new elements into the page
+- Inspect the DOM using Developer Tools
 
-## The Three Ways to Find Elements
+## What Is the DOM?
 
-Before you can manipulate HTML elements, you need to find them. JavaScript gives you three main methods:
+**DOM** = Document Object Model. It's the browser's internal representation of your HTML as JavaScript objects.
 
-### 1. `getElementById()` - Find by ID
+**HTML is text.** The browser reads it, parses it, builds a tree of objects.
 
-**Best for**: Finding a specific, unique element
+### Simple Example
 
-```html
-<button id="save-button">Save</button> <input id="user-name" type="text" />
-```
-
-```javascript
-const saveBtn = document.getElementById("save-button");
-const nameInput = document.getElementById("user-name");
-```
-
-**Key points**:
-
-- IDs should be unique on the page
-- No `#` symbol needed (it's implied)
-- Returns `null` if not found
-
-When using `querySelector("#some-id")`, you **include** the `#` character yourself. With `getElementById("some-id")`, you just pass the bare id name (`"some-id"`) without the `#`.
-
-### 2. `querySelector()` - Find First Match
-
-**Best for**: Using CSS selectors, finding first match
+**Your HTML:**
 
 ```html
-<div class="card">
-  <h2 class="title">First Card</h2>
-  <p class="description">Some text</p>
-</div>
-<div class="card">
-  <h2 class="title">Second Card</h2>
+<div>
+  <h1>Hello</h1>
+  <p>Welcome to the DOM.</p>
 </div>
 ```
 
+**The DOM (as JavaScript objects):**
+
 ```javascript
-// CSS selectors work just like in CSS
-const firstCard = document.querySelector(".card"); // First .card element
-const firstTitle = document.querySelector(".title"); // First .title element
-const cardTitle = document.querySelector(".card .title"); // .title inside .card
-const specificCard = document.querySelector("#special-card"); // By ID
+document.body = {
+  tagName: "BODY",
+  textContent: "Hello Welcome to the DOM.",
+  children: [
+    {
+      tagName: "DIV",
+      children: [
+        { tagName: "H1", textContent: "Hello" },
+        { tagName: "P", textContent: "Welcome to the DOM." },
+      ],
+    },
+  ],
+}
 ```
 
-### 3. `querySelectorAll()` - Find All Matches
+Each element is an object. Each object has:
+- **Properties** (data): `textContent`, `className`, `id`, `children`, etc.
+- **Methods** (actions): `addEventListener()`, `appendChild()`, `querySelector()`, etc.
 
-**Best for**: Working with multiple elements
+### Key Difference: HTML vs DOM
+
+**HTML source code:**
+```html
+<p>Hello</p>
+```
+
+**DOM object for that element:**
+```javascript
+{
+  tagName: "P",
+  textContent: "Hello",
+  className: "",
+  id: "",
+  // ... 50+ other properties and methods
+}
+```
+
+The browser **fixes your HTML** before building the DOM. Missing tags are auto-closed. Errors are corrected. That's why the DOM might look different from your source HTML.
+
+---
+
+## Accessing the DOM
+
+The `document` object is your entry point to the DOM:
 
 ```javascript
-// Returns a NodeList (like an array) of ALL matches
-const allCards = document.querySelectorAll(".card");
-const allTitles = document.querySelectorAll(".title");
-const allButtons = document.querySelectorAll("button");
+// Access the entire document
+console.log(document);
 
-// Use forEach to work with each element
-allCards.forEach((card) => {
-  card.style.border = "1px solid blue";
+// Access the body element
+console.log(document.body);
+
+// Access the root html element
+console.log(document.documentElement);
+
+// Find elements (we'll cover this deeply in the next lesson)
+const title = document.getElementById("page-title");
+const buttons = document.querySelectorAll("button");
+```
+
+For now, just know: **`document` is a global object** that represents your entire page. Everything starts there.
+
+---
+
+## DOM Objects Have Properties and Methods
+
+Every DOM element is a JavaScript object. Here's what that means:
+
+### Properties (Data About the Element)
+
+```javascript
+const heading = document.querySelector("h1");
+
+// Properties you can READ
+console.log(heading.textContent);  // The text inside
+console.log(heading.innerHTML);    // HTML inside the element
+console.log(heading.id);           // The id attribute
+console.log(heading.className);    // The class attribute
+console.log(heading.tagName);      // "H1"
+console.log(heading.children);     // Child elements (array-like)
+console.log(heading.parentElement);// Parent element
+
+// Properties you can CHANGE
+heading.textContent = "New title";
+heading.className = "active";
+```
+
+### Methods (Actions You Can Perform)
+
+```javascript
+const button = document.querySelector("button");
+
+// Listen for an event
+button.addEventListener("click", () => {
+  console.log("Button was clicked!");
 });
+
+// Modify the element
+button.textContent = "Clicked!";
+
+// Add a child element
+const newDiv = document.createElement("div");
+button.appendChild(newDiv);
+
+// Search inside this element
+const firstParagraph = button.querySelector("p");
 ```
 
-## CSS Selector Cheat Sheet
+**Key insight:** Properties hold data. Methods perform actions. Both are critical to working with the DOM.
 
-**Common selectors you'll use:**
-
-```javascript
-// By element type
-document.querySelector("button"); // First <button>
-document.querySelector("p"); // First <p>
-
-// By class (most common with Tailwind)
-document.querySelector(".btn"); // First element with class="btn"
-document.querySelector(".text-red-500"); // First element with Tailwind class
-
-// By ID
-document.querySelector("#header"); // Element with id="header"
-
-// Combinations
-document.querySelector("button.primary"); // <button class="primary">
-document.querySelector(".card h2"); // <h2> inside element with class="card"
-document.querySelector("#nav .menu"); // .menu inside element with id="nav"
-
-// Attributes
-document.querySelector('[type="email"]'); // Element with type="email"
-document.querySelector('[data-id="123"]'); // Element with data-id="123"
-```
+---
 
 ## Changing Element Content
-
-Once you've found an element, you can change what's inside it:
 
 ### `textContent` - Change Text Only
 
@@ -151,417 +194,259 @@ userInfo.innerHTML = `
 `;
 ```
 
-## Working with CSS Classes (Tailwind Focus)
+## Adding Event Listeners
 
-Since you're using Tailwind, you'll frequently add/remove CSS classes.
-
-Instead of directly changing styles with `element.style`, Tailwind encourages you to add or remove **utility classes** (like `bg-red-500`, `hidden`, `text-xl`) on the element. The `classList` API makes this easy.
-
-### `classList` Methods
+DOM objects can listen for user interaction. Every time something happens (click, type, hover), the browser sends an **event**. You can catch it with `addEventListener()`:
 
 ```javascript
-const button = document.querySelector(".btn");
+const button = document.querySelector("button");
 
-// classList is another PROPERTY on the element object
-// It has METHODS like add, remove, toggle, and contains
+button.addEventListener("click", () => {
+  console.log("User clicked the button!");
+});
 
-// Add classes
-button.classList.add("bg-red-500", "text-white", "px-4");
+const input = document.querySelector("input");
 
-// Remove classes
-button.classList.remove("bg-blue-500");
-
-// Toggle a class (add if missing, remove if present)
-button.classList.toggle("hidden");
-
-// Check if class exists
-if (button.classList.contains("active")) {
-  console.log("Button is active");
-}
+input.addEventListener("input", () => {
+  console.log("User typed:", input.value);
+});
 ```
 
-### Practical Tailwind Examples
+**Common events:**
+- `click` - user clicked
+- `input` - user typed in a form field
+- `submit` - user submitted a form
+- `mouseenter` / `mouseleave` - user hovered
+- `change` - value changed
 
-```html
-<div class="card rounded bg-white p-4 shadow">
-  <h3>Card Title</h3>
-  <button class="btn rounded bg-blue-500 px-4 py-2 text-white">Click me</button>
-</div>
-```
+When an event happens, the listener function runs. More on this in later lessons.
+
+---
+
+## Working with CSS Classes (Tailwind Focus)
+
+Instead of changing styles directly, you add/remove CSS classes. The `classList` property makes this easy:
 
 ```javascript
 const card = document.querySelector(".card");
-const button = document.querySelector(".btn");
 
-// Highlight card on hover
-card.addEventListener("mouseenter", () => {
-  card.classList.add("ring-2", "ring-blue-500");
-});
+// classList is a PROPERTY on the DOM element
+// It has METHODS: add, remove, toggle, contains
 
-card.addEventListener("mouseleave", () => {
-  card.classList.remove("ring-2", "ring-blue-500");
-});
+// Add Tailwind classes
+card.classList.add("ring-2", "ring-blue-500");
 
-// Change button state
-button.addEventListener("click", () => {
-  button.classList.remove("bg-blue-500");
-  button.classList.add("bg-green-500");
-  button.textContent = "Clicked!";
-});
+// Remove classes
+card.classList.remove("opacity-50");
+
+// Toggle (add if missing, remove if present)
+card.classList.toggle("hidden");
+
+// Check if class exists
+if (card.classList.contains("active")) {
+  console.log("Card is active");
+}
 ```
 
-## Creating New Elements
+### Why This Matters
 
-Sometimes you need to create elements dynamically with JavaScript:
+**Old way (inline styles):**
+```javascript
+card.style.backgroundColor = "blue";
+card.style.padding = "1rem";
+card.style.borderRadius = "0.5rem";
+```
 
-### Basic Element Creation
+**Tailwind way (add/remove classes):**
+```javascript
+card.classList.add("bg-blue-500", "p-4", "rounded");
+```
+
+The Tailwind approach keeps styling logic in HTML/CSS, not scattered in JavaScript.
+
+## Creating and Adding Elements
+
+Sometimes you need to create new DOM objects and insert them into the page:
 
 ```javascript
-// Create element
+// Create a new element object
 const newDiv = document.createElement("div");
-newDiv.textContent = "Hello from JavaScript!";
-newDiv.classList.add("bg-blue-100", "p-4", "rounded");
 
-// Add to a specific container on the page
+// Set its properties
+newDiv.textContent = "Hello from JavaScript!";
+newDiv.className = "bg-blue-100 p-4 rounded";
+
+// Add it to the page
 const container = document.querySelector("#container");
 container.appendChild(newDiv);
-
-// Or, append directly to the document body
-// (common for small "Hello" examples or quick experiments)
-document.body.appendChild(newDiv);
 ```
 
-### Building Complex Elements
+**Key methods:**
+- `document.createElement(tagName)` - Create a new element object
+- `element.appendChild(child)` - Add a child element
+- `element.removeChild(child)` - Remove a child element
+
+### Practical Example: Building a Card
 
 ```javascript
-// Create a card component
-function createUserCard(user) {
+function createCard(title, description) {
+  // Create the card element
   const card = document.createElement("div");
-  card.classList.add("bg-white", "rounded", "shadow", "p-6");
+  card.classList.add("bg-white", "rounded", "shadow", "p-6", "mb-4");
 
-  card.innerHTML = `
-    <h3 class="text-xl font-bold">${user.name}</h3>
-    <p class="text-gray-600">${user.email}</p>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-      Contact ${user.name}
-    </button>
-  `;
+  // Create and add a heading
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+  heading.className = "text-xl font-bold mb-2";
+  card.appendChild(heading);
+
+  // Create and add a paragraph
+  const para = document.createElement("p");
+  para.textContent = description;
+  para.className = "text-gray-600";
+  card.appendChild(para);
 
   return card;
 }
 
 // Use it
-const users = [{ name: "Sarah", email: "sarah@email.com" }];
-const userList = document.querySelector("#user-list");
-
-users.forEach((user) => {
-  const card = createUserCard(user);
-  userList.appendChild(card);
-});
+const cardList = document.querySelector("#cards");
+const myCard = createCard("DOM Basics", "Learn how JavaScript interacts with HTML");
+cardList.appendChild(myCard);
 ```
 
-## Debugging: When Elements Aren't Found
+This pattern is the foundation of dynamic page generation.
 
-Common issue: `document.querySelector()` returns `null`. This happens when your **CSS selector doesn't match any node on the page**—for example, the class/id changed in the HTML, the element hasn't been rendered yet, or there's a typo in your selector.
+---
 
-### Safe Element Selection
-
-```javascript
-// ❌ Dangerous - will crash if element doesn't exist
-const button = document.querySelector(".my-button");
-button.addEventListener("click", handleClick); // Error if button is null
-
-// ✅ Safe - check before using
-const button = document.querySelector(".my-button");
-if (button) {
-  button.addEventListener("click", handleClick);
-} else {
-  console.log("Button not found!");
-}
-
-// ✅ Alternative - optional chaining (modern browsers)
-button?.addEventListener("click", handleClick);
-```
-
-### Debugging Tips
-
-```javascript
-// Check if element exists
-const element = document.querySelector(".mystery-class");
-console.log("Element found:", element); // null if not found
-
-// Count how many match
-const elements = document.querySelectorAll(".mystery-class");
-console.log("Found", elements.length, "elements");
-
-// Check what classes an element has
-const div = document.querySelector("div");
-if (div) {
-  console.log("Classes:", Array.from(div.classList));
-}
-```
-
-## Inspecting the DOM with Developer Tools
+## Inspecting the Live DOM with Developer Tools
 
 ### Viewing the Live DOM
 
 1. **Open any webpage**
 2. **Press F12** to open Developer Tools
-3. **Click the Elements tab**
+3. **Click the Elements or Inspector tab**
 
-What you see is **not your original HTML** - it's the **live DOM** that the browser created.
+What you see is the **live DOM**—not your original HTML source code.
 
-### Key Differences Between Source HTML and DOM
+### Key Difference: Source HTML vs Live DOM
 
-#### Your HTML Source Code:
-
+**Your original HTML file:**
 ```html
 <div>
   <p>Hello world</p>
 </div>
 ```
 
-#### The Browser's DOM:
-
+**The browser's DOM (what you see in DevTools):**
 ```html
-<div>
-  <p>Hello world</p>
-  <!-- Browser auto-closes the tag -->
-</div>
+<html>
+  <body>
+    <div>
+      <p>Hello world</p>
+    </div>
+  </body>
+</html>
 ```
 
-The browser **fixes errors** and **fills in missing pieces**!
+The browser **auto-corrected** your HTML by adding missing tags.
 
-### Interactive DOM Exploration
+### Testing DOM Changes in Real Time
 
-Try this experiment:
-
-1. **Open any webpage**
-2. **Open Developer Tools (F12)**
-3. **In the Console tab, type**:
-   ```javascript
-   document.body.style.backgroundColor = "lightblue";
-   ```
-4. **Watch the page change color**
-5. **Look at the Elements tab** - you'll see the style attribute was added
-
-You just saw JavaScript modify the DOM, and the browser updated the display immediately!
-
-## DOM Objects Have Properties and Methods
-
-Each DOM element is a JavaScript object with useful properties and methods:
+Open any webpage, press F12, and try this in the Console:
 
 ```javascript
+// Get an element
 const heading = document.querySelector("h1");
 
-// Properties (data about the element)
-console.log(heading.textContent); // The text inside
-console.log(heading.id); // The id attribute
-console.log(heading.className); // The class attribute
-console.log(heading.tagName); // "H1"
+// Change its text
+heading.textContent = "I changed this!";
 
-// Methods (things you can do with the element)
-heading.addEventListener("click", function () {
-  console.log("Heading was clicked!");
-});
+// Add a class
+heading.classList.add("text-red-500");
+
+// Look at the Elements tab — you'll see your changes!
 ```
 
-### Common Properties
+Refresh the page — changes disappear (they were only in the DOM, not saved to disk).
 
-- `element.textContent` - Text inside the element
-- `element.innerHTML` - HTML inside the element
-- `element.id` - The id attribute
-- `element.className` - The class attribute
-- `element.style` - Inline CSS styles
-- `element.children` - Child elements
-- `element.parentElement` - Parent element
+---
 
-### Common Methods
+## Summary: The DOM is Live
 
-- `element.addEventListener()` - Listen for events
-- `element.appendChild()` - Add a child element
-- `element.removeChild()` - Remove a child element
-- `element.querySelector()` - Find elements inside this element
-
-For example, when you see `heading.textContent` or `button.addEventListener("click", handleClick)`, **`textContent` is a property** on the DOM element object, and **`addEventListener` is a method** (a function stored as a property that you can call).
+When you modify a DOM object, the browser immediately updates what the user sees. No refresh needed. This is the power of the DOM.
 
 ## Practical DOM Exploration
 
-Let's explore the DOM of a real example:
+Let's build a simple example that demonstrates DOM objects in action:
 
-### HTML File (index.html)
+### HTML
 
-<CopyableCode language="html">
-{`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>DOM Explorer</title>
-</head>
-<body>
-  <div id="app">
-    <h1 class="title">DOM Explorer</h1>
-    <div class="content">
-      <p>This paragraph has some <strong>bold text</strong> in it.</p>
-      <button id="explore-btn">Click to Explore DOM</button>
-      <ul id="info-list"></ul>
-    </div>
-  </div>
+```html
+<main>
+  <h1 id="title">DOM Explorer</h1>
+  <button id="inspect-btn">Inspect This Page</button>
+  <div id="output"></div>
+</main>
+```
 
-    <script type="module" src="./src/main.js"></script>
+### JavaScript
 
-</body>
-</html>`}
-</CopyableCode>
+```javascript
+const inspectBtn = document.getElementById("inspect-btn");
+const output = document.getElementById("output");
 
-### JavaScript File (main.js)
+inspectBtn.addEventListener("click", () => {
+  // Get DOM objects
+  const title = document.getElementById("title");
+  const button = document.getElementById("inspect-btn");
 
-<CopyableCode language="javascript">
-{`const button = document.getElementById('explore-btn');
-const infoList = document.getElementById('info-list');
+  // Read their properties
+  const results = [
+    `Title text: "${title.textContent}"`,
+    `Title tag name: ${title.tagName}`,
+    `Button has ${button.children.length} child elements`,
+    `Output div is empty: ${output.children.length === 0}`,
+    `Page has ${document.querySelectorAll("*").length} total elements`,
+  ];
 
-button.addEventListener('click', function() {
-// Clear previous results
-infoList.innerHTML = '';
+  // Build output element
+  const list = document.createElement("ul");
+  results.forEach((result) => {
+    const item = document.createElement("li");
+    item.textContent = result;
+    item.className = "p-2 bg-gray-100 mb-1 rounded";
+    list.appendChild(item);
+  });
 
-// Explore the DOM
-const app = document.getElementById('app');
-const title = document.querySelector('.title');
-const paragraph = document.querySelector('p');
-const strongElement = document.querySelector('strong');
-
-// Create info about what we found
-const info = [
-\`App element tag: \${app.tagName}\`,
-\`Title text: "\${title.textContent}"\`,
-\`Paragraph has \${paragraph.children.length} child elements\`,
-\`Strong element text: "\${strongElement.textContent}"\`,
-\`Document has \${document.querySelectorAll('*').length} total elements\`
-];
-
-// Display the info
-info.forEach(item => {
-const li = document.createElement('li');
-li.textContent = item;
-infoList.appendChild(li);
+  output.appendChild(list);
 });
-});`}
-
-</CopyableCode>
-
-### What This Demonstrates
-
-1. **JavaScript can inspect DOM elements** and read their properties
-2. **Elements have relationships** (parents, children, siblings)
-3. **DOM methods work together** to create dynamic content
-4. **The DOM is live** - changes appear immediately
-
-## Homework Assignments
-
-### Assignment 1: DOM Detective (Console Practice)
-
-**Goal**: Practice DOM inspection and manipulation using browser dev tools on real websites.
-
-**Instructions**:
-
-1. **Visit 3 different websites** of your choice (news sites, social media, etc.)
-2. **Open Developer Tools (F12)** on each site
-3. **Complete these tasks** using the Console tab:
-
-**For each website, do the following:**
-
-a) **Find and modify text content**:
-
-```javascript
-// Find a heading and change its text
-document.querySelector("h1").textContent = "I changed this!";
 ```
 
-b) **Change styling**:
+### What's Happening
 
-```javascript
-// Change the background color of the page
-document.body.style.backgroundColor = "lightblue";
-```
+1. We find DOM objects using `getElementById()` and `querySelectorAll()`
+2. We read properties from those objects (`textContent`, `tagName`, `children.length`)
+3. We create new DOM objects and add them to the page (`createElement()`, `appendChild()`)
+4. The page updates instantly—no refresh needed
 
-c) **Inspect element relationships**:
-
-```javascript
-// Find an element and explore its family
-const element = document.querySelector("p"); // or any element
-console.log("Tag name:", element.tagName);
-console.log("Parent:", element.parentElement?.tagName);
-console.log("Children count:", element.children.length);
-```
-
-**Deliverable**: Take screenshots showing your console commands and their effects on each website.
-
-### Assignment 2: Template Repository Work
-
-**Goal**: Set up your development environment and create your first DOM manipulation project.
-
-**Instructions**:
-
-1. **Clone the template repository** provided by your instructor
-2. **Run `npm install`** to install dependencies (`cd` into the project folder first)
-3. **Start the development server** with `npm run dev`
-4. In a separate terminal instance/window, run `code .` to open the project in VSCode. Be sure to install any missing dependencies if prompted (see bottom right corner).
-5. **Modify the template** to create a simple "About Me" page with:
-   - Your name in an `<h1>` tag
-   - A paragraph about yourself
-   - A button that changes the page background color when clicked
-   - A counter that shows how many times the button has been clicked
-
-**Requirements**:
-
-- Use **external JavaScript file** (main.js)
-- Include proper **semantic HTML** structure
-- Use at least **3 DOM manipulation techniques**:
-  - `getElementById()` or `querySelector()`
-  - Changing `textContent` or `innerHTML`
-  - Adding event listeners
-  - Modifying styles with `element.style`
-
-Commit early, commit often, and push your changes to your GitHub repository so that your instructor can review your work.
-
-Create a short video (3-4 minutes) demonstrating your page and explaining your code. Separate out what AI helped with vs. what you actually learned and coded yourself.
-
-### Assignment 3: DOM Reflection
-
-**Goal**: **Personal** (not AI generated regurgitation 🤮 of the facts from the lesson) reflection on understanding the DOM and its role in web development.
-
-**Instructions**: Create a `dom-reflection.md` file and respond to these prompts:
-
-1. **In your own words**, explain the DOM like you're teaching it to someone who's never heard of it.
-
-2. **What was the biggest "aha moment"** you had while learning about the DOM?
-
-3. **Think about a website you use frequently** - describe what you think is happening "under the hood" with the DOM when you interact with it.
-
-4. **What's the weirdest thing** you discovered about how browsers handle HTML vs. the DOM?
-
-5. **What questions do you still have** about the DOM that you're curious to explore?
-
-6. **How has learning about the DOM changed** how you think about websites and web development?
-
-**Deliverable**: Submit `dom-reflection.md` file.
+This is the DOM in action.
 
 ## Looking Ahead
 
-Now that you understand what the DOM is and how it works, you're ready to learn how to **find and select** DOM elements with JavaScript. In our next lesson, we'll master the essential skills of:
+Now you understand what the DOM *is*: a tree of JavaScript objects, each with properties and methods.
 
-- Using CSS selectors to find elements. Yes, CSS 💄 knowledge is not displaced by Tailwind.
-- Understanding the difference between single elements and NodeLists
-- Navigating element relationships (parents, children, siblings)
-- Writing robust selectors that won't break
+**Next lesson:** **Selecting DOM Elements** — You'll master CSS selectors and `querySelector()` so you can find *any* element on a page reliably. Then you'll be ready to build complex, interactive applications.
+
+---
 
 ## Key Takeaways
 
-1. **DOM is not HTML** - it's a JavaScript representation of your HTML
-2. **Everything is an object** - each element has properties and methods
-3. **The DOM is live** - changes appear immediately on the page
-4. **Timing matters** - elements must exist before JavaScript can find them
-5. **Browser fixes errors** - the DOM might look different from your HTML
-6. **Developer Tools show the DOM** - not your original HTML source
+1. **DOM ≠ HTML** — The browser converts HTML to a tree of JavaScript objects
+2. **Every element is an object** with properties you can read/write and methods you can call
+3. **The DOM is live** — Changes appear instantly on the page
+4. **textContent, innerHTML, classList, addEventListener** are your core tools
+5. **You can create and insert elements** with `createElement()` and `appendChild()`
+6. **DevTools shows the live DOM**, not your source HTML—use it to inspect and test
 
-Understanding the DOM is fundamental to all browser JavaScript development. Every time you see `document.something`, you're working with the DOM!
+You now understand the foundation of all interactive web development. The DOM is JavaScript's window into the browser.
