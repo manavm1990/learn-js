@@ -2,12 +2,12 @@ import { transformerColorizedBrackets } from "@shikijs/colorized-brackets";
 import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import React, { type ReactNode } from "react";
-import { createHighlighter, type Highlighter } from "shiki";
 import { Accordion } from "@/components/accordion";
 import { CopyableCode } from "@/components/code-block";
 import { Figure } from "@/components/figure";
 import { VideoYT } from "@/components/video-yt";
 import { ExternalLinkIcon } from "@/icons/external-link-icon";
+import { getShikiHighlighter } from "@/lib/shiki-highlighter";
 import theme from "./src/app/syntax-theme.json";
 
 const IMAGE_PROPS_REGEX = /^[^|]+\|\d+x\d+(\|unoptimized)?$/;
@@ -32,21 +32,9 @@ function generateId(text: string) {
     .replace(/[^a-z0-9-]/g, "");
 }
 
-// Create a singleton promise to ensure only one highlighter instance
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-async function getHighlighter() {
-  if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      langs: ["javascript", "css", "html", "bash", "json", "markdown", "jsx"],
-      themes: [theme],
-    });
-  }
-  return highlighterPromise;
-}
 
 async function CodeBlock({ code, lang }: { code: string; lang: string }) {
-  const highlighter = await getHighlighter();
+  const highlighter = await getShikiHighlighter();
   const out = highlighter.codeToHtml(code, {
     lang,
     theme: theme.name,

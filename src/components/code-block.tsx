@@ -2,8 +2,8 @@
 
 import { transformerColorizedBrackets } from "@shikijs/colorized-brackets";
 import { useEffect, useState } from "react";
-import { createHighlighter, type Highlighter } from "shiki";
-import theme from "../app/syntax-theme.json";
+import theme from "@/app/syntax-theme.json";
+import { getShikiHighlighter } from "@/lib/shiki-highlighter";
 
 interface CodeBlockProps {
   children: string;
@@ -12,18 +12,6 @@ interface CodeBlockProps {
   className?: string;
 }
 
-// Reuse the same highlighter setup as mdx-components.tsx
-let highlighterPromise: Promise<Highlighter> | null = null;
-
-async function getHighlighter() {
-  if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      langs: ["javascript", "css", "html", "bash", "json", "markdown"],
-      themes: [theme],
-    });
-  }
-  return highlighterPromise;
-}
 
 export function CodeBlock({
   children,
@@ -37,7 +25,7 @@ export function CodeBlock({
   useEffect(() => {
     async function highlightCode() {
       try {
-        const highlighter = await getHighlighter();
+        const highlighter = await getShikiHighlighter();
         const html = highlighter.codeToHtml(children, {
           lang: language,
           theme: theme.name,
