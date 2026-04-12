@@ -340,9 +340,9 @@ const lessons = [
       },
       {
         id: "selecting-elements",
-        title: "Selecting DOM Elements",
+        title: "DOM Selectors",
         description:
-          "Master querySelector and querySelectorAll to find elements. Learn CSS selectors, NodeList vs Arrays, and element relationships.",
+          "Use CSS selectors with querySelector() and querySelectorAll() to find and update multiple elements. Master efficient DOM selection patterns.",
         video: null,
       },
       {
