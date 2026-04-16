@@ -346,17 +346,6 @@ const lessons = [
         video: null,
       },
       {
-        id: "function-components",
-        title: "Function Components",
-        description:
-          "Learn to build reusable UI components with JavaScript functions that return DOM elements. Understand component structure and composition.",
-        video: {
-          duration: 703,
-          thumbnail: "https://d8n3.c1.e2-8.dev/swic/videos/function-components.png",
-          url: "https://videos.learnjs.tech/swic/videos/function-components.mp4",
-        },
-      },
-      {
         id: "js-form-fundamentals",
         title: "Form Fundamentals",
         description:
@@ -382,7 +371,7 @@ const lessons = [
         id: "js-form-local-storage",
         title: "Persistent Tutor Requests with localStorage",
         description:
-          "Connect your validated Request a Tutor Session form with function components and localStorage to build a persistent tutor requests inbox.",
+          "Connect your validated Request a Tutor Session form with render helper functions and localStorage to build a persistent tutor requests inbox.",
         video: null,
       },
       {

@@ -15,6 +15,8 @@
 
 **Note:** Throughout this lesson are checkpoint questions—answer them in your reflection at the end. They are also instructions for capturing your work as screenshots as you proceed. And, as usual, make sure that you are making relevant commits as you go.
 
+**Scope note:** This lesson focuses on reading form data and giving simple UI feedback. We are intentionally not covering advanced UI architecture patterns here.
+
 ---
 
 ## Core Concept Overview
@@ -128,7 +130,7 @@ Add the following HTML structure to `index.html` inside the `<body>`:
 
 All of the above is just HTML structure with Tailwind classes for basic styling. No JavaScript yet.
 
-Run `npm run dev` to start the server and verify that the form appears with 3 fields + submit button.
+Run `bun run dev` to start the server and verify that the form appears with 3 fields + submit button.
 
 Take a screenshot of the rendered form for your homework submission.
 
@@ -140,13 +142,13 @@ Take a screenshot of the rendered form for your homework submission.
 
 **What you're learning:** Stop page reload, see what `FormData` contains.
 
-Create `src/form-practice.js`. In the HTML file, be sure to update the script tag to point to this new file:
+The HTML file should be connected to `src/index.js`. Verify that you see:
 
 ```html
-<script type="module" src="./src/form-practice.js"></script>
+<script type="module" src="./src/index.js"></script>
 ```
 
-Then add this to `src/form-practice.js`:
+Then add this to `src/index.js`:
 
 ```js
 const form = document.querySelector("form");
@@ -155,7 +157,14 @@ const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
   // No, browser! WE will handle this. Stop your default behavior.
   event.preventDefault();
-  const formData = new FormData(form);
+  
+  /**
+   * Gather up the form data into key/value pairs using
+   * name attributes and form values.
+  */
+  const formData = new FormData(form); 
+  
+  // Convert that FormData into a plain object for easier use.
   const data = Object.fromEntries(formData);
 
   console.log(data);
@@ -197,16 +206,35 @@ form.addEventListener("submit", (event) => {
 
 Look back at the HTML and notice the empty `<section id="result">` below the form. We'll use that to display the submitted data.
 
-Let's use a function component to render each result item. At the bottom of your `form-practice.js`, add the following:
+Let's use a small helper function to render each result item. At the bottom of your `index.js`, add the following:
 
 ```js
+// Helper function: returns an HTML string.
 function Results(data) {
   console.log(Object.entries(data));
 
   return `<ul class="space-y-1 text-sm">
         ${Object.entries(data)
+
+        /**
+         * Object.entries() gives us an array of arrays.
+         * Each array has two items: [key, value], 
+         * where `key` is the name of the form field and
+         * `value` is what the user entered.
+         * 
+         * Note that we are using ARRAY DESTRUCTURING in the map callback 
+         * to pull apart the key and value from each entry array.
+         * 
+         * `k` and `v` are just variable names we chose for key and value,
+         * and are commonly accepted shorthand in the JS community. 
+        */
           .map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`)
-          .join("")}
+          
+          /**
+           * The map gives us an array of strings,
+           * but we want one big string to insert into the HTML.
+          */
+          .join("")} 
     </ul>   
     `;
 }
@@ -215,8 +243,8 @@ function Results(data) {
 <Accordion question="What's happening above? 🤔">
   <ul>
     <li>
-      We define a function component called Results that takes a data object as
-      an argument.
+      We define a helper function called `Results` that takes a data object as
+      an argument and returns an HTML string.
     </li>
     <li>
       It pulls apart the entries or key-value pairs in that `data` object.
@@ -270,6 +298,8 @@ Start by declaring `const REQUIRED = ["name", "email", "message"];` at the top o
 
 We also need to query the submit button so we can enable/disable it: `const submitBtn = form.querySelector('[type="submit"]');`
 
+Before we keep going, one key detail: form inputs can be accessed by their `name` attributes. That means if an input has `name="email"`, you can access it as `form["email"]` (or `form.email`). We use bracket notation in this lesson because we are looping through field names dynamically.
+
 <Accordion question="What's next? 🤔">
   We need to go over each required field and check if it has a non-empty value.
   So, `value !== ""` for each field. We need some type of loop or array method
@@ -319,7 +349,7 @@ Simply put, the code reads as follows: `REQUIRED.every((field) => form[field].va
 
 But...what kind of an event do we use to enable the submit button? It can't be just `"submit"` because the form isn't being submitted yet.
 
-We need to listen for changes as the user types or interacts with the form fields. The best event for this is the `"input"` event, which fires whenever the value of any input field within the form changes.
+We need to listen for changes as the user types or interacts with the form fields. The best event for this is the `"input"` event, which fires whenever the value of **any** input field within the form changes.
 
 We just add that directly to the `form` reference we already have.
 
@@ -389,50 +419,5 @@ Looking back the HTML, specifically the CSS for the submit button, we see: `disa
 - Small helper functions returning HTML strings reduce repetition for result & error markup.
 - Disabling submit is a UX choice, not a rule.
 - Separation of concerns makes future validation upgrades straightforward.
+- We are not covering reusable component architecture in this lesson; that is deferred.
 
-### Homework: Build a Different Form
-
-Start by deleting the 'practice HTML' form from `index.html`. Make this a clear commit message so that I can easily see that you have removed it. `"Remove contact form HTML"`.
-
-Then, add your own form HTML with respectable Tailwind styling for a registration form. It will have the following fields:
-
-- Username (text input)
-- Email (email input)
-- Password (password input)
-- Confirm Password (password input)
-
-And, of course a submit button.
-
-Right before the closing `form` tag, add an empty `<output>` tag, where you will be displaying an error message if the passwords do not match. `<output className="text-red-500 italic"></output>`.
-
-You don't need any section to output the results. That was just in the practice exercises.
-
-Now, you'll work in `src/main.js`
-
-**Requirements:**
-
-1. Submit button is disabled until all 4 fields are filled (similar to practice).
-2. On submit, intercept with `preventDefault()`. Compare the value of the password and confirm password fields. If they do not match, display an error message in the `<output>` tag. If they do match, clear any error message.
-
-Upon completion, you will need to create a brief walkthrough video (3-5 minutes) showing how you hit each requirement in the code, along with working app in the browser. This video is part of your homework submission. You may also want to show any AI chats that you had to help you complete the assignment.
-
-### Reflection (`js-form-fundamentals-reflection.md`)
-
-Answer these checkpoint questions from the practice exercises:
-
-1. What attribute must each field have to appear in `FormData`?
-2. Why `event.preventDefault()` here but not always?
-3. Explain how `form[field]` bracket notation works vs `form.field` dot notation.
-4. One advantage and one drawback of disabling submit early?
-5. What are two legitimate reasons to let native form submission proceed?
-6. Predict one improvement the constraint validation API gives over manual checks.
-
-### Submission Checklist
-
-- [ ] Practice file `form-practice.js` complete with screenshots showing console output and displayed data
-- [ ] Commit removing contact form HTML from `index.html`
-- [ ] Registration form HTML added to `index.html` with proper Tailwind styling
-- [ ] `src/main.js` working: button disabled until fields filled, password match validation, error message in `<output>` tag
-- [ ] Video walkthrough (3-5 min) showing code + working app
-- [ ] Reflection file with all checkpoint answers
-- [ ] Well written commit messages throughout
