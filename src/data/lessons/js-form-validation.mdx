@@ -8,11 +8,11 @@
 
 **Learning objectives:** You will:
 
-- Use the browser’s built-in validation checks (`validity`, `setCustomValidity`) when needed
-- Show simple, live error messages as the user types
-- Enable/disable submit based on current validity
+- Use the browser's built-in `validity` object to check if fields are valid
+- Show live error messages as the user types
+- Disable submit until all required fields pass
 - Add a small quality-of-life feature: live character counter
-- Keep code organized with small helper functions that return HTML strings
+- Keep code organized with small helper functions
 
 ---
 
@@ -20,32 +20,26 @@
 
 ### 1. The Browser Already Knows a Lot
 
-When an input has attributes like `required`, `minlength`, `maxlength`, or `type="email"`, the browser can check those rules for us.
+When an input has `required`, `minlength`, `maxlength`, or `type="email"`, the browser can validate those rules for us automatically.
 
-Each field gives us a `validity` object.
+Each field has a `.validity` object that tells us what's wrong (if anything):
 
-Example checks:
+- `valueMissing` → field is empty and required
+- `tooShort` → fewer characters than `minlength`
+- `tooLong` → more characters than `maxlength`
+- `typeMismatch` → wrong type (e.g., not a valid email)
+- `customError` → we set a custom error with `setCustomValidity()`
 
-- `valueMissing`
-- `tooShort`
-- `tooLong`
-- `typeMismatch`
-- `customError`
-
-This means we do **less manual rule writing** and more clear feedback.
+This means we do **less manual rule writing** and more clear, live feedback.
 
 ### 2. Native Rules First, JavaScript Second
 
-Use HTML attributes for baseline rules.
-Then use JavaScript to:
+Let HTML attributes do the heavy lifting. Then use JavaScript to:
 
-- collect errors in one place
-- render readable messages
-- control submit button state
-
-### 3. Data Flow for This Lesson
-
-Input changes → browser validity checks → our helper functions → error list in DOM → user fixes input.
+- read the validity state
+- collect errors from all fields
+- show them to the user
+- manage button state
 
 ---
 
@@ -55,9 +49,9 @@ Commit after each major step.
 
 **Learning workflow for this lesson:**
 
-1. Try each step for 5–10 minutes first.
+1. Try each step yourself first, using the instructions and code snippets. You should be typing ⌨️ at least some of the code yourself, not just copy-pasting. Use your discretion to decide which parts to type vs. copy.
 2. If stuck, open the hint accordion.
-3. Write your own explanation by hand before checking the hint explanation.
+3. Write your own explanation by hand before checking the hint explanation. This helps you internalize the concept instead of just reading it passively. After reading the hint, note any differences between your explanation and the hint, and update your understanding accordingly.
 
 ---
 
@@ -124,11 +118,13 @@ At the bottom of `index.html`, load your practice file:
 <script type="module" src="./src/practice.js"></script>
 ```
 
-**Checkpoint:** What does `novalidate` do in this lesson?
+**Checkpoint:** What does `novalidate` do in the form tag above?
 
 ---
 
-### Try It 2: Gather and Render Errors
+### Try It 2: Read One Field's Validity
+
+Let's start simple. We'll read the `validity` object from one field and just log it.
 
 Add this to `src/practice.js`:
 
@@ -136,152 +132,265 @@ Add this to `src/practice.js`:
 import "./style.css";
 
 const form = document.querySelector("#join-form");
+const username = form.username;
+
+form.addEventListener("input", () => {
+  console.log(username.validity);
+});
+```
+
+**Test:** Open the console, type in the username field, and watch the `validity` object.
+
+Notice:
+
+- `valid: true/false`
+- `valueMissing: true/false`
+- `tooShort: true/false`
+
+Take a screenshot of the console showing the validity object.
+
+<Accordion question="What is .validity?">
+  Each input element has a `.validity` object that the browser manages
+  automatically. The browser reads HTML attributes like `required`, `minlength`,
+  and `type="email"`, then updates the validity properties as the user types.
+  You don't calculate validity yourself—the browser does it for free.
+</Accordion>
+
+---
+
+### Try It 3: Show One Error Message
+
+Now let's show an error message if username is too short.
+
+Replace the code in `src/practice.js`:
+
+```js
+// NOTE: Vite allows us to import CSS directly in JS. It bundles it seamlessly.
+import "./style.css";
+
+const form = document.querySelector("#join-form");
 const errorsBox = document.querySelector("#validation-errors");
-const submittedBox = document.querySelector("#submitted");
-const submitBtn = form.querySelector('[type="submit"]');
+const username = form.username;
 
-function ErrorItem(message) {
-  return `<li class="text-red-700">${message}</li>`;
-}
+form.addEventListener("input", () => {
+  const validity = username.validity;
 
-function gatherFieldErrors(field) {
-  const validity = field.validity;
-  if (validity.valid) return [];
+  // Start fresh each time.
+  errorsBox.innerHTML = "";
 
-  const errors = [];
+  // Check if the field is valid.
+  if (validity.valid) return;
 
+  // Check specific problems.
   if (validity.valueMissing)
-    errors.push(`${field.name} is required.`);
+    errorsBox.innerHTML = `<p class="text-red-700">Username is required.</p>`;
 
   if (validity.tooShort)
-    errors.push(
-      `${field.name} must be at least ${field.getAttribute("minlength")} characters.`,
-    );
+    errorsBox.innerHTML = `<p class="text-red-700">Username must be at least 3 characters.</p>`;
+});
+```
 
-  if (validity.tooLong)
-    errors.push(
-      `${field.name} must be at most ${field.getAttribute("maxlength")} characters.`,
-    );
+**Test:** Leave username blank → see "required" message. Type 1–2 characters → see "too short" message.
 
-  if (validity.typeMismatch)
-    errors.push(`Please enter a valid ${field.type}.`);
+<Accordion question="Why clear errorsBox first?">
+  Each time the user types, this listener runs again. If we don't clear the old
+  message, we'll stack up multiple messages in the DOM. Clearing first keeps it
+  fresh.
+</Accordion>
 
-  if (validity.customError)
-    errors.push(field.validationMessage);
+---
+
+### Try It 4: Check All Fields at Once
+
+We can't write that code for every field. Let's create a helper function that loops through all fields and collects errors from all of them.
+
+Replace the code in `src/practice.js`:
+
+```js
+import "./style.css";
+
+const form = document.querySelector("#join-form");
+const errorsBox = document.querySelector("#validation-errors");
+
+function gatherErrors() {
+  const errors = [];
+
+  const fields = Array.from(form.elements).filter((f) => f.name);
+
+/** 
+ * No need for `map`. We actually just want to MUTATE the `errors` array by 
+ * pushing new messages into it.
+ * 
+ * `map` is for transforming arrays, 
+ * and it would create a new array that we would ignore. 
+ * 
+ * A simple `forEach` is more appropriate here since we're not
+ * using the return value of the loop.
+ */
+  fields.forEach((field) => {
+    const validity = field.validity;
+
+    if (validity.valueMissing)
+      errors.push(`${field.name} is required.`);
+
+    if (validity.tooShort)
+      errors.push(
+        `${field.name} must be at least ${field.getAttribute("minlength")} characters.`,
+      );
+
+    if (validity.tooLong)
+      errors.push(
+        `${field.name} must be at most ${field.getAttribute("maxlength")} characters.`,
+      );
+
+    if (validity.typeMismatch)
+      errors.push(`${field.name} must be a valid ${field.type}.`);
+
+    if (validity.customError) errors.push(field.validationMessage);
+  });
 
   return errors;
 }
 
-function collectErrors() {
-  const fields = Array.from(form.elements).filter((field) => field.name);
-  return fields.flatMap((field) => gatherFieldErrors(field));
-}
+form.addEventListener("input", () => {
+  const errors = gatherErrors();
 
-function renderErrors(list) {
-  errorsBox.innerHTML = list.length
-    ? `<ul class="space-y-1">${list.map((item) => ErrorItem(item)).join("")}</ul>`
+  errorsBox.innerHTML = errors.length
+    ? `<ul class="space-y-1">${errors.map((e) => `<li class="text-red-700">${e}</li>`).join("")}</ul>`
     : "";
-}
+});
+```
 
-function updateSubmitState() {
-  submitBtn.disabled = collectErrors().length > 0;
+**Test:** Fill fields invalidly. Watch all errors appear live.
+
+<Accordion question="What's Array.from(form.elements).filter((f) => f.name)?">
+  `form.elements` is a list of all inputs/buttons/textareas in the form. We
+  convert it to an array with `Array.from()` so we can use `.filter()`. Then we
+  keep only fields with a `name` attribute (because buttons don't have names and
+  we don't care about them).
+</Accordion>
+
+---
+
+### Try It 5: Disable Submit Until Valid
+
+Now prevent submit if errors exist.
+
+Add this below the `gatherErrors()` function:
+
+```js
+const submitBtn = form.querySelector('[type="submit"]');
+
+function updateSubmitButton() {
+  submitBtn.disabled = gatherErrors().length > 0;
 }
 
 form.addEventListener("input", () => {
-  renderErrors(collectErrors());
-  updateSubmitState();
+  const errors = gatherErrors();
+  errorsBox.innerHTML = errors.length
+    ? `<ul class="space-y-1">${errors.map((e) => `<li class="text-red-700">${e}</li>`).join("")}</ul>`
+    : "";
+
+  updateSubmitButton();
 });
+
+// Start disabled.
+updateSubmitButton();
 ```
 
-**Test:** Type invalid values and verify that messages appear live.
+**Test:** Button is grayed out initially. Fill fields → button enables. Break a field → button disables again.
 
-<Accordion question="Hint: What should happen when an input becomes valid again?">
-  Your code should re-run the checks every time input changes. That means old
-  messages can disappear and the submit button can re-enable automatically.
+<Accordion question="Why call updateSubmitButton() at the very end?">
+  If you skip this, the button starts enabled, then only disables when the user
+  first types. That's bad UX. Starting disabled signals to the user: "I need to
+  fill something before I can go."
 </Accordion>
 
 ---
 
-### Try It 3: Add One Custom Message
+### Try It 6: Add Custom Validation + Character Counter
 
-Let’s make one message friendlier. In `src/practice.js`, add:
+Let's add two small features:
+1. A custom rule: no spaces in username
+2. A character counter for the bio field
 
-```js
-form.username.addEventListener("input", () => {
-  // Always clear first.
-  form.username.setCustomValidity("");
-
-  // Plain-language custom rule: no spaces in username.
-  if (form.username.value.includes(" "))
-    form.username.setCustomValidity("Username cannot include spaces.");
-});
-```
-
-**Test:** Type a space in username and verify your custom message appears.
-
-<Accordion question="Hint: Why clear custom validity first?">
-  `setCustomValidity("")` resets old custom errors. If you skip this, the
-  field may stay invalid even after the user fixes the input.
-</Accordion>
-
----
-
-### Try It 4: Character Counter + Submit Handler
-
-Still in `src/practice.js`, add:
+Add this before the `input` listener:
 
 ```js
+const username = form.username;
 const bio = form.bio;
 const bioCounter = document.querySelector("#bio-counter");
 const maxChars = Number(bio.getAttribute("maxlength"));
 
-function updateCounter() {
+username.addEventListener("input", () => {
+  // Clear old custom errors first.
+  username.setCustomValidity("");
+
+  // Custom rule: no spaces allowed.
+  if (username.value.includes(" "))
+    username.setCustomValidity("Spaces are not allowed.");
+});
+
+bio.addEventListener("input", () => {
   const used = bio.value.length;
   const remaining = maxChars - used;
   bioCounter.textContent = `${remaining} characters remaining`;
-}
-
-bio.addEventListener("input", updateCounter);
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const errors = collectErrors();
-  renderErrors(errors);
-
-  if (errors.length > 0) return;
-
-  const data = Object.fromEntries(new FormData(form).entries());
-
-  submittedBox.innerHTML = `
-    <div class="rounded border bg-green-50 p-4">
-      <h2 class="mb-2 font-semibold">Submission Received</h2>
-      <pre class="rounded border bg-white p-2 text-xs">${JSON.stringify(data, null, 2)}</pre>
-    </div>
-  `;
 });
-
-updateCounter();
-updateSubmitState();
 ```
 
-**Test:**
+**Test:** Type a space in username → custom message appears in errors. Type in bio → counter updates.
 
-1. Invalid form → errors show, submit blocked.
-2. Valid form → JSON renders in `#submitted`.
-
-<Accordion question="Hint: Why check again on submit?">
-  Button state helps guide users, but submit is the final gate. Re-checking on
-  submit protects you from missed edge cases and keeps behavior predictable.
+<Accordion question="Why setCustomValidity first, then check?">
+  Custom errors stick around until you explicitly clear them with
+  `setCustomValidity("")`. If you don't clear first, the field stays invalid
+  even after the user fixes it. Always clear before setting.
 </Accordion>
 
 ---
 
-## Troubleshooting
+### Try It 7: Submit & Show Success
 
-- **Custom message never clears?** Make sure `setCustomValidity("")` runs before checks.
-- **Submit always disabled?** One field is still invalid; inspect each field’s `validity` state.
-- **Counter looks wrong?** Confirm `maxlength` exists in your HTML.
+Finally, add a submit handler:
+
+```js
+const submittedBox = document.querySelector("#submitted");
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const errors = gatherErrors();
+
+  /**
+   * We don't need `> 0` because an empty array is falsy, 
+   * and a non-empty array is truthy. 
+  */
+  if (errors.length) 
+    // Errors already rendered by the input listener. Just bail.
+    return;
+
+  const data = Object.fromEntries(new FormData(form));
+
+  submittedBox.innerHTML = `
+    <div class="rounded border bg-green-50 p-4">
+      <h2 class="mb-2 font-semibold">Welcome!</h2>
+
+      <pre class="rounded border bg-white p-2 text-xs">
+      ${JSON.stringify(data, null, 2)}</pre>
+    </div>
+  `;
+});
+```
+
+What is `JSON.stringify(data, null, 2)` doing? It converts the form data object into a nicely formatted string for display. The `null` means we don't want to transform the data, and `2` means we want to indent with 2 spaces for readability.
+
+`JSON` is a built-in JavaScript object that provides methods for working with JSON data. `JSON.stringify()` converts a JavaScript object into a JSON string, which is useful for displaying or sending data.
+
+**Test:** Fill all fields validly → click submit → success message appears.
+
+<Accordion question="Why check errors again on submit?">
+  The button is usually disabled, but it's defensive coding. Edge cases happen.
+  Re-checking on submit is a safety net and keeps behavior predictable.
+</Accordion>
 
 ---
 
@@ -289,13 +398,27 @@ updateSubmitState();
 
 ### Key Takeaways
 
-- Let HTML attributes handle baseline validation rules.
-- Use built-in browser checks (like `valueMissing`, `tooShort`, `typeMismatch`) to gather errors.
-- Show helpful feedback while users type.
-- Re-check on submit, even if the button is usually disabled.
-- Small helper functions keep UI code readable.
+- Use the `.validity` object to read what's wrong with each field.
+- Collect errors in one helper function so you don't repeat code.
+- Show errors live as the user types—better UX than waiting until submit.
+- Always check errors again on submit, even if the button is disabled.
+- Small, focused helper functions keep your code readable.
 
-## Looking Ahead
+### Reflection Questions
+
+1. Why does the lesson use `novalidate` on the form tag?
+2. How would you add a new field (e.g., age) to the form? What attributes would you use?
+3. What happens if you remove the `updateSubmitButton()` call at the end of Try It 5? Try it and describe what you see.
+4. In Try It 6, why do we call `setCustomValidity("")` before checking for spaces?
+
+### Submission Checklist
+
+- [ ] All 7 Try Its completed and tested
+- [ ] Screenshots of working form (invalid state + valid state)
+- [ ] Screenshot of console showing `validity` object (Try It 2)
+- [ ] At least 3 meaningful commits with descriptive messages
+- [ ] Reflection questions answered in writing
+
+### Looking Ahead
 
 Next lesson adds persistence: save validated submissions in `localStorage` so they survive refresh.
-
