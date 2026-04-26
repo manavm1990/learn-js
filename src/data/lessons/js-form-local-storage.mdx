@@ -28,14 +28,14 @@ By the end of this lesson, you will be able to:
 - Convert objects/arrays to strings with `JSON.stringify` and back with `JSON.parse`
 - Use `try/catch` to safely handle corrupted data in storage
 - Store validated form submissions in an in-memory array ("app state")
-- Render that array as a list using **function components** and `.map().join("")`
+- Render that array as a list using **render helper functions** and `.map().join("")`
 - Persist that array to `localStorage` and restore it on page load
 
 > Time budget: This lesson (reading + practice + homework + reflection) is designed for roughly **4 hours** of focused work.
 
 ## Core Concept Overview
 
-### 1. Where We Are: Validated Forms + Components
+### 1. Where We Are: Validated Forms + Render Helpers
 
 From earlier lessons you already know how to:
 
@@ -45,7 +45,7 @@ From earlier lessons you already know how to:
   - `checkValidity()`, `reportValidity()`, `setCustomValidity()`
 - Turn a form into a **plain object** with `FormData` + `Object.fromEntries`
 - Render that object into the DOM
-- Build **function components**:
+- Build **render helper functions**:
 
 ```js
 function RequestCard(request) {
@@ -61,7 +61,7 @@ function RequestCard(request) {
 You already have:
 
 - **Validated data** in a plain JS object
-- **Components** that turn objects into HTML strings
+- **Render helper functions** that turn objects into HTML strings
 
 ### 2. What We Add: Browser Storage
 
@@ -296,13 +296,13 @@ clearBtn.addEventListener("click", () => {
 
 ### Try It 2: Tutor Requests as App State (In Memory Only)
 
-**Goal:** Treat each **validated submission** as an object in an array, and render a list from that array with function components. No localStorage yet.
+**Goal:** Treat each **validated submission** as an object in an array, and render a list from that array with render helper functions. No localStorage yet.
 
 You will:
 
 - Reuse the **“Request a Tutor Session”** form structure from `js-form-validation`
 - Store each successful submission in a `requests` array
-- Render all requests below the form using function components
+- Render all requests below the form using render helper functions
 
 #### Step 1: HTML: Tutor Form + Requests Section
 
@@ -479,7 +479,7 @@ notes.addEventListener("input", updateNotesCounter);
 updateNotesCounter();
 ```
 
-#### Step 5: Request Components (Function Components)
+#### Step 5: Request Rendering Helpers
 
 Create components for rendering requests:
 
@@ -716,7 +716,7 @@ Best practices from this lesson:
 
 1. Keep **app state** in a JS variable (like `requests`), not in the DOM
 2. Render the DOM from that **single source of truth**
-3. Use **function components** for repeated UI (`RequestCard`, `RequestList`, `EmptyState`)
+3. Use **render helper functions** for repeated UI (`RequestCard`, `RequestList`, `EmptyState`)
 4. Use immutable updates (`requests = [...requests, data]`)
 5. Wrap `JSON.parse` in `try/catch` and default to **safe values** (like `[]`)
 6. Treat `localStorage` like a **small, local notebook**, not a shared, secure database
@@ -731,7 +731,7 @@ For your graded assignment, you will upgrade your **existing `js-form-validation
 
 - A **persistent tutor requests inbox**
 - localStorage integration
-- Clear, component-based rendering of the list
+- Clear, helper-function-based rendering of the list
 
 #### 1. Starting Point
 
@@ -744,7 +744,7 @@ In your template repo:
 
 You will **extend** this app; you do _not_ need to start from scratch.
 
-#### 2. Requirements: State & Components
+#### 2. Requirements: State & Rendering Helpers
 
 In `src/main.js`:
 
@@ -754,7 +754,7 @@ In `src/main.js`:
   let requests = [];
   ```
 
-- Add function components (you may reuse/adjust from practice):
+- Add render helper functions (you may reuse/adjust from practice):
   - `RequestCard(request)` – renders one tutor request
   - `EmptyState()` – renders a “no requests yet” message
   - `RequestList(items)` – renders all requests or the empty state
@@ -882,10 +882,10 @@ Answer these questions in your own words:
    - Back out of `localStorage` on the next page load  
      Use 1–2 short paragraphs.
 
-2. **Components:**  
-   Name at least **two** function components you wrote in this homework.  
+2. **Rendering Helpers:**  
+  Name at least **two** render helper functions you wrote in this homework.  
    For each one, explain:
-   - What props/data it expects
+  - What input data it expects
    - How it helped you avoid copy-pasting HTML
 
 3. **localStorage Safety:**  
@@ -913,7 +913,7 @@ Be specific and concrete. Show that you understand **why** your code works, not 
 
 In this lesson you:
 
-- Combined **validated forms**, **function components**, and **localStorage**
+- Combined **validated forms**, **render helper functions**, and **localStorage**
 - Treated `requests` (an array) as your **single source of truth**
 - Used localStorage as a **small, local notebook** to remember that array between page loads
 
