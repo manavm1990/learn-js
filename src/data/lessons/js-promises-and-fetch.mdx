@@ -1,0 +1,347 @@
+# Promises + Fetch: Load Data from the Web
+
+## Introduction
+
+**Icebreaker:** Have you ever waited for something that wasn't ready yet? A response to a text. An email. Approval from your boss. While you wait, you don't stop your life—you keep moving. Then when it arrives, you handle it.
+
+That's how Promises work in JavaScript.
+
+**Scenario:** So far, most of your data has been hardcoded in your JavaScript files. Real apps load data from servers. This lesson teaches the minimum Promise + Fetch workflow you need to do that.
+
+### Learning Objectives
+
+By the end of this lesson, you will be able to:
+
+- Explain what "asynchronous" means in plain language
+- Use `fetch()` with `.then()` and `.catch()`
+- Parse JSON with `response.json()`
+- Log and inspect fetched data in the console
+- Handle errors gracefully
+- Explain JSON as a portable data format
+
+---
+
+## Core Concept Overview
+
+### 1. Asynchronous Means “Not Ready Yet”
+
+Some work in JavaScript finishes instantly.
+Other work takes time—like asking a server for data over the internet.
+
+JavaScript doesn't wait. It keeps running and comes back later when the data arrives.
+
+That's asynchronous.
+
+### 2. What Is `fetch`?
+
+`fetch()` does exactly what the name says: it *fetches* data from a remote source.
+
+```js
+fetch("https://example.com/data");
+```
+
+Give it a URL, and it starts the request.
+
+But it does **not** hand you the data right away.
+It hands you a **Promise**.
+
+### 3. What Is a Promise?
+
+Think restaurant buzzer:
+
+- You request a table.
+- Host gives you a buzzer.
+- While you wait, the buzzer is **pending**.
+- When it buzzes, you check in and get your table.
+
+`fetch()` works the same way:
+
+- `fetch(...)` gives you the buzzer (the Promise)
+- `.then(...)` is what you do when it buzzes (Promise fulfilled)
+- `.catch(...)` is what you do if something goes wrong
+
+A Promise has three states:
+- **pending** = waiting for the server
+- **fulfilled** = data arrived successfully  
+- **rejected** = something went wrong (error)
+
+Restaurant mapping:
+- Buzzer in your hand, waiting → **pending**
+- Buzzer goes off, you get seated → **fulfilled**
+- Kitchen fire, no table available → **rejected**
+
+So yes: `fetch` gets you the Promise first.
+Then you process it with `.then()` (and `.catch()` for errors) to reach the actual data.
+
+`then()` is you walking back to the host when the buzzer goes off so you can get the table (the data).
+
+And `catch` is you realizing the restaurant is on fire and calling 991 instead - or similar.
+
+### 4. JSON Is Portable Data
+
+Servers send data as JSON—plain text that looks like a JavaScript object.
+
+```js
+// JavaScript object
+{ name: "Ava", age: 22 }
+
+// JSON (same thing, but as text)
+"{\"name\":\"Ava\",\"age\":22}"
+```
+
+`response.json()` converts JSON text into a JavaScript object you can use.
+
+Think of `response.json()` as converting raw response text into data you can actually use in JavaScript.
+
+**Servers** are remote computers that receive requests, do work (talk to databases, etc.), and send back responses. This is covered in [How Computers and the Web Work](/how-computers-and-web-work).
+
+---
+
+## Hands-On Application
+
+**Note:** Use the assigned template repo to follow along with the Try Its. Each Try It builds on the previous one, so do them in order. **Commit early, commit often!**
+
+In these examples, we are using [DummyJSON](https://dummyjson.com/), a free API for testing and prototyping. It provides endpoints like `/todos` that return JSON data we can practice with.
+
+**What's REST?** For now: it's a common way APIs expose data over URLs, and `fetch` is how you request that data.
+
+### Try It 1: Just `fetch()` and Log It
+
+In `src/index.js`, write:
+
+```js
+const result = fetch("https://dummyjson.com/todos/1");
+console.log(result);
+```
+
+Run it:
+
+```bash
+bun src/index.js
+```
+
+**What do you see?**
+
+You see: `Promise { <pending> }`
+
+That's not data. That's a *Promise*. That's your buzzer - not your table.
+
+---
+
+### Try It 2: See What Happens When It Fulfills
+
+Now use `.then()` to see what arrives when the Promise fulfills:
+
+```js
+fetch("https://dummyjson.com/todos/1")
+  .then((response) => {
+    console.log("Promise fulfilled!");
+    console.log(response);
+  });
+```
+
+Run it. You see a response object. Remember the restaurant buzzer? The buzzer just went off. The Promise is fulfilled.
+
+---
+
+### Try It 3: Extract the Data
+
+The response object contains the data, but it's still wrapped as text (JSON).
+
+Use `response.json()` to unwrap it:
+
+```js
+fetch("https://dummyjson.com/todos/1")
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    console.log("Here's the actual data:");
+    console.log(data);
+  });
+```
+
+Run it. Now you see a real JavaScript object: `{ id: 1, todo: "...", completed: false }`.
+
+Notice the two `.then()`s:
+1. First gets the response
+2. Second gets the parsed data
+
+---
+
+### Try It 4: Handle Errors with `.catch()`
+
+Now add `.catch()` so your code can handle problems gracefully:
+
+```js
+fetch("https://dummyjson.com/todos/1")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error("Something went wrong:", error.message);
+  });
+```
+
+Try breaking it with a bad URL (for example, change `todos/1` to `todoz/1`) so you can see `.catch()` run.
+
+---
+
+### Try It 5: Check `response.ok`
+
+Now check HTTP status manually with `response.ok`.
+
+```js
+fetch("https://dummyjson.com/todos/1")
+  .then((response) => {
+    if (!response.ok) {
+      console.log(`Server returned status: ${response.status}`);
+      return null;
+    }
+
+    return response.json();
+  })
+  .then((data) => {
+    if (data === null) return;
+    console.log(data);
+  })
+  .catch((error) => {
+    console.error("Something went wrong:", error.message);
+  });
+```
+
+This pattern becomes important when APIs return a response with a failed status code. For instance, if a database lookup fails, the server might return a 404 or 500 status. `fetch` won't reject the Promise in that case, so you have to check `response.ok` to handle it.
+
+---
+
+### Try It 6: Load Multiple Todos
+
+Now fetch a list instead of one todo, then do two useful data steps (`filter` and `map`):
+
+```js
+fetch("https://dummyjson.com/todos")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log("All todos:", data.todos);
+    console.log("Count:", data.todos.length);
+
+    const openTodos = data.todos.filter((item) => item.completed === false);
+    console.log(`Open todos: ${openTodos.length}`);
+    console.table(openTodos);
+
+    const titles = data.todos.map((todo) => todo.todo);
+    console.log("Todo titles:", titles);
+  })
+  .catch((error) => {
+    console.error("Failed:", error.message);
+  });
+```
+
+Notice: `data.todos` (not just `data`). The API wraps the array in an object. Always inspect the response shape first.
+
+---
+
+This is the complete Promise + Fetch pattern for this lesson.
+
+<info>
+**What About the Browser?**
+This lesson teaches *fetching and inspecting data*. In a later lesson, you'll learn how to render fetched data into the browser DOM. For now, mastering the data fetch itself is the goal.
+</info>
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Forgetting `return response.json()`
+
+```js
+// ❌ Wrong: next then gets undefined
+.then((response) => {
+  response.json();
+})
+
+// ✅ Right
+.then((response) => {
+  return response.json();
+})
+```
+
+### Mistake 2: Assuming `fetch` rejects on 404
+
+`fetch` only rejects for network-level failures (no internet, DNS timeout, etc.).
+HTTP status errors like 404 or 500 still return a response object.
+That is why we check `response.ok` manually.
+
+```js
+// ❌ This won't catch a 404
+fetch("https://api.example.com/missing")
+  .then((response) => response.json())
+  .catch(console.error); // Won't run if status is 404
+
+// ✅ This handles failed status codes
+fetch("https://api.example.com/missing")
+  .then((response) => {
+    if (!response.ok) {
+      console.log(`Status ${response.status}`);
+      return null;
+    }
+    return response.json();
+  })
+  .then((data) => {
+    if (data === null) return;
+    console.log(data);
+  })
+  .catch(console.error); // Runs for 404, 500, etc.
+```
+
+### Mistake 3: Forgetting `.catch()`
+
+If you don't handle errors, fetch failures fail silently and confuse you.
+Always add `.catch()`.
+
+### Mistake 4: Not Understanding Response Shape
+
+Different APIs return different structures. Always `console.log()` the full response first.
+
+```js
+// ❌ Wrong if API returns {todos: [...]} not just [...]
+data.map(...)
+
+// ✅ Right
+data.todos.map(...)
+```
+
+---
+
+## Wrap-Up & Assessment
+
+### Key Takeaways
+
+- `fetch()` returns a Promise
+- `.then()` handles success, `.catch()` handles errors
+- `response.json()` converts response text into JavaScript data
+- Always inspect the API response shape before using it
+- `console.log()` and `console.table()` are your debugging friends
+
+### Reflection Questions
+
+1. In Try It 1, why did we see `Promise { <pending> }` instead of the data?
+2. What does "fulfilled" mean for a Promise? What does "rejected" mean?
+3. Why do we need TWO `.then()` calls in Try It 3?
+4. How did you trigger `.catch()` in Try It 4?
+5. Write one sentence: When would you actually use `.catch()`?
+
+### Submission Checklist
+
+- [ ] Completed Try Its 1–6
+- [ ] Screenshot of Try It 1 output (showing the Promise object)
+- [ ] Screenshot of Try It 6 output (showing total loaded todos)
+- [ ] Screenshot of Try It 6 output (showing filtered open todos)
+- [ ] Screenshot of error handling (modify a URL to break it)
+- [ ] At least 3 commits (one per few Try Its)
+- [ ] Reflection questions answered
+
+### Looking Ahead
+
+Next, you'll use fetch inside form submissions and event listeners to build interactive apps that load data when users click buttons or submit forms.

@@ -360,17 +360,10 @@ const lessons = [
         video: null,
       },
       {
-        id: "js-form-local-storage",
-        title: "Persistent Tutor Requests with localStorage",
+        id: "js-promises-and-fetch",
+        title: "Promises + Fetch Basics",
         description:
-          "Connect your validated Request a Tutor Session form with render helper functions and localStorage to build a persistent tutor requests inbox.",
-        video: null,
-      },
-      {
-        id: "js-local-storage",
-        title: "Browser Storage Fundamentals",
-        description:
-          "Understand how browsers store data with localStorage. Learn when to use it, how to handle errors, and build persistent applications.",
+          "Learn the practical Promise workflow with fetch: loading JSON data, checking response status, and rendering loading/error/success states.",
         video: null,
       },
     ],
