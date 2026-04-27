@@ -23,7 +23,7 @@
     "input-otp": "^1.4.2",
     "next": "16.1.6",
     "node-webvtt": "^1.9.4",
-    "postcss": "^8.5.10",
+    "postcss": "^8.5.12",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "remark-gfm": "^4.0.1",
