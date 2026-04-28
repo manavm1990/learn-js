@@ -350,7 +350,11 @@ const lessons = [
         title: "Form Fundamentals",
         description:
           "Learn to work with HTML forms using JavaScript: reading values, handling submissions, and understanding form behavior in the browser.",
-        video: null,
+        video: {
+          url: "https://videos.learnjs.tech/swic/videos/sp26/form-fundamentals.mp4",
+          thumbnail: "https://videos.learnjs.tech/swic/videos/sp26/form-fundamentals.png",
+          duration: 1515,
+        },
       },
       {
         id: "js-form-validation",
