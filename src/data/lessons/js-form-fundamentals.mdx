@@ -380,9 +380,8 @@ submitBtn.disabled = true; // Start disabled
 
 form.addEventListener("input", () => {
   // Does EVERY form input field have a non-empty value?
-  REQUIRED.every((field) => form[field].value.trim() !== "")
-    ? (submitBtn.disabled = false) // If yes, enable button
-    : (submitBtn.disabled = true); // If no, disable button
+  const isValid = REQUIRED.every((field) => form[field].value.trim() !== "");
+  submitBtn.disabled = !isValid;
 });
 
 form.addEventListener("submit", (event) => {
