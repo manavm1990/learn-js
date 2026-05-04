@@ -103,8 +103,6 @@ Use the assigned GitHub Classroom repo. The HTML template is already there — y
 In `src/main.js`:
 
 ```js
-import "./style.css";
-
 async function getPlanet(id) {
   const resp = await fetch(`https://swapi.info/api/planets/${id}`);
   const data = await resp.json();
@@ -149,8 +147,6 @@ getPlanet(999); // Bad ID — watch the console
 Your HTML template has a `<select>` element. Wire it up:
 
 ```js
-import "./style.css";
-
 const select = document.querySelector("#sw-select");
 
 select.addEventListener("change", async (event) => {
