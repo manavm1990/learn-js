@@ -1,0 +1,293 @@
+# Await: Star Wars Data Lab
+
+## Introduction
+
+You already know the Promise + Fetch pattern:
+
+```js
+fetch("https://dummyjson.com/todos/1")
+  .then((response) => response.json())
+  .then((data) => {
+    console.info(data);
+  })
+  .catch((error) => {
+    console.error("Something went wrong:", error.message);
+  });
+```
+
+That works. It is valid. It is professional.
+
+But chains get hard to read when you also need:
+
+- a form submission handler
+- a loading state
+- an error state
+- DOM rendering
+- a second fetch based on the first response
+
+This lesson introduces a cleaner syntax for the same thing.
+
+---
+
+## Top-Level `await`
+
+Instead of chaining `.then()`, you can write:
+
+```js
+const resp = await fetch("https://swapi.info/api/planets/1");
+const data = await resp.json();
+console.info(data);
+```
+
+`await` pauses execution until the Promise resolves — then hands you the value directly. No callbacks. No nesting. Reads like a story.
+
+**One catch:** `await` only works inside an `async` function, or at the top level of an ES module (which is what you're already using).
+
+---
+
+## `async` Functions
+
+Wrap any code that uses `await` in an `async` function:
+
+```js
+async function getPlanet(id) {
+  const resp = await fetch(`https://swapi.info/api/planets/${id}`);
+  const data = await resp.json();
+  console.info(data);
+}
+```
+
+The keyword `async` before `function` is what lets you use `await` inside it.
+
+<Accordion question="What does async actually return?">
+  An `async` function always returns a Promise. You don't usually need to think
+  about this — just know that `async` and `await` are two sides of the same
+  coin. `async` declares the function. `await` pauses inside it.
+</Accordion>
+
+---
+
+## SWAPI
+
+We'll use [SWAPI Reborn](https://swapi.info/) — the Star Wars API. Real data about characters, planets, starships, and more.
+
+The URL pattern:
+
+```sh
+https://swapi.info/api/films/:id
+https://swapi.info/api/people/:id
+https://swapi.info/api/planets/:id
+https://swapi.info/api/species/:id
+https://swapi.info/api/starships/:id
+https://swapi.info/api/vehicles/:id
+```
+
+Omit the `:id` to get all resources in that category:
+
+```sh
+https://swapi.info/api/planets/
+```
+
+---
+
+## Hands-On Application
+
+You'll build this incrementally. Each Try It adds one piece. **Commit after each one.**
+
+Use the assigned GitHub Classroom repo. The HTML template is already there — you're writing the JavaScript.
+
+---
+
+### Try It 1: Fetch a Planet with `await`
+
+In `src/main.js`:
+
+```js
+import "./style.css";
+
+async function getPlanet(id) {
+  const resp = await fetch(`https://swapi.info/api/planets/${id}`);
+  const data = await resp.json();
+  console.info(data);
+}
+
+getPlanet(1);
+```
+
+Run the dev server. Open DevTools. You should see the Tatooine object logged.
+
+**Checkpoint:** What properties does the planet object have? Write down 3.
+
+---
+
+### Try It 2: Check `resp.ok`
+
+`await` doesn't throw on a 404. Same rule as `.then()` — you still have to check:
+
+```js
+async function getPlanet(id) {
+  const resp = await fetch(`https://swapi.info/api/planets/${id}`);
+
+  if (!resp.ok) {
+    console.error(`Request failed: ${resp.status}`);
+    return;
+  }
+
+  const data = await resp.json();
+  console.info(data);
+}
+
+getPlanet(999); // Bad ID — watch the console
+```
+
+**Checkpoint:** What status code do you see when the ID doesn't exist?
+
+---
+
+### Try It 3: Hook Up a Form
+
+Your HTML template has a `<select>` element. Wire it up:
+
+```js
+import "./style.css";
+
+const select = document.querySelector("#sw-select");
+
+select.addEventListener("change", async (event) => {
+  const category = event.target.value;
+  if (!category) return; // guard clause — user picked the placeholder
+
+  const resp = await fetch(`https://swapi.info/api/${category}/`);
+
+  if (!resp.ok) {
+    console.error(`Failed: ${resp.status}`);
+    return;
+  }
+
+  const data = await resp.json();
+  console.info(data);
+});
+```
+
+Pick a category from the dropdown. Confirm you see an array of results in the console.
+
+<Accordion question="Why is the event listener callback async?">
+  You can only use `await` inside an `async` function. The event listener
+  callback is a function, so it needs `async` in front of it to unlock `await`
+  inside. The browser doesn't care — it just calls the function when the event
+  fires.
+</Accordion>
+
+---
+
+### Try It 4: Show a Loading State
+
+Fetch takes time. Give users feedback:
+
+```js
+const output = document.querySelector("#output");
+
+select.addEventListener("change", async (event) => {
+  const category = event.target.value;
+  if (!category) return;
+
+  // Loading state
+  output.textContent = `Loading ${category}...`;
+
+  const resp = await fetch(`https://swapi.info/api/${category}/`);
+
+  if (!resp.ok) {
+    output.textContent = `Something went wrong. Status: ${resp.status}`;
+    return;
+  }
+
+  const data = await resp.json();
+  console.info(data);
+  output.textContent = `Loaded ${data.length} results.`;
+});
+```
+
+**Checkpoint:** Does the loading message appear before the data loads? It should flash briefly on a fast connection.
+
+---
+
+### Try It 5: Render Results to the DOM
+
+Replace the `console.info` and count message with a real list. Use `map` + `join` to build the HTML:
+
+```js
+const data = await resp.json();
+
+const html = data
+  .map((item) => `<li>${item.name ? item.name : item.title}</li>`)
+  .join("");
+
+output.innerHTML = `<ul>${html}</ul>`;
+```
+
+<Accordion question="Why item.name ? item.name : item.title?">
+  Most SWAPI resources use `name` (planets, people, species). Films use `title`
+  instead. The ternary checks whether `name` exists — if so, use it; otherwise
+  fall back to `title`.
+</Accordion>
+
+---
+
+
+## Common Mistakes
+
+**Forgetting `async` on the callback:**
+
+```js
+// ❌ SyntaxError: await is not allowed without async
+select.addEventListener("change", (event) => {
+  const resp = await fetch(url);
+});
+
+// ✅
+select.addEventListener("change", async (event) => {
+  const resp = await fetch(url);
+});
+```
+
+**Not checking `resp.ok`:**
+
+```js
+// ❌ Will try to parse error HTML as JSON
+const resp = await fetch(badUrl);
+const data = await resp.json();
+
+// ✅
+if (!resp.ok) return;
+const data = await resp.json();
+```
+
+**Awaiting inside a non-async function:**
+
+`await` only works inside `async`. If you get a syntax error about `await`, look up the call stack — some function is missing `async`.
+
+---
+
+## Wrap-Up & Assessment
+
+### Key Takeaways
+
+- `async`/`await` is syntactic sugar over Promises — same rules apply
+- Always check `resp.ok` before calling `.json()`
+- Event listener callbacks can be `async`
+- `Promise.all` runs multiple fetches in parallel
+- Loading/error/success states are the minimum UX for any fetch
+
+### Reflection Questions
+
+1. Compare this `async`/`await` version to the `.then()` chain from the [Promises + Fetch](/js-promises-and-fetch) lesson. What's actually different under the hood? What's the same?
+2. What would happen if you forgot the `if (!resp.ok) return` guard and SWAPI returned a 404?
+3. Where else in this course have you used a guard clause to exit early? How is this the same pattern?
+
+### Submission Checklist
+
+- [ ] All 6 Try Its completed and working in the browser
+- [ ] Loading state is visible (even briefly)
+- [ ] Error state renders in the DOM (not just the console)
+- [ ] At least 4 commits with meaningful messages (one per Try It pair)
+- [ ] Reflection questions answered in writing

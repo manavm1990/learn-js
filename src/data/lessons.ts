@@ -370,6 +370,13 @@ const lessons = [
           "Learn the practical Promise workflow with fetch: loading JSON data, checking response status, and rendering loading/error/success states.",
         video: null,
       },
+      {
+        id: "js-await-swapi",
+        title: "Await: Star Wars Data Lab",
+        description:
+          "Combine forms, await fetch, and DOM rendering in one end-of-semester project with loading, success, and error states.",
+        video: null,
+      },
     ],
   },
   {
