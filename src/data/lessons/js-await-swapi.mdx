@@ -176,9 +176,16 @@ Pick a category from the dropdown. Confirm you see an array of results in the co
 
 ---
 
-### Try It 4: Show a Loading State
+### Try It 4: Show Loading + Error States
 
-Fetch takes time. Give users feedback:
+Fetch can fail in two different ways:
+
+- You get a response, but the status is bad (`!resp.ok`) — example: 404
+- The request fails before a response (network issue or broken URL)
+
+Think of it like this: sometimes the server answers with a “no,” and sometimes it never answers at all.
+
+Handle both in the DOM:
 
 ```js
 const output = document.querySelector("#output");
@@ -189,27 +196,30 @@ select.addEventListener("change", async (event) => {
 
   // Loading state
   output.textContent = `Loading ${category}...`;
+  try {
+    const resp = await fetch(`https://swapi.info/api/${category}/`);
 
-  const resp = await fetch(`https://swapi.info/api/${category}/`);
+    if (!resp.ok) {
+      output.textContent = `Something went wrong. Status: ${resp.status}`;
+      return;
+    }
 
-  if (!resp.ok) {
-    output.textContent = `Something went wrong. Status: ${resp.status}`;
-    return;
+    const data = await resp.json();
+    console.info(data);
+    output.textContent = `Loaded ${data.length} results.`;
+  } catch (error) {
+    output.textContent = `Network error: ${error.message}`;
   }
-
-  const data = await resp.json();
-  console.info(data);
-  output.textContent = `Loaded ${data.length} results.`;
 });
 ```
 
 **Checkpoint:** Does the loading message appear before the data loads? It should flash briefly on a fast connection.
+**Checkpoint:** Temporarily break the URL (for example, change `swapi.info` to `swapi.invalid`) and confirm your network error message shows in the page. Then change it back.
 
 ---
 
 ### Try It 5: Render Results to the DOM
-
-Replace the `console.info` and count message with a real list. Use `map` + `join` to build the HTML:
+Keep your `try/catch` and `resp.ok` checks from Try It 4. Replace only the success block with a real list. Use `map` + `join` to build the HTML:
 
 ```js
 const data = await resp.json();
@@ -258,6 +268,29 @@ if (!resp.ok) return;
 const data = await resp.json();
 ```
 
+**Only handling `!resp.ok` and forgetting `try/catch`:**
+
+If `fetch` fails before a response, `if (!resp.ok)` never runs because `resp` was never created.
+
+```js
+// ❌ Handles 404 responses, but not request failures
+const resp = await fetch(url);
+if (!resp.ok) {
+  output.textContent = `Something went wrong. Status: ${resp.status}`;
+}
+
+// ✅ Handles both response errors and request failures
+try {
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    output.textContent = `Something went wrong. Status: ${resp.status}`;
+    return;
+  }
+} catch (error) {
+  output.textContent = `Network error: ${error.message}`;
+}
+```
+
 **Awaiting inside a non-async function:**
 
 `await` only works inside `async`. If you get a syntax error about `await`, look up the call stack — some function is missing `async`.
@@ -270,20 +303,20 @@ const data = await resp.json();
 
 - `async`/`await` is syntactic sugar over Promises — same rules apply
 - Always check `resp.ok` before calling `.json()`
+- Use `try/catch` to handle request failures before a response exists
 - Event listener callbacks can be `async`
-- `Promise.all` runs multiple fetches in parallel
 - Loading/error/success states are the minimum UX for any fetch
 
 ### Reflection Questions
 
 1. Compare this `async`/`await` version to the `.then()` chain from the [Promises + Fetch](/js-promises-and-fetch) lesson. What's actually different under the hood? What's the same?
-2. What would happen if you forgot the `if (!resp.ok) return` guard and SWAPI returned a 404?
+2. If SWAPI returns 404, which part of your code runs? If the URL is broken and the request fails, which part runs?
 3. Where else in this course have you used a guard clause to exit early? How is this the same pattern?
 
 ### Submission Checklist
 
-- [ ] All 6 Try Its completed and working in the browser
+- [ ] All 5 Try Its completed and working in the browser
 - [ ] Loading state is visible (even briefly)
-- [ ] Error state renders in the DOM (not just the console)
-- [ ] At least 4 commits with meaningful messages (one per Try It pair)
+- [ ] Error state renders in the DOM for both `!resp.ok` and `catch` cases (not just the console)
+- [ ] At least 5 commits with meaningful messages (one per Try It)
 - [ ] Reflection questions answered in writing
