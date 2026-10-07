@@ -12,7 +12,6 @@ interface CodeBlockProps {
   className?: string;
 }
 
-
 export function CodeBlock({
   children,
   copyable = false,

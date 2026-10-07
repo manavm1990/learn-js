@@ -32,7 +32,6 @@ function generateId(text: string) {
     .replace(/[^a-z0-9-]/g, "");
 }
 
-
 async function CodeBlock({ code, lang }: { code: string; lang: string }) {
   const highlighter = await getShikiHighlighter();
   const out = highlighter.codeToHtml(code, {
@@ -57,7 +56,7 @@ async function CodeBlock({ code, lang }: { code: string; lang: string }) {
   return (
     <div
       className="max-w-full overflow-x-auto rounded-lg bg-gray-100 p-3 sm:p-4 dark:bg-gray-800"
-      // Shiki produces HTML for syntax highlighting.
+      /* biome-ignore lint/security/noDangerouslySetInnerHtml: Shiki produces trusted, sanitized HTML */
       dangerouslySetInnerHTML={{ __html: out }}
     />
   );
